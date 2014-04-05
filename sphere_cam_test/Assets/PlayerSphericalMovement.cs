@@ -25,4 +25,10 @@ public class PlayerSphericalMovement : MonoBehaviour {
 	transform.Rotate(Vector3.right, 90);
   }
 
+	void OnTriggerEnter(Collider other) {
+		if ( other.gameObject.tag == "Baddy" ) {
+			other.gameObject.SetActive(false);
+		}
+	}
+
 }

@@ -1,8 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/PlayerSphericalMovement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AddRegularPills.cs">
     <Files>
-      <File FileName="Assets/PlayerSphericalMovement.cs" Line="29" Column="28" />
+      <File FileName="Assets/Scripts/AddRegularPills.cs" Line="4" Column="20" />
+      <File FileName="Assets/Scripts/PlayerSphericalMovement.cs" Line="10" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

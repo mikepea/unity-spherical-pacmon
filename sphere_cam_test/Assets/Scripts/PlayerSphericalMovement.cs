@@ -6,17 +6,14 @@ public class PlayerSphericalMovement : MonoBehaviour {
   public float horizontalSpeed = 2.0F;
   public float verticalSpeed = 2.0F;
   public float rotateSpeed = 2.0F;
-  public Vector3 pivot;
 
   public SphericalCoordinates sc;
 
-  // Use this for initialization
   void Start () {
 	sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f) );
 	transform.localPosition = sc.toCartesian;
   }
 
-  // Update is called once per frame
   void FixedUpdate () {
     float h = Input.GetAxis("Horizontal");
     float v = Input.GetAxis("Vertical");
@@ -27,6 +24,10 @@ public class PlayerSphericalMovement : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if ( other.gameObject.tag == "Baddy" ) {
+			other.gameObject.SetActive(false);
+		} else if ( other.gameObject.tag == "Pill" ) {
+			other.gameObject.SetActive(false);
+		} else if ( other.gameObject.tag == "Power Pill" ) {
 			other.gameObject.SetActive(false);
 		}
 	}

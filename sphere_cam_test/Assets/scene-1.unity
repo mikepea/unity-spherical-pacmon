@@ -84,7 +84,7 @@ GameObject:
   - 4: {fileID: 195959929}
   - 114: {fileID: 195959930}
   m_Layer: 0
-  m_Name: 001 Setup Pills
+  m_Name: 010 Setup Pills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -340,6 +340,12 @@ MonoBehaviour:
   horizontalSpeed: 2
   verticalSpeed: 2
   rotateSpeed: 2
+  playerSpeed: .5
+  gridSpacing: 10
+  framesPerGridMove: 10
+  numPills: 0
+  speed: .5
+  maxAngleY: 80
 --- !u!114 &705191608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,6 +631,12 @@ MonoBehaviour:
   horizontalSpeed: 2
   verticalSpeed: 2
   rotateSpeed: 2
+  playerSpeed: .5
+  gridSpacing: 10
+  framesPerGridMove: 10
+  numPills: 0
+  speed: .5
+  maxAngleY: 80
 --- !u!114 &959835693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,6 +920,32 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!1 &1449940163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1449940164}
+  m_Layer: 0
+  m_Name: 001 Setup Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1449940164
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1449940163}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1793603776}
 --- !u!1 &1527557685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,6 +1045,12 @@ MonoBehaviour:
   horizontalSpeed: 2
   verticalSpeed: 2
   rotateSpeed: 2
+  playerSpeed: .5
+  gridSpacing: 10
+  framesPerGridMove: 10
+  numPills: 0
+  speed: .5
+  maxAngleY: 80
 --- !u!54 &1527557692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1034,6 +1078,7 @@ GameObject:
   - 135: {fileID: 1793603778}
   - 23: {fileID: 1793603777}
   - 114: {fileID: 1793603780}
+  - 114: {fileID: 1793603781}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1053,6 +1098,7 @@ Transform:
   m_Children:
   - {fileID: 195959929}
   - {fileID: 705191605}
+  - {fileID: 1449940164}
   - {fileID: 1527557689}
   - {fileID: 959835691}
   m_Father: {fileID: 0}
@@ -1107,6 +1153,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e1bcdeb190794a43966d84cb76cfe3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1793603781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1793603775}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ddb8e3d661254b88bd0e62b5cde9077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridColor: {r: .5, g: .5, b: .5, a: 1}
+  offset: 1000
 --- !u!1 &1875379717
 GameObject:
   m_ObjectHideFlags: 0

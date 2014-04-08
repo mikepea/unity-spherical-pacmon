@@ -346,6 +346,7 @@ MonoBehaviour:
   numPills: 0
   speed: .5
   maxAngleY: 80
+  minAngleY: -80
 --- !u!114 &705191608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,6 +638,7 @@ MonoBehaviour:
   numPills: 0
   speed: .5
   maxAngleY: 80
+  minAngleY: -80
 --- !u!114 &959835693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1051,6 +1053,7 @@ MonoBehaviour:
   numPills: 0
   speed: .5
   maxAngleY: 80
+  minAngleY: -80
 --- !u!54 &1527557692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1079,6 +1082,7 @@ GameObject:
   - 23: {fileID: 1793603777}
   - 114: {fileID: 1793603780}
   - 114: {fileID: 1793603781}
+  - 114: {fileID: 1793603782}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1148,7 +1152,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1793603775}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e1bcdeb190794a43966d84cb76cfe3b, type: 3}
   m_Name: 
@@ -1166,6 +1170,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridColor: {r: .5, g: .5, b: .5, a: 1}
   offset: 1000
+--- !u!114 &1793603782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1793603775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0154fe609b784ee596af828df3f773f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: -10
 --- !u!1 &1875379717
 GameObject:
   m_ObjectHideFlags: 0

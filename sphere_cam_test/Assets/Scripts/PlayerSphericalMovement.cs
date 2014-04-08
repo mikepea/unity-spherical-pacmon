@@ -21,6 +21,7 @@ public class PlayerSphericalMovement : MonoBehaviour {
 	private float currentAngleX = 0F;
 	private float currentAngleY = 0F;
 	public float maxAngleY = 80F;
+	public float minAngleY = -80F;
 
   	void Start () {
 		sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f) );
@@ -30,7 +31,7 @@ public class PlayerSphericalMovement : MonoBehaviour {
 
   	void FixedUpdate () {
 
-		Debug.Log (Time.deltaTime + " - deltaTime");
+		//Debug.Log (Time.deltaTime + " - deltaTime");
 
   	  	float h = Input.GetAxisRaw("Horizontal");
   	  	float v = Input.GetAxisRaw("Vertical");
@@ -50,7 +51,7 @@ public class PlayerSphericalMovement : MonoBehaviour {
 		  playerDirection = playerIntendedDirection;
 		}
 		//Debug.Log (currentAngleX + " - currentAngleX");
-		//Debug.Log (currentAngleY + " - currentAngleY");
+		Debug.Log (currentAngleY + " - currentAngleY");
 
 		/* TODO: Need to adjust speed based on latitude
 		 * equator, moves 1x angular speed.
@@ -58,10 +59,15 @@ public class PlayerSphericalMovement : MonoBehaviour {
 		 * TODO: need to ensure that our angle % grid calculation still works though.
 		 */
 		currentAngleX = ( currentAngleX + playerDirection.x * speed ) % 360;
+		currentAngleY = currentAngleY + playerDirection.y * speed;
 		if ( currentAngleX < 0 ) {
 			currentAngleX = 360 + currentAngleX;
 		}
-		currentAngleY = Mathf.Abs(currentAngleY) >= maxAngleY ? currentAngleY : currentAngleY + playerDirection.y * speed;
+		if ( currentAngleY < minAngleY ) {
+			currentAngleY = minAngleY;
+		} else if ( currentAngleY > maxAngleY ) {
+			currentAngleY = minAngleY;
+		} 
 
 		transform.localPosition = sc.SetRotation( 
             degreesToRadians(currentAngleX),

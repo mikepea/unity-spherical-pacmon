@@ -1,11 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CreateMap.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RotateWorld.js">
     <Files>
-      <File FileName="Assets/Scripts/PlayerSphericalMovement.cs" Line="47" Column="17" />
-      <File FileName="Assets/Scripts/AddRegularPills.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/SphericalCoordinates.cs" Line="1" Column="1" />
-      <File FileName="Assets/CreateMap.cs" Line="29" Column="16" />
+      <File FileName="Assets/Scripts/AddRegularPills.cs" Line="14" Column="9" />
+      <File FileName="Assets/Scripts/SphericalCoordinates.cs" Line="113" Column="1" />
+      <File FileName="Assets/CreateMap.cs" Line="19" Column="14" />
+      <File FileName="Assets/Scripts/PlayerSphericalMovement.cs" Line="70" Column="1" />
+      <File FileName="Assets/Scripts/RotateWorld.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

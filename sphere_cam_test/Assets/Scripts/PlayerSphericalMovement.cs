@@ -58,7 +58,7 @@ public class PlayerSphericalMovement : MonoBehaviour {
 		 * at 80deg, moves 6x angular speed.
 		 * TODO: need to ensure that our angle % grid calculation still works though.
 		 */
-		currentAngleX = ( currentAngleX + playerDirection.x * speed ) % 360;
+		currentAngleX = ( currentAngleX + playerDirection.x * speed * LatitudeSpeedAdjust(currentAngleY) ) % 360;
 		currentAngleY = currentAngleY + playerDirection.y * speed;
 		if ( currentAngleX < 0 ) {
 			currentAngleX = 360 + currentAngleX;
@@ -77,6 +77,21 @@ public class PlayerSphericalMovement : MonoBehaviour {
 		transform.LookAt (Vector3.zero);
 		transform.Rotate(Vector3.right, 90);
   	}
+
+	float LatitudeSpeedAdjust (float angle) {
+		float a = Mathf.Abs (angle);
+		if ( a >= 80 ) {
+			return 6.0F;
+		} else if ( a >= 70 ) {
+			return 3.0F;
+		} else if ( a >= 60 ) {
+			return 2.0F;
+		} else if ( a >= 50 ) {
+			return 1.5F;
+		} else {
+			return 1.0F;
+		}
+	}
 
 	void OnTriggerEnter(Collider other) {
 		if ( other.gameObject.tag == "Baddy" ) {

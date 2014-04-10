@@ -115,8 +115,6 @@ MonoBehaviour:
   pillObject: {fileID: 100000, guid: 9c6465d3411624d4399ad00f9c80f447, type: 2}
   pillSpacing: 10
   pillMinSeparation: .075000003
-  latitudeMin: -80
-  latitudeMax: 80
 --- !u!1 &260144989
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,16 +335,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36fa9c69404048cba81da608cf79dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalSpeed: 2
-  verticalSpeed: 2
-  rotateSpeed: 2
-  playerSpeed: .5
   gridSpacing: 10
-  framesPerGridMove: 10
   numPills: 0
   speed: .5
-  maxAngleY: 80
-  minAngleY: -80
 --- !u!114 &705191608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,16 +620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36fa9c69404048cba81da608cf79dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalSpeed: 2
-  verticalSpeed: 2
-  rotateSpeed: 2
-  playerSpeed: .5
   gridSpacing: 10
-  framesPerGridMove: 10
   numPills: 0
   speed: .5
-  maxAngleY: 80
-  minAngleY: -80
 --- !u!114 &959835693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1031,16 +1015,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36fa9c69404048cba81da608cf79dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalSpeed: 2
-  verticalSpeed: 2
-  rotateSpeed: 2
-  playerSpeed: 1
-  gridSpacing: 10
-  framesPerGridMove: 10
+  gridSpacing: 5
   numPills: 0
   speed: .5
-  maxAngleY: 80
-  minAngleY: -80
 --- !u!54 &1527557692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1067,9 +1044,9 @@ GameObject:
   - 33: {fileID: 1793603779}
   - 135: {fileID: 1793603778}
   - 23: {fileID: 1793603777}
-  - 114: {fileID: 1793603780}
   - 114: {fileID: 1793603781}
   - 114: {fileID: 1793603782}
+  - 114: {fileID: 1793603780}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1139,9 +1116,9 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1793603775}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e1bcdeb190794a43966d84cb76cfe3b, type: 3}
+  m_Script: {fileID: 11500000, guid: 21832a7d3bb8443cbb5fbd28ffe1d6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1793603781
@@ -1168,7 +1145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0154fe609b784ee596af828df3f773f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: -10
+  rotateSpeed: 5
 --- !u!1 &1875379717
 GameObject:
   m_ObjectHideFlags: 0

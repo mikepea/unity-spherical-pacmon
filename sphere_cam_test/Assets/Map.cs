@@ -70,26 +70,75 @@ public class Map
         }
     }
 
-    public bool PillAtMapReference (float latitude, float longitude)
+    public int[] GridReferenceAtLatitudeLongitude (float latitude, float longitude)
     {
         // longitude goes from -180 to 180
         // latitude goes from -80 to 80
         // our grid[0,0] is -180 long, +80 lat
         int intLatitude = Mathf.FloorToInt (Mathf.Round (latitude));
         int intLongitude = Mathf.FloorToInt (Mathf.Round (longitude));
-
-        Debug.Log ("intLatitude: " + intLatitude + ", intLongitude: " + intLongitude);
-
+        //Debug.Log ("intLatitude: " + intLatitude + ", intLongitude: " + intLongitude);
         int gridX = ((intLongitude + 180) % 360) / gridSpacing;
         int gridY = (160 - ((intLatitude + 80) % 180)) / gridSpacing;
+        int[] gridRef = {gridX, gridY};
+        return gridRef;
+    }
 
-        Debug.Log ("gridX: " + gridX + ", gridY: " + gridY);
+    public bool PillAtMapReference (float latitude, float longitude)
+    {
+        int[] gridRef = GridReferenceAtLatitudeLongitude (latitude, longitude);
 
-        if (mapData [gridY, gridX] == 2) {
+        if (mapData [gridRef [1], gridRef [0]] == 2) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public bool WallAtMapReference (float latitude, float longitude)
+    {
+        int[] gridRef = GridReferenceAtLatitudeLongitude (latitude, longitude);
+        return WallAtGridReference (gridRef [1], gridRef [0]);
+    }
+
+    public bool WallAtGridReference (int x, int y)
+    {
+        if (mapData [y, x] == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Texture2D UVMappedTexture (int xPixels, int yPixels, int xOffsetPixels)
+    {
+        Texture2D texture = new Texture2D (xPixels, yPixels);
+        int xScaling = xPixels / numColumns;
+        int yScaling = yPixels / numRows + 3;
+        int fiveDegrees = 5 * xPixels / 360;
+
+        Debug.Log ("xScaling: " + xScaling + ", yScaling: " + yScaling);
+
+        for (int x = 0; x < xPixels; x++) {
+            int gridX = x / xScaling; 
+
+            for (int y = 0; y < yPixels; y++) {
+                int gridY = 33 - ((y / yScaling) - 2); 
+                //Debug.Log ("gridX: " + gridX + ", gridY: " + gridY);
+                if (y < 20 * 5 || y > 160 * 5) {
+                    texture.SetPixel (x, y, Color.red);
+                } else if (WallAtGridReference (gridX, gridY)) {
+                    texture.SetPixel (x, y, Color.blue);
+                } else {
+                    texture.SetPixel (x, y, Color.black);
+                }
+                if (y % fiveDegrees == 0 || x % fiveDegrees == 0) {
+                    texture.SetPixel (x, y, Color.white);
+                }
+            }
+        }
+        return texture;
+
     }
 
 }

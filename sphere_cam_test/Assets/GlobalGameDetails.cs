@@ -8,5 +8,6 @@ public class GlobalGameDetails : MonoBehaviour
     public static float minAngleY = -80F;
     public static float cellSpacing = 5F;
 
+    public Map map = new Map ("map1");
 
 }

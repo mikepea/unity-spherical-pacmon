@@ -17,6 +17,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     private float maxAngleY = GlobalGameDetails.maxAngleY;
     private float minAngleY = GlobalGameDetails.minAngleY;
 
+    public Map map = new Map ("map1");
+
     void Start ()
     {
         sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f));
@@ -39,10 +41,21 @@ public class PlayerSphericalMovement : MonoBehaviour
             playerIntendedDirection = - Vector2.up;
         } 
 
+        int[] gridRef = map.GridReferenceAtLatitudeLongitude (currentAngleY, currentAngleX);
+        //Debug.Log ("PlayerX: " + gridRef [0] + ", PlayerY: " + gridRef [1]);
+
         if (currentAngleX % gridSpacing == 0 && playerIntendedDirection.y != 0) {
-            playerDirection = playerIntendedDirection;
+            if (! map.WallAtGridReference (gridRef [0], gridRef [1] + (int)playerIntendedDirection.y)) {
+                playerDirection = playerIntendedDirection;
+            } else {
+                Debug.Log ("Wall at PlayerX: " + gridRef [0] + ", PlayerY: " + (gridRef [1] + (int)playerIntendedDirection.y));
+            }
         } else if (currentAngleY % gridSpacing == 0 && playerIntendedDirection.x != 0) {
-            playerDirection = playerIntendedDirection;
+            if (! map.WallAtGridReference (gridRef [0] + (int)playerIntendedDirection.x, gridRef [1])) {
+                playerDirection = playerIntendedDirection;
+            } else {
+                Debug.Log ("Wall at PlayerX: " + gridRef [0] + (int)playerIntendedDirection.x + ", PlayerY: " + gridRef [1]);
+            }
         }
 
         currentAngleX = (currentAngleX + playerDirection.x * speed * LatitudeSpeedAdjust (currentAngleY)) % 360;

@@ -4,9 +4,13 @@ using System.IO;
 
 public class Map
 {
-    public static int numRows = 33;
-    public static int numColumns = 72;
-    public static int gridSpacing = 5;
+    public static int numRows = GlobalGameDetails.mapRows;
+    public static int numColumns = GlobalGameDetails.mapColumns;
+    public static float gridSpacing = GlobalGameDetails.cellSpacing;
+    private int intGridSpacing = Mathf.FloorToInt (gridSpacing);
+
+    public static float maxLatitude = GlobalGameDetails.maxAngleY;
+    public static float minLatitude = GlobalGameDetails.minAngleY;
 
     private bool mapLoaded = false;
     private int[,] mapData = new int[numRows, numColumns];
@@ -70,16 +74,32 @@ public class Map
         }
     }
 
+    public float NormalizeLongitude (float longitude)
+    { 
+        if (longitude > 180) {
+            longitude = NormalizeLongitude (longitude - 360);
+        } else if (longitude < -180) {
+            longitude = NormalizeLongitude (longitude + 360);
+        }
+        return longitude;
+    }
+
     public int[] GridReferenceAtLatitudeLongitude (float latitude, float longitude)
     {
-        // longitude goes from -180 to 180
-        // latitude goes from -80 to 80
-        // our grid[0,0] is -180 long, +80 lat
-        int intLatitude = Mathf.FloorToInt (Mathf.Round (latitude));
-        int intLongitude = Mathf.FloorToInt (Mathf.Round (longitude));
+        // however, grid is [0,0] valid at -(gridSpacing/2) to +(gridSpacing/2) away.
+        //longitude = NormalizeLongitude(longitude);
+
+        if (latitude > maxLatitude) {
+            latitude = maxLatitude;
+        } else if (latitude < minLatitude) {
+            latitude = minLatitude;
+        }
+        int intLatitude = Mathf.FloorToInt (Mathf.Round (latitude + gridSpacing / 2));
+        int intLongitude = Mathf.FloorToInt (Mathf.Round (longitude + gridSpacing / 2));
         //Debug.Log ("intLatitude: " + intLatitude + ", intLongitude: " + intLongitude);
-        int gridX = ((intLongitude + 180) % 360) / gridSpacing;
-        int gridY = (160 - ((intLatitude + 80) % 180)) / gridSpacing;
+        int gridX = ((intLongitude + 180) % 360) / intGridSpacing;
+        int gridY = (Mathf.FloorToInt (maxLatitude - minLatitude) - ((intLatitude + 80) % 180)) / intGridSpacing;
+        //Debug.Log ("gridX: " + gridX + ", gridY: " + gridY);
         int[] gridRef = {gridX, gridY};
         return gridRef;
     }
@@ -89,6 +109,7 @@ public class Map
         int[] gridRef = GridReferenceAtLatitudeLongitude (latitude, longitude);
 
         if (mapData [gridRef [1], gridRef [0]] == 2) {
+            Debug.Log ("Pill at X: " + gridRef [0] + ", Y: " + gridRef [1]);
             return true;
         } else {
             return false;
@@ -113,19 +134,20 @@ public class Map
     public Texture2D UVMappedTexture (int xPixels, int yPixels, int xOffsetPixels)
     {
         Texture2D texture = new Texture2D (xPixels, yPixels);
-        int xScaling = xPixels / numColumns;
-        int yScaling = yPixels / numRows + 3;
+        int xScaling = xPixels / 360;
+        int yScaling = yPixels / 180;
         int fiveDegrees = 5 * xPixels / 360;
 
+        Debug.Log ("xPixels: " + xPixels + ", yPixels: " + yPixels);
         Debug.Log ("xScaling: " + xScaling + ", yScaling: " + yScaling);
+        Debug.Log ("fiveDegrees: " + fiveDegrees);
 
         for (int x = 0; x < xPixels; x++) {
-            int gridX = x / xScaling; 
+            int gridX = x / (xScaling * intGridSpacing); 
 
             for (int y = 0; y < yPixels; y++) {
-                int gridY = 33 - ((y / yScaling) - 2); 
-                //Debug.Log ("gridX: " + gridX + ", gridY: " + gridY);
-                if (y < 20 * 5 || y > 160 * 5) {
+                int gridY = (180 / intGridSpacing) - (y / (yScaling * intGridSpacing) + ((90 - Mathf.FloorToInt (maxLatitude)) / intGridSpacing));
+                if (gridY < 0 || gridY > (numRows - 1)) {
                     texture.SetPixel (x, y, Color.red);
                 } else if (WallAtGridReference (gridX, gridY)) {
                     texture.SetPixel (x, y, Color.blue);

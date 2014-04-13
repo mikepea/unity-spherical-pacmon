@@ -182,7 +182,7 @@ Camera:
     x: .5
     y: 0
     width: .5
-    height: .5
+    height: 1
   near clip plane: .300000012
   far clip plane: 1000
   field of view: 35
@@ -261,9 +261,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: .5
+    y: 0
     width: .5
-    height: .5
+    height: 1
   near clip plane: .300000012
   far clip plane: 1000
   field of view: 35
@@ -1145,7 +1145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0154fe609b784ee596af828df3f773f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 0
+  rotateSpeed: 2
 --- !u!1 &1875379717
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,7 +1204,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1875379717}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
@@ -1273,7 +1273,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1938779255}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}

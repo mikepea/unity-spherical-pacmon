@@ -14,7 +14,7 @@ PlayerSettings:
   productName: sphere_cam_test
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
-  defaultScreenWidth: 1024
+  defaultScreenWidth: 2048
   defaultScreenHeight: 768
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
@@ -35,9 +35,9 @@ PlayerSettings:
   use32BitDisplayBuffer: 1
   use24BitDepthBuffer: 1
   defaultIsFullScreen: 1
-  defaultIsNativeResolution: 1
-  runInBackground: 0
-  captureSingleScreen: 0
+  defaultIsNativeResolution: 0
+  runInBackground: 1
+  captureSingleScreen: 1
   Override IPod Music: 0
   Prepare IOS For Recording: 0
   enableHWStatistics: 1
@@ -52,7 +52,7 @@ PlayerSettings:
   xboxEnableKinect: 0
   xboxEnableKinectAutoTracking: 0
   xboxEnableFitness: 0
-  macFullscreenMode: 2
+  macFullscreenMode: 0
   xboxSpeechDB: 0
   xboxEnableHeadOrientation: 0
   xboxEnableGuest: 0
@@ -109,7 +109,11 @@ PlayerSettings:
   AndroidKeystoreName: 
   AndroidKeyaliasName: 
   resolutionDialogBanner: {fileID: 0}
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - m_Icon: {fileID: 0}
+      m_Size: 128
   m_BuildTargetBatching: []
   webPlayerTemplate: APPLICATION:Default
   m_TemplateCustomTags: {}
@@ -148,7 +152,8 @@ PlayerSettings:
   ps3TrialMode: 0
   flashStrippingLevel: 2
   spritePackerPolicy: 
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    4: 
   metroPackageName: sphere_cam_test
   metroPackageLogo: 
   metroPackageVersion: 

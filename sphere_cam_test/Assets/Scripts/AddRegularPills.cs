@@ -10,7 +10,7 @@ public class AddRegularPills : MonoBehaviour
     private float latitudeMin = GlobalGameDetails.minAngleY;
     private float latitudeMax = GlobalGameDetails.maxAngleY;
 
-    private float gridSpacing = 5;
+    private float gridSpacing = GlobalGameDetails.cellSpacing;
 
     void Start ()
     {
@@ -21,8 +21,9 @@ public class AddRegularPills : MonoBehaviour
 
         for (float latitude = latitudeMin; latitude < latitudeMax; latitude += gridSpacing) {
             Vector3 lastPillPosition = Vector3.zero;
-            for (float longitude = -180; longitude < 180; longitude += gridSpacing) {
+            for (float longitude = -180F; longitude < 180; longitude += gridSpacing) {
                 if (map.PillAtMapReference (latitude, longitude)) {
+                    Debug.Log ("Placing pill at latitude: " + latitude + ", longitude: " + longitude);
                     SphericalCoordinates sc = new SphericalCoordinates (
     					0.5f, 
     					degreesToRadians (longitude), 

@@ -4,9 +4,11 @@ using System.Collections;
 public class GlobalGameDetails : MonoBehaviour
 {
 
-    public static float maxAngleY = 80F;
-    public static float minAngleY = -80F;
+    public static float maxAngleY = 70F;
+    public static float minAngleY = -70F;
     public static float cellSpacing = 5F;
+    public static int mapRows = 29;
+    public static int mapColumns = 72;
 
     public Map map = new Map ("map1");
 

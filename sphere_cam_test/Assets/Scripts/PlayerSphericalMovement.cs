@@ -31,6 +31,8 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         float h = Input.GetAxisRaw ("Horizontal");
         float v = Input.GetAxisRaw ("Vertical");
+        Vector2 stop = Vector2.zero;
+
         if (h == 1) {
             playerIntendedDirection = Vector2.right;
         } else if (h == -1) {
@@ -42,21 +44,23 @@ public class PlayerSphericalMovement : MonoBehaviour
         } 
 
         int[] gridRef = map.GridReferenceAtLatitudeLongitude (currentAngleY, currentAngleX);
-        //Debug.Log ("PlayerX: " + gridRef [0] + ", PlayerY: " + gridRef [1]);
+        Debug.Log ("playerLat: " + currentAngleX + ", playerLong: " + currentAngleY);
+        Debug.Log ("Player GridX: " + gridRef [0] + ", GridY: " + gridRef [1]);
 
         if (currentAngleX % gridSpacing == 0 && playerIntendedDirection.y != 0) {
-            Debug.Log ("playerLat: " + currentAngleX + ", playerLong: " + currentAngleY);
             if (! map.WallAtGridReference (gridRef [0], gridRef [1] + (int)playerIntendedDirection.y)) {
                 playerDirection = playerIntendedDirection;
             } else {
                 Debug.Log ("Wall at gridX: " + gridRef [0] + ", gridY: " + (gridRef [1] + (int)playerIntendedDirection.y));
+                playerDirection = stop;
             }
         } else if (currentAngleY % gridSpacing == 0 && playerIntendedDirection.x != 0) {
-            Debug.Log ("playerLat: " + currentAngleX + ", playerLong: " + currentAngleY);
+            Debug.Log ("Player GridX: " + gridRef [0] + ", GridY: " + gridRef [1]);
             if (! map.WallAtGridReference (gridRef [0] + (int)playerIntendedDirection.x, gridRef [1])) {
                 playerDirection = playerIntendedDirection;
             } else {
                 Debug.Log ("Wall at gridX: " + gridRef [0] + (int)playerIntendedDirection.x + ", gridY: " + gridRef [1]);
+                playerDirection = stop;
             }
         }
 

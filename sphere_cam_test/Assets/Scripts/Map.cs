@@ -108,7 +108,6 @@ public class Map
         // grid [0,0] is latitude +72.5 to +67.5, longitude +177.5 to -177.5
         // grid [max,0] is latitude +72.5 to +67.5, longitude +175 to +177.5
         // grid [0,max] is latitude -67.5 to -72.5 , longitude +177.5 to +177.5
-        //longitude = NormalizeLongitude(longitude);
 
         if (latitude > maxLatitude) {
             latitude = maxLatitude;
@@ -116,11 +115,15 @@ public class Map
             latitude = minLatitude;
         }
 
+        longitude = NormalizeLongitude (longitude);
+
+        float latitudeRange = maxLatitude - minLatitude;
+        float adjustedLatitude = latitude + (gridSpacing / 2);
+        int gridY = numRows - 1 - Mathf.FloorToInt ((latitudeRange - (latitude - minLatitude)) / gridSpacing);
         int intLatitude = Mathf.FloorToInt (Mathf.Round (latitude + gridSpacing / 2));
         int intLongitude = Mathf.FloorToInt (Mathf.Round (longitude + gridSpacing / 2));
         //Debug.Log ("intLatitude: " + intLatitude + ", intLongitude: " + intLongitude);
         int gridX = ((intLongitude + 180) % 360) / intGridSpacing;
-        int gridY = (Mathf.FloorToInt (maxLatitude - minLatitude) - ((intLatitude + 80) % 180)) / intGridSpacing;
         //Debug.Log ("gridX: " + gridX + ", gridY: " + gridY);
         int[] gridRef = {gridX, gridY};
         return gridRef;
@@ -150,7 +153,11 @@ public class Map
 
     public bool WallAtGridReference (int x, int y)
     {
-        if (mapData [y, x] == 1) {
+        if (y >= numColumns) {
+            return true;
+        } else if (y < 0) {
+            return true;
+        } else if (mapData [y, x] == 1) {
             return true;
         } else {
             return false;

@@ -57,28 +57,46 @@ public class PlayerSphericalMovement : MonoBehaviour
         transform.Rotate (Vector3.right, 90);
     }
 
+    bool PlayerIsOnGridLine (float latitude, float longitude)
+    {
+        if (latitude % gridSpacing == 0 && longitude % gridSpacing == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     Vector2 GetPlayerNextLocation (float longitude, float latitude, Vector2 intendedDirection)
     {
         int[] gridRef = map.GridReferenceAtLatitudeLongitude (latitude, longitude);
         int playerGridX = gridRef [0];
         int playerGridY = gridRef [1];
         Vector2 stop = Vector2.zero;
-        Debug.Log ("playerLat: " + latitude + ", playerLong: " + longitude);
-        Debug.Log ("Player GridX: " + playerGridX + ", GridY: " + playerGridY);
+        //Debug.Log ("playerLat: " + latitude + ", playerLong: " + longitude);
+        //Debug.Log ("Player GridX: " + playerGridX + ", GridY: " + playerGridY);
+
+        if (PlayerIsOnGridLine (latitude, longitude)) {
+            Debug.Log ("playerLat: " + latitude + ", playerLong: " + longitude);
+            Debug.Log ("Player GridX: " + playerGridX + ", GridY: " + playerGridY);
+        }
 
         if (longitude % gridSpacing == 0 && intendedDirection.y != 0) {
-            if (! map.WallAtGridReference (playerGridX, playerGridY + (int)intendedDirection.y)) {
-                playerDirection = intendedDirection;
-            } else {
+            if (map.WallAtGridReference (playerGridX, playerGridY + (int)intendedDirection.y)) {
                 Debug.Log ("Wall at gridX: " + playerGridX + ", gridY: " + (playerGridY + (int)intendedDirection.y));
-                playerDirection = stop;
+                if (playerDirection == playerIntendedDirection) {
+                    playerDirection = stop;
+                }
+            } else {
+                playerDirection = intendedDirection;
             }
         } else if (latitude % gridSpacing == 0 && intendedDirection.x != 0) {
-            if (! map.WallAtGridReference (playerGridX + (int)intendedDirection.x, playerGridY)) {
-                playerDirection = intendedDirection;
+            if (map.WallAtGridReference (playerGridX + (int)intendedDirection.x, playerGridY)) {
+                Debug.Log ("Wall at gridX: " + (playerGridX + (int)playerIntendedDirection.x) + ", gridY: " + playerGridY);
+                if (playerDirection == playerIntendedDirection) {
+                    playerDirection = stop;
+                }
             } else {
-                Debug.Log ("Wall at gridX: " + playerGridX + (int)playerIntendedDirection.x + ", gridY: " + playerGridY);
-                playerDirection = stop;
+                playerDirection = intendedDirection;
             }
         }
 

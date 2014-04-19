@@ -119,7 +119,7 @@ public class Map
 
         float latitudeRange = maxLatitude - minLatitude;
         float adjustedLatitude = latitude + (gridSpacing / 2);
-        int gridY = numRows - 1 - Mathf.FloorToInt ((latitudeRange - (latitude - minLatitude)) / gridSpacing);
+        int gridY = Mathf.FloorToInt ((latitudeRange - (latitude - minLatitude)) / gridSpacing);
         int intLatitude = Mathf.FloorToInt (Mathf.Round (latitude + gridSpacing / 2));
         int intLongitude = Mathf.FloorToInt (Mathf.Round (longitude + gridSpacing / 2));
         //Debug.Log ("intLatitude: " + intLatitude + ", intLongitude: " + intLongitude);

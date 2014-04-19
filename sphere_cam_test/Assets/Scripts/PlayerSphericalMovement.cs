@@ -31,7 +31,6 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         float h = Input.GetAxisRaw ("Horizontal");
         float v = Input.GetAxisRaw ("Vertical");
-        Vector2 stop = Vector2.zero;
 
         if (h == 1) {
             playerIntendedDirection = Vector2.right;
@@ -43,37 +42,9 @@ public class PlayerSphericalMovement : MonoBehaviour
             playerIntendedDirection = - Vector2.up;
         } 
 
-        int[] gridRef = map.GridReferenceAtLatitudeLongitude (currentAngleY, currentAngleX);
-        Debug.Log ("playerLat: " + currentAngleX + ", playerLong: " + currentAngleY);
-        Debug.Log ("Player GridX: " + gridRef [0] + ", GridY: " + gridRef [1]);
-
-        if (currentAngleX % gridSpacing == 0 && playerIntendedDirection.y != 0) {
-            if (! map.WallAtGridReference (gridRef [0], gridRef [1] + (int)playerIntendedDirection.y)) {
-                playerDirection = playerIntendedDirection;
-            } else {
-                Debug.Log ("Wall at gridX: " + gridRef [0] + ", gridY: " + (gridRef [1] + (int)playerIntendedDirection.y));
-                playerDirection = stop;
-            }
-        } else if (currentAngleY % gridSpacing == 0 && playerIntendedDirection.x != 0) {
-            Debug.Log ("Player GridX: " + gridRef [0] + ", GridY: " + gridRef [1]);
-            if (! map.WallAtGridReference (gridRef [0] + (int)playerIntendedDirection.x, gridRef [1])) {
-                playerDirection = playerIntendedDirection;
-            } else {
-                Debug.Log ("Wall at gridX: " + gridRef [0] + (int)playerIntendedDirection.x + ", gridY: " + gridRef [1]);
-                playerDirection = stop;
-            }
-        }
-
-        currentAngleX = (currentAngleX + playerDirection.x * speed * LatitudeSpeedAdjust (currentAngleY)) % 360;
-        currentAngleY = currentAngleY + playerDirection.y * speed;
-        if (currentAngleX < 0) {
-            currentAngleX = 360 + currentAngleX;
-        }
-        if (currentAngleY < minAngleY) {
-            currentAngleY = minAngleY;
-        } else if (currentAngleY > maxAngleY) {
-            currentAngleY = maxAngleY;
-        } 
+        Vector2 playerNextLocation = GetPlayerNextLocation (currentAngleX, currentAngleY, playerIntendedDirection);
+        currentAngleX = playerNextLocation.x;
+        currentAngleY = playerNextLocation.y;
 
         //Debug.Log ("X: " + currentAngleX + " -- Y: " + currentAngleY);
 
@@ -84,6 +55,46 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         transform.LookAt (Vector3.zero);
         transform.Rotate (Vector3.right, 90);
+    }
+
+    Vector2 GetPlayerNextLocation (float longitude, float latitude, Vector2 intendedDirection)
+    {
+        int[] gridRef = map.GridReferenceAtLatitudeLongitude (latitude, longitude);
+        int playerGridX = gridRef [0];
+        int playerGridY = gridRef [1];
+        Vector2 stop = Vector2.zero;
+        Debug.Log ("playerLat: " + latitude + ", playerLong: " + longitude);
+        Debug.Log ("Player GridX: " + playerGridX + ", GridY: " + playerGridY);
+
+        if (longitude % gridSpacing == 0 && intendedDirection.y != 0) {
+            if (! map.WallAtGridReference (playerGridX, playerGridY + (int)intendedDirection.y)) {
+                playerDirection = intendedDirection;
+            } else {
+                Debug.Log ("Wall at gridX: " + playerGridX + ", gridY: " + (playerGridY + (int)intendedDirection.y));
+                playerDirection = stop;
+            }
+        } else if (latitude % gridSpacing == 0 && intendedDirection.x != 0) {
+            if (! map.WallAtGridReference (playerGridX + (int)intendedDirection.x, playerGridY)) {
+                playerDirection = intendedDirection;
+            } else {
+                Debug.Log ("Wall at gridX: " + playerGridX + (int)playerIntendedDirection.x + ", gridY: " + playerGridY);
+                playerDirection = stop;
+            }
+        }
+
+        float newLongitude = (longitude + playerDirection.x * speed * LatitudeSpeedAdjust (latitude)) % 360;
+        float newLatitude = latitude + playerDirection.y * speed;
+        if (newLongitude < 0) {
+            newLongitude = 360 + newLongitude;
+        }
+        if (newLatitude < minAngleY) {
+            newLatitude = minAngleY;
+        } else if (newLatitude > maxAngleY) {
+            newLatitude = maxAngleY;
+        } 
+
+        return new Vector2 (newLongitude, newLatitude);
+
     }
 
     float LatitudeSpeedAdjust (float angle)

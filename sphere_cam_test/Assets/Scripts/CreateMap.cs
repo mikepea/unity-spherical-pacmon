@@ -6,7 +6,7 @@ public class CreateMap : MonoBehaviour
 
     public Color gridColor = Color.grey;
 
-    public float offset;
+    public int offset;
 
     // Use this for initialization
     void Start ()
@@ -14,16 +14,11 @@ public class CreateMap : MonoBehaviour
 
         Map map = new Map ("map1");
 
-        Texture2D texture = map.UVMappedTexture (360 * 5, 180 * 5, 0);
+        Texture2D texture = map.UVMappedTexture (360 * 5, 180 * 5, offset);
 
         texture.Apply ();
         renderer.material.mainTexture = texture;
 
     }
 
-    void Update ()
-    {
-        renderer.material.mainTextureOffset = new Vector2 (offset, 0);
-    }
-	
 }

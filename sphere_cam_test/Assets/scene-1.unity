@@ -113,8 +113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pillObject: {fileID: 100000, guid: 9c6465d3411624d4399ad00f9c80f447, type: 2}
-  pillSpacing: 10
-  pillMinSeparation: .075000003
 --- !u!1 &260144989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,7 +1040,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1793603776}
   - 33: {fileID: 1793603779}
-  - 135: {fileID: 1793603778}
   - 23: {fileID: 1793603777}
   - 114: {fileID: 1793603781}
   - 114: {fileID: 1793603782}
@@ -1091,18 +1088,6 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!135 &1793603778
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1793603775}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: .5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1793603779
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1133,7 +1118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridColor: {r: .5, g: .5, b: .5, a: 1}
-  offset: 1000
+  offset: 10
 --- !u!114 &1793603782
 MonoBehaviour:
   m_ObjectHideFlags: 0

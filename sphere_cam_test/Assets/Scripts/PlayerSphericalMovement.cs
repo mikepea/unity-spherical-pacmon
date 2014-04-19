@@ -45,16 +45,18 @@ public class PlayerSphericalMovement : MonoBehaviour
         //Debug.Log ("PlayerX: " + gridRef [0] + ", PlayerY: " + gridRef [1]);
 
         if (currentAngleX % gridSpacing == 0 && playerIntendedDirection.y != 0) {
+            Debug.Log ("playerLat: " + currentAngleX + ", playerLong: " + currentAngleY);
             if (! map.WallAtGridReference (gridRef [0], gridRef [1] + (int)playerIntendedDirection.y)) {
                 playerDirection = playerIntendedDirection;
             } else {
-                Debug.Log ("Wall at PlayerX: " + gridRef [0] + ", PlayerY: " + (gridRef [1] + (int)playerIntendedDirection.y));
+                Debug.Log ("Wall at gridX: " + gridRef [0] + ", gridY: " + (gridRef [1] + (int)playerIntendedDirection.y));
             }
         } else if (currentAngleY % gridSpacing == 0 && playerIntendedDirection.x != 0) {
+            Debug.Log ("playerLat: " + currentAngleX + ", playerLong: " + currentAngleY);
             if (! map.WallAtGridReference (gridRef [0] + (int)playerIntendedDirection.x, gridRef [1])) {
                 playerDirection = playerIntendedDirection;
             } else {
-                Debug.Log ("Wall at PlayerX: " + gridRef [0] + (int)playerIntendedDirection.x + ", PlayerY: " + gridRef [1]);
+                Debug.Log ("Wall at gridX: " + gridRef [0] + (int)playerIntendedDirection.x + ", gridY: " + gridRef [1]);
             }
         }
 

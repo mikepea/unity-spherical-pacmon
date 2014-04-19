@@ -80,13 +80,34 @@ public class Map
             longitude = NormalizeLongitude (longitude - 360);
         } else if (longitude < -180) {
             longitude = NormalizeLongitude (longitude + 360);
+        } else if (longitude == 180) {
+            longitude = -180;
         }
         return longitude;
     }
 
+    public float[] LatitudeLongitudeAtGridReference (int x, int y)
+    {
+        // x = 0 => -180
+        // x = [numColumns -1] => 175
+        // y = 0 => maxLatitude
+        // y = 14 => 0deg
+        // y = [numRows - 1] => minLatitude
+
+        float longitude = (float)x * gridSpacing - 180f;
+        float latitude = maxLatitude - (float)y * gridSpacing;
+
+        float [] latLong = {latitude, longitude};
+        return latLong;
+
+    }
+
     public int[] GridReferenceAtLatitudeLongitude (float latitude, float longitude)
     {
-        // however, grid is [0,0] valid at -(gridSpacing/2) to +(gridSpacing/2) away.
+        // grid position is centered on lat/long, so:
+        // grid [0,0] is latitude +72.5 to +67.5, longitude +177.5 to -177.5
+        // grid [max,0] is latitude +72.5 to +67.5, longitude +175 to +177.5
+        // grid [0,max] is latitude -67.5 to -72.5 , longitude +177.5 to +177.5
         //longitude = NormalizeLongitude(longitude);
 
         if (latitude > maxLatitude) {
@@ -94,6 +115,7 @@ public class Map
         } else if (latitude < minLatitude) {
             latitude = minLatitude;
         }
+
         int intLatitude = Mathf.FloorToInt (Mathf.Round (latitude + gridSpacing / 2));
         int intLongitude = Mathf.FloorToInt (Mathf.Round (longitude + gridSpacing / 2));
         //Debug.Log ("intLatitude: " + intLatitude + ", intLongitude: " + intLongitude);
@@ -104,16 +126,20 @@ public class Map
         return gridRef;
     }
 
-    public bool PillAtMapReference (float latitude, float longitude)
+    public bool PillAtGridReference (int x, int y)
     {
-        int[] gridRef = GridReferenceAtLatitudeLongitude (latitude, longitude);
-
-        if (mapData [gridRef [1], gridRef [0]] == 2) {
-            Debug.Log ("Pill at X: " + gridRef [0] + ", Y: " + gridRef [1]);
+        if (mapData [y, x] == 2) {
+            Debug.Log ("Pill at x: " + x + ", y: " + y);
             return true;
         } else {
             return false;
         }
+    }
+
+    public bool PillAtMapReference (float latitude, float longitude)
+    {
+        int[] gridRef = GridReferenceAtLatitudeLongitude (latitude, longitude);
+        return PillAtGridReference (gridRef [0], gridRef [1]);
     }
 
     public bool WallAtMapReference (float latitude, float longitude)
@@ -144,18 +170,22 @@ public class Map
 
         for (int x = 0; x < xPixels; x++) {
             int gridX = x / (xScaling * intGridSpacing); 
+            int xOffsetted = x - xOffsetPixels;
+            if (xOffsetted < 0) {
+                xOffsetted += xPixels;
+            }
 
             for (int y = 0; y < yPixels; y++) {
                 int gridY = (180 / intGridSpacing) - (y / (yScaling * intGridSpacing) + ((90 - Mathf.FloorToInt (maxLatitude)) / intGridSpacing));
                 if (gridY < 0 || gridY > (numRows - 1)) {
-                    texture.SetPixel (x, y, Color.red);
+                    texture.SetPixel (xOffsetted, y, Color.red);
                 } else if (WallAtGridReference (gridX, gridY)) {
-                    texture.SetPixel (x, y, Color.blue);
+                    texture.SetPixel (xOffsetted, y, Color.blue);
                 } else {
-                    texture.SetPixel (x, y, Color.black);
+                    texture.SetPixel (xOffsetted, y, Color.black);
                 }
                 if (y % fiveDegrees == 0 || x % fiveDegrees == 0) {
-                    texture.SetPixel (x, y, Color.white);
+                    texture.SetPixel (xOffsetted, y, Color.white);
                 }
             }
         }

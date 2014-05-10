@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSpacing: 5
   numPills: 0
-  speed: .5
+  speed: 20
 --- !u!54 &1527557692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1118,7 +1118,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridColor: {r: .5, g: .5, b: .5, a: 1}
-  offset: 10
+  xOffset: 100
+  yOffset: 14
+  enableGridLines: 1
 --- !u!114 &1793603782
 MonoBehaviour:
   m_ObjectHideFlags: 0

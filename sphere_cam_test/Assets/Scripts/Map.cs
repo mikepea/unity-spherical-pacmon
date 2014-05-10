@@ -163,7 +163,7 @@ public class Map
         }
     }
 
-    public Texture2D UVMappedTexture (int xPixels, int yPixels, int xOffsetPixels)
+    public Texture2D UVMappedTexture (int xPixels, int yPixels, int xOffsetPixels, int yOffsetPixels, bool enableGridLines)
     {
         Texture2D texture = new Texture2D (xPixels, yPixels);
         int xScaling = xPixels / 360;
@@ -182,21 +182,33 @@ public class Map
             }
 
             for (int y = 0; y < yPixels; y++) {
-                int gridY = (180 / intGridSpacing) - (y / (yScaling * intGridSpacing) + ((90 - Mathf.FloorToInt (maxLatitude)) / intGridSpacing));
-                if (gridY < 0 || gridY > (numRows - 1)) {
-                    texture.SetPixel (xOffsetted, y, Color.red);
-                } else if (WallAtGridReference (gridX, gridY)) {
-                    texture.SetPixel (xOffsetted, y, Color.blue);
-                } else {
-                    texture.SetPixel (xOffsetted, y, Color.black);
+                int gridY = gridYAtPixelY (y, yPixels);
+                int yOffsetted = y - yOffsetPixels;
+                if (yOffsetted < 0) {
+                    yOffsetted += yPixels;
                 }
-                if (y % fiveDegrees == 0 || x % fiveDegrees == 0) {
-                    texture.SetPixel (xOffsetted, y, Color.white);
+                if (gridY < 0 || gridY >= numRows) {
+                    texture.SetPixel (xOffsetted, yOffsetted, Color.red);
+                } else if (WallAtGridReference (gridX, gridY)) {
+                    texture.SetPixel (xOffsetted, yOffsetted, Color.blue);
+                } else {
+                    texture.SetPixel (xOffsetted, yOffsetted, Color.black);
+                }
+                if (enableGridLines) {
+                    if (y % fiveDegrees == 0 || x % fiveDegrees == 0) {
+                        texture.SetPixel (xOffsetted, yOffsetted, Color.white);
+                    }
                 }
             }
         }
         return texture;
 
+    }
+
+    private int gridYAtPixelY (int y, int yTotalPixels)
+    {
+        int yScaling = yTotalPixels / 180;
+        return (180 / intGridSpacing) - (y / (yScaling * intGridSpacing) + ((90 - Mathf.FloorToInt (maxLatitude)) / intGridSpacing));
     }
 
 }

@@ -30,7 +30,6 @@ public class Map
         try {
 
             int rowCount = 0;
-            int columnCount = 0;
             string line;
 
             StreamReader theReader = new StreamReader (fileName, Encoding.Default);
@@ -39,8 +38,8 @@ public class Map
                 do {
                     line = theReader.ReadLine ();
                     if (line != null) {
-                        if (rowCount == 0) {
-                            columnCount = line.Split (',').Length;
+                        if (line.StartsWith ("#")) {
+                            continue;
                         }
                         string[] entries = line.Split (',');
                         ProcessMapRow (rowCount, entries);

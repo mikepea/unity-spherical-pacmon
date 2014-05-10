@@ -17,7 +17,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     private float maxAngleY = GlobalGameDetails.maxAngleY;
     private float minAngleY = GlobalGameDetails.minAngleY;
 
-    public Map map = new Map ("map1");
+    public Map map = new Map (GlobalGameDetails.mapName);
 
     void Start ()
     {

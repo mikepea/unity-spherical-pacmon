@@ -13,7 +13,7 @@ public class AddRegularPills : MonoBehaviour
     void Start ()
     {
 
-        Map map = new Map ("map1");
+        Map map = new Map (GlobalGameDetails.mapName);
 
         int pillCount = 0;
 

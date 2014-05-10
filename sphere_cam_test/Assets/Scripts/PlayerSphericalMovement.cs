@@ -26,33 +26,42 @@ public class PlayerSphericalMovement : MonoBehaviour
         numPills = GameObject.FindGameObjectsWithTag ("Pill").Length;
     }
 
-    void FixedUpdate ()
+    Vector2 ProcessInputsIntoDirection (Vector2 direction)
     {
-
         float h = Input.GetAxisRaw ("Horizontal");
         float v = Input.GetAxisRaw ("Vertical");
 
         if (h == 1) {
-            playerIntendedDirection = Vector2.right;
+            direction = Vector2.right;
         } else if (h == -1) {
-            playerIntendedDirection = - Vector2.right;
+            direction = (- Vector2.right);
         } else if (v == 1) {
-            playerIntendedDirection = Vector2.up;
+            direction = Vector2.up;
         } else if (v == -1) {
-            playerIntendedDirection = - Vector2.up;
-        } 
+            direction = (- Vector2.up);
+        }
+        return direction;
+    }
+
+    void FixedUpdate ()
+    {
+
+        playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
 
         Vector2 playerNextLocation = GetPlayerNextLocation (currentAngleX, currentAngleY, playerIntendedDirection);
         currentAngleX = playerNextLocation.x;
         currentAngleY = playerNextLocation.y;
 
-        //Debug.Log ("X: " + currentAngleX + " -- Y: " + currentAngleY);
+        updatePlayerObjectLocationAndRotation (currentAngleX, currentAngleY);
 
+    }
+
+    void updatePlayerObjectLocationAndRotation (float longitude, float latitude)
+    {
         transform.localPosition = sc.SetRotation (
-            degreesToRadians (currentAngleX),
-	  		degreesToRadians (currentAngleY)
+            degreesToRadians (longitude),
+            degreesToRadians (latitude)
         ).toCartesian;
-
         transform.LookAt (Vector3.zero);
         transform.Rotate (Vector3.right, 90);
     }

@@ -66,15 +66,6 @@ public class PlayerSphericalMovement : MonoBehaviour
         transform.Rotate (Vector3.right, 90);
     }
 
-    bool PlayerIsOnGridLine (float latitude, float longitude)
-    {
-        if (latitude % gridSpacing == 0 && longitude % gridSpacing == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     Vector2 GetPlayerNextLocation (float longitude, float latitude, Vector2 intendedDirection)
     {
         int[] gridRef = map.GridReferenceAtLatitudeLongitude (latitude, longitude);
@@ -83,11 +74,6 @@ public class PlayerSphericalMovement : MonoBehaviour
         Vector2 stop = Vector2.zero;
         //Debug.Log ("playerLat: " + latitude + ", playerLong: " + longitude);
         //Debug.Log ("Player GridX: " + playerGridX + ", GridY: " + playerGridY);
-
-        if (PlayerIsOnGridLine (latitude, longitude)) {
-            Debug.Log ("playerLat: " + latitude + ", playerLong: " + longitude);
-            Debug.Log ("Player GridX: " + playerGridX + ", GridY: " + playerGridY);
-        }
 
         if (longitude % gridSpacing == 0 && intendedDirection.y != 0) {
             if (map.WallAtGridReference (playerGridX, playerGridY + (int)intendedDirection.y)) {

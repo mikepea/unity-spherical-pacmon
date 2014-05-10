@@ -72,31 +72,44 @@ public class PlayerSphericalMovement : MonoBehaviour
         int playerGridX = gridRef [0];
         int playerGridY = gridRef [1];
         Vector2 stop = Vector2.zero;
-        //Debug.Log ("playerLat: " + latitude + ", playerLong: " + longitude);
-        //Debug.Log ("Player GridX: " + playerGridX + ", GridY: " + playerGridY);
+        Vector2 nextMoveSpeed = new Vector2 (
+                (speed * Time.deltaTime * LatitudeSpeedAdjust (latitude)),
+                (speed * Time.deltaTime)
+        );
 
-        if (longitude % gridSpacing == 0 && intendedDirection.y != 0) {
+        float dist = angularDistanceToNextGridLine (latitude, longitude, playerDirection);
+        if (intendedDirection.y != 0
+            && dist < nextMoveSpeed.x
+            ) {
+
             if (map.WallAtGridReference (playerGridX, playerGridY + (int)intendedDirection.y)) {
-                Debug.Log ("Wall at gridX: " + playerGridX + ", gridY: " + (playerGridY + (int)intendedDirection.y));
+                Debug.Log ("MIKEDEBUG: Wall at gridX: " + playerGridX + ", gridY: " + (playerGridY + (int)intendedDirection.y));
                 if (playerDirection == playerIntendedDirection) {
                     playerDirection = stop;
                 }
             } else {
+                latitude = latitude + (playerDirection.x * dist);
                 playerDirection = intendedDirection;
             }
-        } else if (latitude % gridSpacing == 0 && intendedDirection.x != 0) {
+
+        } else if (intendedDirection.x != 0
+            && dist < nextMoveSpeed.y
+                   ) {
+            // wants to travel east/west
             if (map.WallAtGridReference (playerGridX + (int)intendedDirection.x, playerGridY)) {
-                Debug.Log ("Wall at gridX: " + (playerGridX + (int)playerIntendedDirection.x) + ", gridY: " + playerGridY);
+                Debug.Log ("MIKEDEBUG: Wall at gridX: " + (playerGridX + (int)playerIntendedDirection.x) + ", gridY: " + playerGridY);
                 if (playerDirection == playerIntendedDirection) {
                     playerDirection = stop;
                 }
             } else {
+                longitude = longitude + (playerDirection.y * dist);
                 playerDirection = intendedDirection;
             }
         }
 
-        float newLongitude = (longitude + playerDirection.x * speed * LatitudeSpeedAdjust (latitude)) % 360;
-        float newLatitude = latitude + playerDirection.y * speed;
+        float newLongitude = (longitude + playerDirection.x * nextMoveSpeed.x) % 360;
+        float newLatitude = latitude + playerDirection.y * nextMoveSpeed.y;
+
         if (newLongitude < 0) {
             newLongitude = 360 + newLongitude;
         }
@@ -104,10 +117,47 @@ public class PlayerSphericalMovement : MonoBehaviour
             newLatitude = minAngleY;
         } else if (newLatitude > maxAngleY) {
             newLatitude = maxAngleY;
-        } 
+        }
+
+        Debug.Log ("MIKEDEBUG: "
+            + " gridX: " + playerGridX
+            + " gridXangle: " + playerGridX * gridSpacing
+            + " gridY: " + playerGridY
+            + " gridYangle: " + playerGridY * gridSpacing
+            + " dist: " + angularDistanceToNextGridLine (latitude, longitude, playerDirection)
+            + " lat: " + latitude
+            + " long: " + longitude
+            + " newLat: " + newLatitude
+            + " newLong: " + newLongitude
+        );
+
 
         return new Vector2 (newLongitude, newLatitude);
 
+    }
+
+    float angularDistanceToNextGridLine (float latitude, float longitude, Vector2 direction)
+    {
+        if (direction.y > 0) {
+            // going up
+            float nextGridLine = Mathf.Ceil (latitude / gridSpacing) * gridSpacing;
+            return nextGridLine - latitude;
+        } else if (direction.y < 0) {
+            // going down
+            float nextGridLine = Mathf.Floor (latitude / gridSpacing) * gridSpacing;
+            return latitude - nextGridLine;
+        } else if (direction.x > 0) {
+            // going east
+            float nextGridLine = Mathf.Ceil (longitude / gridSpacing) * gridSpacing;
+            return nextGridLine - longitude;
+        } else if (direction.x < 0) {
+            // going west
+            float nextGridLine = Mathf.Floor (longitude / gridSpacing) * gridSpacing;
+            return longitude - nextGridLine;
+        } else {
+            // stopped, return a sensible default
+            return 0;
+        }
     }
 
     float LatitudeSpeedAdjust (float angle)

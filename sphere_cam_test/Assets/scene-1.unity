@@ -912,6 +912,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1449940164}
+  - 114: {fileID: 1449940165}
   m_Layer: 0
   m_Name: 001 Setup Map
   m_TagString: Untagged
@@ -930,6 +931,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1793603776}
+--- !u!114 &1449940165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1449940163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 395a2029a27904837be6f53d1e422a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallObject: {fileID: 100000, guid: 53c9473ee0d8849988d21602b10b909a, type: 2}
 --- !u!1 &1527557685
 GameObject:
   m_ObjectHideFlags: 0

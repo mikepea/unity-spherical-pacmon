@@ -78,33 +78,13 @@ public class PlayerSphericalMovement : MonoBehaviour
         );
 
         float dist = angularDistanceToNextGridLine (latitude, longitude, playerDirection);
-        if (intendedDirection.y != 0
-            && dist < nextMoveSpeed.x
-            ) {
 
-            if (map.WallAtGridReference (playerGridX, playerGridY + (int)intendedDirection.y)) {
-                Debug.Log ("MIKEDEBUG: Wall at gridX: " + playerGridX + ", gridY: " + (playerGridY + (int)intendedDirection.y));
-                if (playerDirection == playerIntendedDirection) {
-                    playerDirection = stop;
-                }
-            } else {
-                latitude = latitude + (playerDirection.x * dist);
-                playerDirection = intendedDirection;
-            }
-
-        } else if (intendedDirection.x != 0
-            && dist < nextMoveSpeed.y
-                   ) {
-            // wants to travel east/west
-            if (map.WallAtGridReference (playerGridX + (int)intendedDirection.x, playerGridY)) {
-                Debug.Log ("MIKEDEBUG: Wall at gridX: " + (playerGridX + (int)playerIntendedDirection.x) + ", gridY: " + playerGridY);
-                if (playerDirection == playerIntendedDirection) {
-                    playerDirection = stop;
-                }
-            } else {
-                longitude = longitude + (playerDirection.y * dist);
-                playerDirection = intendedDirection;
-            }
+        if (intendedDirection.y != 0 && dist < nextMoveSpeed.x) {
+            latitude = latitude + (playerDirection.x * dist);
+            playerDirection = intendedDirection;
+        } else if (intendedDirection.x != 0 && dist < nextMoveSpeed.y) {
+            longitude = longitude + (playerDirection.y * dist);
+            playerDirection = intendedDirection;
         }
 
         float newLongitude = (longitude + playerDirection.x * nextMoveSpeed.x) % 360;

@@ -16,6 +16,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     private float currentAngleY = 0F;
     private float maxAngleY = GlobalGameDetails.maxAngleY;
     private float minAngleY = GlobalGameDetails.minAngleY;
+    private int playerGridX = 0;
+    private int playerGridY = 0;
 
     public Map map = new Map (GlobalGameDetails.mapName);
 
@@ -48,72 +50,71 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
 
-        Vector2 playerNextLocation = GetPlayerNextLocation (currentAngleX, currentAngleY, playerIntendedDirection);
-        currentAngleX = playerNextLocation.x;
-        currentAngleY = playerNextLocation.y;
+        UpdateNextPlayerPosition ();
 
-        updatePlayerObjectLocationAndRotation (currentAngleX, currentAngleY);
-
+        UpdatePlayerObjectLocationAndRotation ();
     }
 
-    void updatePlayerObjectLocationAndRotation (float longitude, float latitude)
+    void UpdatePlayerObjectLocationAndRotation ()
     {
         transform.localPosition = sc.SetRotation (
-            degreesToRadians (longitude),
-            degreesToRadians (latitude)
+            degreesToRadians (currentAngleX),
+            degreesToRadians (currentAngleY)
         ).toCartesian;
         transform.LookAt (Vector3.zero);
         transform.Rotate (Vector3.right, 90);
     }
 
-    Vector2 GetPlayerNextLocation (float longitude, float latitude, Vector2 intendedDirection)
+    void ChangeDirectionIfAble (Vector2 nextMoveSpeed)
     {
-        int[] gridRef = map.GridReferenceAtLatitudeLongitude (latitude, longitude);
-        int playerGridX = gridRef [0];
-        int playerGridY = gridRef [1];
-        Vector2 stop = Vector2.zero;
+        float dist = angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
+        if (playerIntendedDirection.y != 0 && dist < nextMoveSpeed.x) {
+            currentAngleY = currentAngleY + (playerDirection.x * dist); // normalise angle to grid
+            playerDirection = playerIntendedDirection;
+        } else if (playerIntendedDirection.x != 0 && dist < nextMoveSpeed.y) {
+            currentAngleX = currentAngleX + (playerDirection.y * dist); // normalise angle to grid
+            playerDirection = playerIntendedDirection;
+        }
+    }
+
+    void NormalizeAngles ()
+    {
+        if (currentAngleX < 0) {
+            currentAngleX = 360 + currentAngleX;
+        }
+        if (currentAngleY < minAngleY) {
+            currentAngleY = minAngleY;
+        } else if (currentAngleY > maxAngleY) {
+            currentAngleY = maxAngleY;
+        }
+    }
+
+    void UpdateNextPlayerPosition ()
+    {
+        int[] gridRef = map.GridReferenceAtLatitudeLongitude (currentAngleY, currentAngleX);
+        playerGridX = gridRef [0];
+        playerGridY = gridRef [1];
         Vector2 nextMoveSpeed = new Vector2 (
-                (speed * Time.deltaTime * LatitudeSpeedAdjust (latitude)),
+                (speed * Time.deltaTime * LatitudeSpeedAdjust (currentAngleY)),
                 (speed * Time.deltaTime)
         );
 
-        float dist = angularDistanceToNextGridLine (latitude, longitude, playerDirection);
+        ChangeDirectionIfAble (nextMoveSpeed);
 
-        if (intendedDirection.y != 0 && dist < nextMoveSpeed.x) {
-            latitude = latitude + (playerDirection.x * dist);
-            playerDirection = intendedDirection;
-        } else if (intendedDirection.x != 0 && dist < nextMoveSpeed.y) {
-            longitude = longitude + (playerDirection.y * dist);
-            playerDirection = intendedDirection;
-        }
 
         float newLongitude = (longitude + playerDirection.x * nextMoveSpeed.x) % 360;
         float newLatitude = latitude + playerDirection.y * nextMoveSpeed.y;
-
-        if (newLongitude < 0) {
-            newLongitude = 360 + newLongitude;
-        }
-        if (newLatitude < minAngleY) {
-            newLatitude = minAngleY;
-        } else if (newLatitude > maxAngleY) {
-            newLatitude = maxAngleY;
-        }
+        NormalizeAngles ();
 
         Debug.Log ("MIKEDEBUG: "
             + " gridX: " + playerGridX
             + " gridXangle: " + playerGridX * gridSpacing
             + " gridY: " + playerGridY
             + " gridYangle: " + playerGridY * gridSpacing
-            + " dist: " + angularDistanceToNextGridLine (latitude, longitude, playerDirection)
-            + " lat: " + latitude
-            + " long: " + longitude
-            + " newLat: " + newLatitude
-            + " newLong: " + newLongitude
+            + " dist: " + angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection)
+            + " lat: " + currentAngleY
+            + " long: " + currentAngleX
         );
-
-
-        return new Vector2 (newLongitude, newLatitude);
-
     }
 
     float angularDistanceToNextGridLine (float latitude, float longitude, Vector2 direction)

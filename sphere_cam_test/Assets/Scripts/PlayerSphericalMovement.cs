@@ -77,6 +77,30 @@ public class PlayerSphericalMovement : MonoBehaviour
         }
     }
 
+    void MoveUnlessBlockedByWall (Vector2 nextMoveSpeed)
+    {
+        float dist = angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
+        if (playerDirection.y != 0
+            && dist < nextMoveSpeed.y
+            && map.WallAtGridReference (playerGridX, playerGridY + (int)playerDirection.y)
+            ) {
+            // going north/south, blocked by wall.
+            currentAngleY = currentAngleY + (playerDirection.y * dist); // normalise angle to grid
+            playerDirection = Vector2.zero;
+        } else if (playerDirection.x != 0
+            && dist < nextMoveSpeed.x
+            && map.WallAtGridReference (playerGridX + (int)playerDirection.x, playerGridY)
+                   ) {
+            // going east/west, blocked by wall.
+            currentAngleX = currentAngleX + (playerDirection.x * dist); // normalise angle to grid
+            playerDirection = Vector2.zero;
+        } else {
+            // not about to hit wall, move as normal
+            currentAngleX = (currentAngleX + playerDirection.x * nextMoveSpeed.x) % 360;
+            currentAngleY = currentAngleY + playerDirection.y * nextMoveSpeed.y;
+        }
+    }
+
     void NormalizeAngles ()
     {
         if (currentAngleX < 0) {
@@ -101,9 +125,8 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         ChangeDirectionIfAble (nextMoveSpeed);
 
+        MoveUnlessBlockedByWall (nextMoveSpeed);
 
-        float newLongitude = (longitude + playerDirection.x * nextMoveSpeed.x) % 360;
-        float newLatitude = latitude + playerDirection.y * nextMoveSpeed.y;
         NormalizeAngles ();
 
         Debug.Log ("MIKEDEBUG: "

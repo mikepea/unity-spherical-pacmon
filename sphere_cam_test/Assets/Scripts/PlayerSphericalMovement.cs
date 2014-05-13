@@ -90,7 +90,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         float dist = angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerIntendedDirection.y != 0 ) {
             // player is going east/west, wants to go north/south
-            if (map.WallAtGridReference (playerGridX, playerGridY + (int)playerIntendedDirection.y)) {
+            if (map.WallAtGridReference (playerGridX, playerGridY - (int)playerIntendedDirection.y)) {
                 Debug.Log ("MIKEDEBUG: Wall at"
                     + " X: " + playerGridX
                     + " Y: " + ( playerGridY - (int)playerIntendedDirection.y )
@@ -126,7 +126,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         float dist = angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerDirection.y != 0
             && dist < nextMoveSpeed.y
-            && map.WallAtGridReference (playerGridX, playerGridY + (int)playerDirection.y)
+            && map.WallAtGridReference (playerGridX, playerGridY - (int)playerDirection.y)
             ) {
             // going north/south, blocked by wall.
             currentAngleY = currentAngleY + (playerDirection.y * dist); // normalise angle to grid

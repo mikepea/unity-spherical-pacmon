@@ -69,7 +69,6 @@ public class PlayerSphericalMovement : MonoBehaviour
     {
         if (playerIntendedDirection == playerDirection) {
           // not changing direction
-          Debug.Log ("MIKEDEBUG: No Change in Direction!");
           return;
         }
 
@@ -78,7 +77,6 @@ public class PlayerSphericalMovement : MonoBehaviour
            ) {
             // reversing, no need to check for grid lines or walls
             playerDirection = playerIntendedDirection;
-            Debug.Log ("MIKEDEBUG: Reverse!");
             return;
         }
 
@@ -97,7 +95,7 @@ public class PlayerSphericalMovement : MonoBehaviour
                     );
             } else if ( dist < nextMoveSpeed.x ) {
                 // can turn -- we're on/about to be on a grid line
-                Debug.Log ("MIKEDEBUG: Turning!");
+                Debug.Log ("MIKEDEBUG: Turning North/South!");
                 currentAngleX = Mathf.Round(currentAngleX + (playerDirection.x * dist)); // normalise angle to grid
                 playerDirection = playerIntendedDirection;
             }
@@ -110,7 +108,7 @@ public class PlayerSphericalMovement : MonoBehaviour
                     );
             } else if ( dist < nextMoveSpeed.y ) {
                 // can turn -- we're on/about to be on a grid line
-                Debug.Log ("MIKEDEBUG: Turning!");
+                Debug.Log ("MIKEDEBUG: Turning East/West!");
                 currentAngleY = Mathf.Round(currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
                 playerDirection = playerIntendedDirection;
             }

@@ -4,8 +4,6 @@ using System.Collections;
 public class PlayerSphericalMovement : MonoBehaviour
 {
 
-    public float gridSpacing;
-
     public SphericalCoordinates sc;
     public int numPills;
     private Vector2 playerDirection = new Vector2 (0, 0);
@@ -58,8 +56,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     void UpdatePlayerObjectLocationAndRotation ()
     {
         transform.localPosition = sc.SetRotation (
-            degreesToRadians (currentAngleX),
-            degreesToRadians (currentAngleY)
+            map.degreesToRadians (currentAngleX),
+            map.degreesToRadians (currentAngleY)
         ).toCartesian;
         transform.LookAt (Vector3.zero);
         transform.Rotate (Vector3.right, 90);
@@ -85,7 +83,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         // NB: They should *always* be on the grid line in the direction
         //     they are travelling.
         // Also need to check if they would hit a wall
-        float dist = angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
+        float dist = map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerIntendedDirection.y != 0 ) {
             // player is going east/west, wants to go north/south
             if (map.WallAtGridReference (playerGridX, playerGridY - (int)playerIntendedDirection.y)) {
@@ -117,7 +115,7 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void MoveUnlessBlockedByWall (Vector2 nextMoveSpeed)
     {
-        float dist = angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
+        float dist = map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerDirection.y != 0
             && dist < nextMoveSpeed.y
             && map.WallAtGridReference (playerGridX, playerGridY - (int)playerDirection.y)
@@ -157,7 +155,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         playerGridX = gridRef [0];
         playerGridY = gridRef [1];
         Vector2 nextMoveSpeed = new Vector2 (
-                (speed * Time.deltaTime * LatitudeSpeedAdjust (currentAngleY)),
+                (speed * Time.deltaTime * map.LatitudeSpeedAdjust (currentAngleY)),
                 (speed * Time.deltaTime)
         );
 
@@ -172,52 +170,12 @@ public class PlayerSphericalMovement : MonoBehaviour
             + " gridY: " + playerGridY
             + " currentX: " + currentAngleX
             + " currentY: " + currentAngleY
-            + " dist: " + angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection)
+            + " dist: " + map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection)
             + " dirX: " + playerDirection.x
             + " dirY: " + playerDirection.y
             + " IdirX: " + playerIntendedDirection.x
             + " IdirY: " + playerIntendedDirection.y
         );
-    }
-
-    float angularDistanceToNextGridLine (float latitude, float longitude, Vector2 direction)
-    {
-        if (direction.y > 0) {
-            // going up
-            float nextGridLine = Mathf.Ceil (latitude / gridSpacing) * gridSpacing;
-            return nextGridLine - latitude;
-        } else if (direction.y < 0) {
-            // going down
-            float nextGridLine = Mathf.Floor (latitude / gridSpacing) * gridSpacing;
-            return latitude - nextGridLine;
-        } else if (direction.x > 0) {
-            // going east
-            float nextGridLine = Mathf.Ceil (longitude / gridSpacing) * gridSpacing;
-            return nextGridLine - longitude;
-        } else if (direction.x < 0) {
-            // going west
-            float nextGridLine = Mathf.Floor (longitude / gridSpacing) * gridSpacing;
-            return longitude - nextGridLine;
-        } else {
-            // stopped, return a sensible default
-            return 0;
-        }
-    }
-
-    float LatitudeSpeedAdjust (float angle)
-    {
-        float a = Mathf.Abs (angle);
-        if (a >= 80) {
-            return 6.0F;
-        } else if (a >= 70) {
-            return 3.0F;
-        } else if (a >= 60) {
-            return 2.0F;
-        } else if (a >= 50) {
-            return 1.5F;
-        } else {
-            return 1.0F;
-        }
     }
 
     void OnTriggerEnter (Collider other)
@@ -231,16 +189,6 @@ public class PlayerSphericalMovement : MonoBehaviour
         } else if (other.gameObject.tag == "Power Pill") {
             other.gameObject.SetActive (false);
         }
-    }
-
-    float radiansToDegrees (float rads)
-    {
-        return rads * 180 / Mathf.PI;
-    }
-
-    float degreesToRadians (float degrees)
-    {
-        return degrees * Mathf.PI / 180;
     }
 
 }

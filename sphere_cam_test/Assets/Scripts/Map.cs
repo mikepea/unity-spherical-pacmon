@@ -211,5 +211,55 @@ public class Map
         return (180 / intGridSpacing) - (y / (yScaling * intGridSpacing) + ((90 - Mathf.FloorToInt (maxLatitude)) / intGridSpacing));
     }
 
+    public float angularDistanceToNextGridLine (float latitude, float longitude, Vector2 direction)
+    {
+        if (direction.y > 0) {
+            // going up
+            float nextGridLine = Mathf.Ceil (latitude / gridSpacing) * gridSpacing;
+            return nextGridLine - latitude;
+        } else if (direction.y < 0) {
+            // going down
+            float nextGridLine = Mathf.Floor (latitude / gridSpacing) * gridSpacing;
+            return latitude - nextGridLine;
+        } else if (direction.x > 0) {
+            // going east
+            float nextGridLine = Mathf.Ceil (longitude / gridSpacing) * gridSpacing;
+            return nextGridLine - longitude;
+        } else if (direction.x < 0) {
+            // going west
+            float nextGridLine = Mathf.Floor (longitude / gridSpacing) * gridSpacing;
+            return longitude - nextGridLine;
+        } else {
+            // stopped, return a sensible default
+            return 0;
+        }
+    }
+
+    public float LatitudeSpeedAdjust (float angle)
+    {
+        float a = Mathf.Abs (angle);
+        if (a >= 80) {
+            return 6.0F;
+        } else if (a >= 70) {
+            return 3.0F;
+        } else if (a >= 60) {
+            return 2.0F;
+        } else if (a >= 50) {
+            return 1.5F;
+        } else {
+            return 1.0F;
+        }
+    }
+
+    public float radiansToDegrees (float rads)
+    {
+        return rads * 180 / Mathf.PI;
+    }
+
+    public float degreesToRadians (float degrees)
+    {
+        return degrees * Mathf.PI / 180;
+    }
+
 }
 

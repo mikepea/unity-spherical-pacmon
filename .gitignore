@@ -5,4 +5,5 @@ Temp/
 *.pidb
 *.unityproj
 *.sln
+*.swp
 *.userprefs

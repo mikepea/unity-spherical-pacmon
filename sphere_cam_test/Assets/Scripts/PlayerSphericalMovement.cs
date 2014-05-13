@@ -98,7 +98,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             } else if ( dist < nextMoveSpeed.x ) {
                 // can turn -- we're on/about to be on a grid line
                 Debug.Log ("MIKEDEBUG: Turning!");
-                currentAngleX = currentAngleX + (playerDirection.x * dist); // normalise angle to grid
+                currentAngleX = Mathf.Round(currentAngleX + (playerDirection.x * dist)); // normalise angle to grid
                 playerDirection = playerIntendedDirection;
             } else {
                 Debug.Log ("MIKEDEBUG: Huh?!");
@@ -113,7 +113,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             } else if ( dist < nextMoveSpeed.y ) {
                 // can turn -- we're on/about to be on a grid line
                 Debug.Log ("MIKEDEBUG: Turning!");
-                currentAngleY = currentAngleY + (playerDirection.y * dist); // normalise angle to grid
+                currentAngleY = Mathf.Round(currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
                 playerDirection = playerIntendedDirection;
             } else {
                 Debug.Log ("MIKEDEBUG: Huh?!");
@@ -129,14 +129,14 @@ public class PlayerSphericalMovement : MonoBehaviour
             && map.WallAtGridReference (playerGridX, playerGridY - (int)playerDirection.y)
             ) {
             // going north/south, blocked by wall.
-            currentAngleY = currentAngleY + (playerDirection.y * dist); // normalise angle to grid
+            currentAngleY = Mathf.Round(currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
             playerDirection = Vector2.zero;
         } else if (playerDirection.x != 0
             && dist < nextMoveSpeed.x
             && map.WallAtGridReference (playerGridX + (int)playerDirection.x, playerGridY)
                    ) {
             // going east/west, blocked by wall.
-            currentAngleX = currentAngleX + (playerDirection.x * dist); // normalise angle to grid
+            currentAngleX = Mathf.Round(currentAngleX + (playerDirection.x * dist)); // normalise angle to grid
             playerDirection = Vector2.zero;
         } else {
             // not about to hit wall, move as normal

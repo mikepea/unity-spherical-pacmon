@@ -100,8 +100,6 @@ public class PlayerSphericalMovement : MonoBehaviour
                 Debug.Log ("MIKEDEBUG: Turning!");
                 currentAngleX = Mathf.Round(currentAngleX + (playerDirection.x * dist)); // normalise angle to grid
                 playerDirection = playerIntendedDirection;
-            } else {
-                Debug.Log ("MIKEDEBUG: Huh?!");
             }
         } else if (playerIntendedDirection.x != 0) {
             // player is going north/south, wants to go east/west
@@ -115,8 +113,6 @@ public class PlayerSphericalMovement : MonoBehaviour
                 Debug.Log ("MIKEDEBUG: Turning!");
                 currentAngleY = Mathf.Round(currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
                 playerDirection = playerIntendedDirection;
-            } else {
-                Debug.Log ("MIKEDEBUG: Huh?!");
             }
         }
     }
@@ -175,12 +171,10 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         Debug.Log ("MIKEDEBUG: "
             + " gridX: " + playerGridX
-            + " gridXangle: " + playerGridX * gridSpacing
             + " gridY: " + playerGridY
-            + " gridYangle: " + playerGridY * gridSpacing
+            + " currentX: " + currentAngleX
+            + " currentY: " + currentAngleY
             + " dist: " + angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection)
-            + " lat: " + currentAngleY
-            + " long: " + currentAngleX
             + " dirX: " + playerDirection.x
             + " dirY: " + playerDirection.y
             + " IdirX: " + playerIntendedDirection.x

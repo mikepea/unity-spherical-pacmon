@@ -67,13 +67,57 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void ChangeDirectionIfAble (Vector2 nextMoveSpeed)
     {
+        if (playerIntendedDirection == playerDirection) {
+          // not changing direction
+          Debug.Log ("MIKEDEBUG: No Change in Direction!");
+          return;
+        }
+
+        if ((playerIntendedDirection.x != 0 && playerDirection.x != 0) ||
+            (playerIntendedDirection.y != 0 && playerDirection.y != 0)
+           ) {
+            // reversing, no need to check for grid lines or walls
+            playerDirection = playerIntendedDirection;
+            Debug.Log ("MIKEDEBUG: Reverse!");
+            return;
+        }
+
+        // turning left or right - need to confirm we're about to cross
+        // a grid line, and normalise the player onto the grid line.
+        // NB: They should *always* be on the grid line in the direction
+        //     they are travelling.
+        // Also need to check if they would hit a wall
         float dist = angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
-        if (playerIntendedDirection.y != 0 && dist < nextMoveSpeed.x) {
-            currentAngleY = currentAngleY + (playerDirection.x * dist); // normalise angle to grid
-            playerDirection = playerIntendedDirection;
-        } else if (playerIntendedDirection.x != 0 && dist < nextMoveSpeed.y) {
-            currentAngleX = currentAngleX + (playerDirection.y * dist); // normalise angle to grid
-            playerDirection = playerIntendedDirection;
+        if (playerIntendedDirection.y != 0 ) {
+            // player is going east/west, wants to go north/south
+            if (map.WallAtGridReference (playerGridX, playerGridY + (int)playerIntendedDirection.y)) {
+                Debug.Log ("MIKEDEBUG: Wall at"
+                    + " X: " + playerGridX
+                    + " Y: " + ( playerGridY - (int)playerIntendedDirection.y )
+                    );
+            } else if ( dist < nextMoveSpeed.x ) {
+                // can turn -- we're on/about to be on a grid line
+                Debug.Log ("MIKEDEBUG: Turning!");
+                currentAngleX = currentAngleX + (playerDirection.x * dist); // normalise angle to grid
+                playerDirection = playerIntendedDirection;
+            } else {
+                Debug.Log ("MIKEDEBUG: Huh?!");
+            }
+        } else if (playerIntendedDirection.x != 0) {
+            // player is going north/south, wants to go east/west
+            if (map.WallAtGridReference (playerGridX + (int)playerIntendedDirection.x, playerGridY)) {
+                Debug.Log ("MIKEDEBUG: Wall at"
+                    + " X: " + ( playerGridX + (int)playerIntendedDirection.x )
+                    + " Y: " + playerGridY
+                    );
+            } else if ( dist < nextMoveSpeed.y ) {
+                // can turn -- we're on/about to be on a grid line
+                Debug.Log ("MIKEDEBUG: Turning!");
+                currentAngleY = currentAngleY + (playerDirection.y * dist); // normalise angle to grid
+                playerDirection = playerIntendedDirection;
+            } else {
+                Debug.Log ("MIKEDEBUG: Huh?!");
+            }
         }
     }
 
@@ -137,6 +181,10 @@ public class PlayerSphericalMovement : MonoBehaviour
             + " dist: " + angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection)
             + " lat: " + currentAngleY
             + " long: " + currentAngleX
+            + " dirX: " + playerDirection.x
+            + " dirY: " + playerDirection.y
+            + " IdirX: " + playerIntendedDirection.x
+            + " IdirY: " + playerIntendedDirection.y
         );
     }
 

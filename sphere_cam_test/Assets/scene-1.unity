@@ -937,7 +937,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1449940163}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 395a2029a27904837be6f53d1e422a6e, type: 3}
   m_Name: 
@@ -1133,7 +1133,7 @@ MonoBehaviour:
   gridColor: {r: .5, g: .5, b: .5, a: 1}
   xOffset: 100
   yOffset: 14
-  enableGridLines: 1
+  enableGridLines: 0
 --- !u!114 &1793603782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1145,7 +1145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0154fe609b784ee596af828df3f773f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 0
+  rotateSpeed: 5
 --- !u!1 &1875379717
 GameObject:
   m_ObjectHideFlags: 0

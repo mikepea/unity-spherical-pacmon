@@ -24,6 +24,12 @@ public class PlayerSphericalMovement : MonoBehaviour
         sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f));
         transform.localPosition = sc.toCartesian;
         numPills = GameObject.FindGameObjectsWithTag ("Pill").Length;
+        int[] playerStartGridRef = map.FindEntityGridCell("PlayerStart");
+        playerGridX = playerStartGridRef[0];
+        playerGridY = playerStartGridRef[1];
+        float[] mapRef = map.LatitudeLongitudeAtGridReference(playerGridX, playerGridY);
+        currentAngleX = mapRef[1];
+        currentAngleY = mapRef[0];
     }
 
     Vector2 ProcessInputsIntoDirection (Vector2 direction)

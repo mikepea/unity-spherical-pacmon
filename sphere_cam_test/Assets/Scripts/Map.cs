@@ -13,7 +13,7 @@ public class Map
     public static float minLatitude = GlobalGameDetails.minAngleY;
 
     private bool mapLoaded = false;
-    private int[,] mapData = new int[numRows, numColumns];
+    private long[,] mapData = new long[numRows, numColumns];
 
     public Map (string name)
     {
@@ -67,6 +67,12 @@ public class Map
                 mapData [row, i] = 1;
             } else if (entries [i] == "p") {
                 mapData [row, i] = 2;
+            } else if (entries [i] == "*") {
+                mapData [row, i] = 4;
+            } else if (entries [i] == "G") {
+                mapData [row, i] = 8;
+            } else if (entries [i] == "X") {
+                mapData [row, i] = 16;
             } else {
                 mapData [row, i] = 0;
             }
@@ -110,6 +116,31 @@ public class Map
         float [] latLong = {latitude, longitude};
         return latLong;
 
+    }
+
+    public int[] FindEntityGridCell (string entityName)
+    {
+        long mapDataValue;
+        int[] gridRef = { -1, -1 };
+        if ( entityName == "PlayerStart" ) {
+            mapDataValue = 16;
+        } else {
+            throw new System.InvalidOperationException ("Invalid entityName " + entityName);
+        }
+        for ( int x=0; x<numColumns; x++ ) {
+            for ( int y=0; y<numRows; y++ ) {
+                //if ( ( mapData [y, x] & mapDataValue ) == 1 ) {
+                if ( mapData [y, x] == mapDataValue ) {
+                    gridRef[0] = x;
+                    gridRef[1] = y;
+                }
+            }
+        }
+        if ( gridRef[0] == -1 ) {
+            throw new System.InvalidOperationException ("Entity " + entityName + " not found");
+        } else {
+            return gridRef;
+        }
     }
 
     public int[] GridReferenceAtLatitudeLongitude (float latitude, float longitude)

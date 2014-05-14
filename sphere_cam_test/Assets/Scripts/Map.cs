@@ -124,6 +124,8 @@ public class Map
         int[] gridRef = { -1, -1 };
         if ( entityName == "PlayerStart" ) {
             mapDataValue = 16;
+        } else if ( entityName == "BaddyStart" ) {
+            mapDataValue = 8;
         } else {
             throw new System.InvalidOperationException ("Invalid entityName " + entityName);
         }
@@ -173,7 +175,6 @@ public class Map
     public bool PillAtGridReference (int x, int y)
     {
         if (mapData [y, x] == 2) {
-            Debug.Log ("Pill at x: " + x + ", y: " + y);
             return true;
         } else {
             return false;

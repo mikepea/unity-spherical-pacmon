@@ -5,10 +5,10 @@ public class PlayerSphericalMovement : MonoBehaviour
 {
 
     public SphericalCoordinates sc;
-    public int numPills;
     private Vector2 playerDirection = new Vector2 (0, 0);
     private Vector2 playerIntendedDirection = new Vector2 (0, 0);
 
+    public string startMarkerTag;
     public float speed = 0.5F;
     private float currentAngleX = 0F;
     private float currentAngleY = 0F;
@@ -23,8 +23,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     {
         sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f));
         transform.localPosition = sc.toCartesian;
-        numPills = GameObject.FindGameObjectsWithTag ("Pill").Length;
-        int[] playerStartGridRef = map.FindEntityGridCell("PlayerStart");
+        int[] playerStartGridRef = map.FindEntityGridCell(startMarkerTag);
         playerGridX = playerStartGridRef[0];
         playerGridY = playerStartGridRef[1];
         float[] mapRef = map.LatitudeLongitudeAtGridReference(playerGridX, playerGridY);
@@ -182,19 +181,6 @@ public class PlayerSphericalMovement : MonoBehaviour
             + " IdirX: " + playerIntendedDirection.x
             + " IdirY: " + playerIntendedDirection.y
         );
-    }
-
-    void OnTriggerEnter (Collider other)
-    {
-        if (other.gameObject.tag == "Baddy") {
-            other.gameObject.SetActive (false);
-        } else if (other.gameObject.tag == "Pill") {
-            other.gameObject.SetActive (false);
-            numPills = GameObject.FindGameObjectsWithTag ("Pill").Length;
-            Debug.Log (numPills + " pills remaining");
-        } else if (other.gameObject.tag == "Power Pill") {
-            other.gameObject.SetActive (false);
-        }
     }
 
 }

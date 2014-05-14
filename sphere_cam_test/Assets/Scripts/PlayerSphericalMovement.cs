@@ -99,7 +99,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             }
         } else if (playerIntendedDirection.x != 0) {
             // player is going north/south, wants to go east/west
-            if (map.WallAtGridReference (playerGridX + (int)playerIntendedDirection.x, playerGridY)) {
+            if (map.WallAtGridReference (map.NormalizeGridX(playerGridX + (int)playerIntendedDirection.x), playerGridY)) {
                 Debug.Log ("MIKEDEBUG: Wall at"
                     + " X: " + ( playerGridX + (int)playerIntendedDirection.x )
                     + " Y: " + playerGridY
@@ -125,7 +125,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             playerDirection = Vector2.zero;
         } else if (playerDirection.x != 0
             && dist < nextMoveSpeed.x
-            && map.WallAtGridReference (playerGridX + (int)playerDirection.x, playerGridY)
+            && map.WallAtGridReference (map.NormalizeGridX(playerGridX + (int)playerDirection.x), playerGridY)
                    ) {
             // going east/west, blocked by wall.
             currentAngleX = Mathf.Round(currentAngleX + (playerDirection.x * dist)); // normalise angle to grid

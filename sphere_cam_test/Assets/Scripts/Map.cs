@@ -73,6 +73,17 @@ public class Map
         }
     }
 
+    public int NormalizeGridX (int unnormalizedGridX)
+    {
+        if ( unnormalizedGridX < 0 ) {
+            return unnormalizedGridX + numColumns;
+        } else if ( unnormalizedGridX >= numColumns ) {
+            return numColumns - unnormalizedGridX;
+        } else {
+            return unnormalizedGridX;
+        }
+    }
+
     public float NormalizeLongitude (float longitude)
     { 
         if (longitude > 180) {

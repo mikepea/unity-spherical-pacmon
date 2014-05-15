@@ -1332,6 +1332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numPills: 0
+  chaseMode: 0
 --- !u!114 &1527557691
 MonoBehaviour:
   m_ObjectHideFlags: 0

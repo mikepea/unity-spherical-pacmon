@@ -101,7 +101,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 172795347}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: 0, z: .5}
+  m_LocalPosition: {x: 0, y: -.0209362041, z: .447439402}
   m_LocalScale: {x: .0500000007, y: .00100000005, z: .0500000045}
   m_Children: []
   m_Father: {fileID: 1793603776}
@@ -149,7 +149,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 41f802f70ed264919932e8bcf722edf3, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -440,7 +440,7 @@ MonoBehaviour:
   inputHorizontalTag: P2Horizontal
   inputVerticalTag: P2Vertical
   speed: 20
-  humanControl: 1
+  humanControl: 0
   maxAutoDirectionChangeTime: 500
 --- !u!23 &705191609
 Renderer:
@@ -454,7 +454,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 164e7d362e126479aa11e0f1e4ffbb9f, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -995,7 +995,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9593280417b43463aa38f6eaf00f9743, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1179,7 +1179,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f5c9ca9e06ac3465a85bcdabe5b4a5cb, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0

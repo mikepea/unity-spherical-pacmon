@@ -1,30 +1,30 @@
-#p1 2 3 4 5 6 7 8 9 1011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071
+#01 2 3 4 5 6 7 8 9 1011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071
 w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w
 w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w
 w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w
-w,w,w,w,p, ,p, ,p, ,p, ,p, ,p, ,w,w,p, ,p,w,w,w,p, ,p, ,p, ,p, ,p, ,p,w,w,w,w,w, , , , , , , , ,p, , ,w, , , , , ,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w
-w,w,w,w,p,p,w,w,p,w,p,w,p,w,w,p,p,w,p,w,p,w,w,w,p,w,p,w,p,w,p,w,w,w,p,w, , , ,w, ,w, ,w, ,w, ,w,p,w,p,w,p,w,p,w, ,w,p,p,p,p,p,p,p,p, ,p, , ,p,0
-w,w,w,w,p,w,w,w,p,w,p,w,p,w,w,w,p,w,p,w,p,w,w,w,p,w,p,w,p,w,p, ,p,p,p,w, ,w, ,w, ,w, ,w, ,w, ,w,p,w,p,w,p,w,p,w, ,w,p,w,p,w,w,p,w,w,w,p,w,w,p,0
-w,w,w,w,p,w,w,w,p,w,p,w,p,w,w,w,p,p,p,w,p,p,p, ,p, ,p,p,p,w,p,w,p,w,w,w, ,w, ,w, ,w, ,w, ,w, ,w,p,w,p,w,p,w, ,w, ,w,p,w,p,w,w,p,w,w,w,p,w,w,p,w
-w,w,w,w,p,w,w,w,p,w,p,w,p,w,w,w,p,w,p,w,w,w,p,w,w,w,p,w,w,w,p,w,p,w,p, , ,w, ,p,p, , , , , , ,w,p,w, , , , , , , ,p,p,p,p,w,w,p,p,p,w,p,w,w,p,w
-p,p,p,p,p,p,p,p,p,w,p,w,p,p,p,p,p,w,p,p,p,p,p,w,w,w,p,p,p,w,p,w,p,w,p,w,w,w, ,w,w,w,w,w,p,w,w,w,p,w,p,w,w,w,w,w, ,w,w,w,p,w,w,p,w,p,p,p,w,w,p,p
-w,w,w,w,w,w,p,w,w,w,p,w,w,w,w,w,w,w,p,w,w,w,p, ,p,p,p,w,p,w,p,w,p,w,p, , ,w, ,w,p,p,p,w,p,p,p,p,p,w,p,p,p,p,p,w, ,w,w,w,p,w,w,p,w,w,w,p,w,w,p,w
-w,w,w,p,p,p,p,w,p,p,p,p,p,w,p,p,p,p,p,w,p,p,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p, , ,w,p,w,p,w,w,w,w,w,p,w,w,w,p,w,p,p,p,w,w,w,p,p,p,p,w,w,w,p,p,p,p,w
+w,w,w,w,w, ,p, ,p, ,p, ,p, ,p, ,w,w,p, ,p,w,w,w,p, ,p, ,p, ,p, ,p, ,p,w,w,w,w,w,p, ,p, ,p, ,p, ,p, ,p,w,p, ,p, ,p,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w
+w,w,w,w,p,p,w,w,p,w,p,w,p,w,w,p,p,w,p,w,p,w,w,w,p,w,p,w,p,w,p,w,w,w,p,w,p, ,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p, ,p, ,p, ,p, , ,p, , ,p,0
+w,w,w,w,p,w,w,w,p,w,p,w,p,w,w,w,p,w,p,w,p,w,w,w,p,w,p,w,p,w,p, ,p,p,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,w,p,w,w,w,p,w,w,p,0
+w,w,w,w,p,w,w,w,p,w,p,w,p,w,w,w,p,p,p,w,p,p,p, ,p, ,p,p,p,w,p,w,p,w,w,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w, ,w,p,w,p,w,p,w,w,p,w,w,w,p,w,w,p,w
+w,w,w,w,p,w,w,w,p,w,p,w,p,w,w,w,p,w,p,w,w,w,p,w,w,w,p,w,w,w,p,w,p,w,p, ,p,w,p, ,p, ,p, ,p, ,p,w,p,w,p, ,p, ,p, ,p,p,p,p,p,w,w,p,p,p,w,p,w,w,p,w
+p, ,p, ,p, ,p, ,p,w,p,w,p, ,p, ,p,w,p, ,p, ,p,w,w,w,p, ,p,w,p,w,p,w,p,w,w,w,p,w,w,w,w,w,p,w,w,w,p,w,p,w,w,w,w,w,p,w,w,w,p,w,w,p,w,p,p,p,w,w,p,p
+w,w,w,w,w,w,p,w,w,w,p,w,w,w,w,w,w,w,p,w,w,w,p, ,p,p,p,w,p,w,p,w,p,w,p, ,p,w,p,w,p,p,p,w,p,p,p,p,p,w,p,p,p,p,p,w,p,w,w,w,p,w,w,p,w,w,w,p,w,w,p,w
+w,w,w,p,p,p,p,w,p,p,p,p,p,w,p,p,p,p,p,w,p,p,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p, ,p,w,p,w,p,w,w,w,w,w,p,w,w,w,p,w,p,p,p,w,w,w,p,p,p,p,w,w,w,p,p,p,p,w
 w,w,w,p,w,w,p,w,p,w,w,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,p,w,w,w,w,w,p,w,p,p,p,G,p,p,p,p,p,w,p,w,w,w,w,w,w,w,p,w,w,p,p,p,p,p,w,w,p,w
 p,p,p,p,w,w,p,w,p,p,p,p,p,w,p,w,p,w,p,w,p,w,w,w,p,w,p,w,p, ,p,p,p,w,p, ,p, , ,w,p,w,p,w,w, ,w,w,p,w,p,w,p,w,p, ,p,p,p,p,p,p,p,p,w,w,w,p,p,p,p,p
 p,w,w,p,w,w,p,w,p,w,w,w,p,w,p,w,p,w,p,w,p,w,p,p,p,w,p,w,p,w,w,p,w,w,p,w,w,w, ,w,p,w,p, , , , , ,p,w,p,w,p,w,p,w,p,w,w,w,p,w,w, ,w,w,w, ,w,w,w,p
 p,w,w,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,w,p, ,p,w,w,w,p,w,p,w,w,p,p,w,p,p,p, ,X,w,p,w,p,w, , , ,w,p,w,p,w,p,w,p,w,p,w,p,p,p,w,p,p,p,p,p,p,p,p,p,p
 w,w,w,p,w,w,w,w,p,w,p,w,p,w,w,w,w,w,p,w,p,w,p,w,p,p,p,w,p,w,w,w,p,w,p,w,w,w,p,w,p,w,p,w,w,w,w,w,p,w,p,w,p, ,p,w,p,w,p,w,p,w,w,w, ,w,w,p,w,p,w,0
-w,w,w,p,p,p,w,w,p,w,p,w,p,w,w,p,p,p,p,w,p,w,p,w,w,w,p, ,p, ,p,p,p,p,p,p,p,w,p,w,p,w,p,p,p,p,p,p,p,w,p,w,p,w,w,w,p,w,p,w,p,w,w,w, ,w,w,p,w,p,w,0
-w,w,w,w,w,p,w,p,p,w,p,w,p,p,p,p,w,w,p,w,p,w,p,w, , ,p,w,w,w,p,w,w,w,p,w,p,w,p,w,p,w,w,w,w,w,w,w,w,w,p,w,p,w,p,p,p,p,p,w,p,p,p,p,p,p,p,p,p,p,w,0
-w,w,w,w,p,p,w,p,w,w,p,w,w,p,w,p,p,w,p,w,p,p,p,p,p,w,p,w,w,w,p,w,p, ,p,w,p, ,p,w,p,p,p,p,p,p,p,p,p,p,p,w,p,w,p,w, ,w,p,w,p,w,w,w,w,w,w,w,p,w,w,0
+w,p,p,p,p,p,w,w,p,w,p,w,p,w,w,p,p,p,p,w,p,w,p,w,w,w,p, ,p, ,p,p,p,p,p,p,p,w,p,w,p,w,p,p,p,p,p,p,p,w,p,w,p,w,w,w,p,w,p,w,p,w,w,w, ,w,w,p,w,p,w,0
+p,p,w,w,w,p,w,p,p,w,p,w,p,p,p,p,w,w,p,w,p,w,p,w, , ,p,w,w,w,p,w,w,w,p,w,p,w,p,w,p,w,w,w,w,w,w,w,w,w,p,w,p,w,p,p,p,p,p,w,p,p,p,p,p,p,p,p,p,p,w,0
+w,p,p,p,p,p,w,p,w,w,p,w,w,p,w,p,p,w,p,w,p,p,p,p,p,w,p,w,w,w,p,w,p, ,p,w,p, ,p,w,p,p,p,p,p,p,p,p,p,p,p,w,p,w,p,w, ,w,p,w,p,w,w,w,w,w,w,w,p,w,w,0
 w,w,w,w,p,w,w,p,w,p,p,p,w,p,w,w,p,w,p,w,w,w,p,w, ,w,p,w,w,w,p,w,p,w,p,w,w,w,p,w, ,w,w,w,w, ,w,w,w,w,p,w,p,w,p,w, ,w,p,w,p,p,p,p,p,p,p,p,p,w,w,0
-w,w,w,w,p,w,w,p,w,p,w,p,w,p,w,w,p,w,p,p,p,p,p,p,p, ,p, , , ,p,w,p,w,p,w,p, ,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,w, ,w,p,p,p,w,p,w,w,w,w,w,p,w,w,w
-p,p,p,p,p,p,p,p,w,p,w,p,w,p,p,p,p,p,p,w,w,w,p,w, ,w,p,w,w,w,p,w,p,w,p,w,p,w,p,w,w,w,w,w,w,p,w,p,w, ,w,p,w,w,p, , ,w,w,w,p,w,p,p,p,p,p,p,p,p,p,p
-w,w,w,w,w,w,w,p,w,p,w,p,w,p,w,w,w,w,p,w,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p, , ,w,p,w,p,p,p,w,p, ,w,p,w,p,w,p,w,w,p,w,w,w,w,w,p,w,p,w,w,w,w,w,p,w, , 
-w,w,p,p,p,p,p,p,p,p,w,p,p,p,p,p,p,p,p,w,p,w,w, ,w,w,w,w,w,w,p,w,w, ,w,w,w,w,p,w,p,w,p,w,p,w,w,p,w,p,w,p,w,w,p, ,p,p,p,w,p,w,p,p,p,p,p,p,p,p,p,w
+w,w,w,w,p,w,w,p,w,p,w,p,w,p,w,w,p,w,p, ,p, ,p, ,p, ,p, , , ,p,w,p,w,p,w,p, ,p, ,p, ,p, ,p, ,p, ,p, ,p, ,p, ,p,w, ,w,p, ,p,w,p,w,w,w,w,w,p,w,w,w
+p, ,p, ,p, ,p, ,w,p,w,p,w,p, ,p, ,p, ,w,w,w,p,w, ,w,p,w,w,w,p,w,p,w,p,w,p,w,p,w,w,w,w,w,w,p,w,p,w, ,w,p,w,w,p, , ,w,w,w,p,w,p, ,p, ,p, ,p, ,p, 
+w,w,w,w,w,w,w,p,w,p,w,p,w,p,w,w,w,w,p,w, ,p, ,p, ,p, ,p, ,p, ,p, ,p, , ,p,w,p,w,p, ,p,w,p, ,w,p,w,p,w,p,w,w,p,w,w,w,w,w,p,w,p,w,w,w,w,w,p,w, , 
+w,w,p, ,p, ,p, ,p, ,w,p, ,p, ,p, ,p, ,w,p,w,w, ,w,w,w,w,w,w,p,w,w, ,w,w,w,w,p,w,p,w,p,w,p,w,w,p,w,p,w,p,w,w,p, ,p,p,p,w,p,w,p, ,p, ,p, ,p, ,p,w
 w,w,p,w, ,w,w,w,w,p,w,p,w,w,w,w,w,w,p,w,p,w, , ,p,p,p,p,p, ,p, ,p,p,w,w,w,w,p,w,p,w,p,w,p,w,p,p,w,p,w,p,p,w,p,w,w,w,p,p,p,w,w,w,p,w,w,w,w,w,w,w
-p,p,p,p,p,w,w,w,w,p,p,p,w,w,w,w,w,w,p, ,p, ,p,w,w,w,w,w,w,w,w,w,w, ,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p, ,p,p,p,p,0,0,0,0,0,0,0,0,0,0,0,0
+p, ,p, ,p,w,w,w,w,p, ,p,w,w,w,w,w,w,p, ,p, ,p,w,w,w,w,w,w,w,w,w,w,p, ,p, ,p, ,p, ,p, ,p, ,p, ,p, ,p, ,p, ,p, , , ,p, ,p,0,0,0,0,0,0,0,0,0,0,0,0
 w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w
 w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w
 w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w

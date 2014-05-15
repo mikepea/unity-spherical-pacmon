@@ -9,6 +9,9 @@ public class PlayerSphericalMovement : MonoBehaviour
     private Vector2 playerIntendedDirection = new Vector2 (0, 0);
 
     public string startMarkerTag;
+    public string inputHorizontalTag;
+    public string inputVerticalTag;
+
     public float speed = 0.5F;
     public bool humanControl;
 
@@ -37,8 +40,8 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     Vector2 ProcessInputsIntoDirection (Vector2 direction)
     {
-        float h = Input.GetAxisRaw ("Horizontal");
-        float v = Input.GetAxisRaw ("Vertical");
+        float h = Input.GetAxisRaw (inputHorizontalTag);
+        float v = Input.GetAxisRaw (inputVerticalTag);
 
         if (h == 1) {
             direction = Vector2.right;

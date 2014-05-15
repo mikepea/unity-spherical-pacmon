@@ -132,6 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: BaddyStart
+  inputHorizontalTag: P5Horizontal
+  inputVerticalTag: P5Vertical
   speed: 10
   humanControl: 0
   maxAutoDirectionChangeTime: 1000
@@ -435,8 +437,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: BaddyStart
-  speed: 30
-  humanControl: 0
+  inputHorizontalTag: P2Horizontal
+  inputVerticalTag: P2Vertical
+  speed: 20
+  humanControl: 1
   maxAutoDirectionChangeTime: 500
 --- !u!23 &705191609
 Renderer:
@@ -709,6 +713,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: PlayerStart
+  inputHorizontalTag: 
+  inputVerticalTag: 
   speed: .5
   humanControl: 0
   maxAutoDirectionChangeTime: 0
@@ -972,6 +978,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: BaddyStart
+  inputHorizontalTag: P3Horizontal
+  inputVerticalTag: P3Vertical
   speed: 5
   humanControl: 0
   maxAutoDirectionChangeTime: 2000
@@ -1154,6 +1162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: BaddyStart
+  inputHorizontalTag: P4Horizontal
+  inputVerticalTag: P4Vertical
   speed: 10
   humanControl: 0
   maxAutoDirectionChangeTime: 10000
@@ -1334,6 +1344,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: PlayerStart
+  inputHorizontalTag: Horizontal
+  inputVerticalTag: Vertical
   speed: 20
   humanControl: 1
   maxAutoDirectionChangeTime: 0

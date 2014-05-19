@@ -10,6 +10,6 @@ public class GlobalGameDetails : MonoBehaviour
     public static int mapRows = 29;
     public static int mapColumns = 72;
 
-    public static string mapName = "map2";
+    public static string mapName = "map3";
 
 }

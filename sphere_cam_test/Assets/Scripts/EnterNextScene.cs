@@ -4,12 +4,14 @@ using System.Collections;
 public class EnterNextScene : MonoBehaviour
 {
 
-    // Update is called once per frame
+    public string nextScene;
+    public string nextSceneKey;
+
     void Update ()
     {
-        if (Input.GetKeyDown (" ")) {
-
+        if (Input.GetKey (nextSceneKey)) {
+            Application.LoadLevel (nextScene);
         }
-	
     }
+
 }

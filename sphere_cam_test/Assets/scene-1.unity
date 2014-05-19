@@ -1378,6 +1378,8 @@ GameObject:
   - 114: {fileID: 1793603781}
   - 114: {fileID: 1793603782}
   - 114: {fileID: 1793603780}
+  - 114: {fileID: 1793603778}
+  - 114: {fileID: 1793603783}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1425,6 +1427,19 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
+--- !u!114 &1793603778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1793603775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff58bd7e92ea74717adb84869c3e7eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextScene: alignment-scene
+  nextSceneKey: 5
 --- !u!33 &1793603779
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1470,6 +1485,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 5
+--- !u!114 &1793603783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1793603775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff58bd7e92ea74717adb84869c3e7eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextScene: title-scene
+  nextSceneKey: 6
 --- !u!1 &1875379717
 GameObject:
   m_ObjectHideFlags: 0

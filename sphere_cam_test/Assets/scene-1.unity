@@ -680,7 +680,6 @@ GameObject:
   - 33: {fileID: 959835696}
   - 136: {fileID: 959835695}
   - 23: {fileID: 959835694}
-  - 114: {fileID: 959835693}
   - 114: {fileID: 959835692}
   - 54: {fileID: 959835697}
   m_Layer: 0
@@ -718,17 +717,6 @@ MonoBehaviour:
   speed: .5
   humanControl: 0
   maxAutoDirectionChangeTime: 0
---- !u!114 &959835693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959835690}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0caa33d77c327467b8c2cb5478718324, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &959835694
 Renderer:
   m_ObjectHideFlags: 0
@@ -1332,7 +1320,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numPills: 0
+  playerMaxLives: 3
   chaseMode: 0
+  gameOverScene: title-scene
 --- !u!114 &1527557691
 MonoBehaviour:
   m_ObjectHideFlags: 0

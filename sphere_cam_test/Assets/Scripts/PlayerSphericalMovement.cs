@@ -30,6 +30,11 @@ public class PlayerSphericalMovement : MonoBehaviour
     {
         sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f));
         transform.localPosition = sc.toCartesian;
+        PutPlayerAtStartPosition ();
+    }
+
+    void PutPlayerAtStartPosition ()
+    {
         int[] playerStartGridRef = map.FindEntityGridCell (startMarkerTag);
         playerGridX = playerStartGridRef [0];
         playerGridY = playerStartGridRef [1];
@@ -57,7 +62,7 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     Vector2 NextComputerDirection (Vector2 direction)
     {
-        if ( lastAutoDirectionChangeTime % maxAutoDirectionChangeTime == 0 ) {
+        if (lastAutoDirectionChangeTime % maxAutoDirectionChangeTime == 0) {
             float r = Random.Range (0, 4);
             if (r < 1) {
                 direction = Vector2.right;
@@ -70,6 +75,12 @@ public class PlayerSphericalMovement : MonoBehaviour
             }
         }
         return direction;
+    }
+
+    void Stop ()
+    {
+        playerIntendedDirection = Vector2.zero;
+        playerDirection = Vector2.zero;
     }
 
     void FixedUpdate ()

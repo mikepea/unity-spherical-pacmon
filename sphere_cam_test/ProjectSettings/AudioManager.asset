@@ -7,6 +7,6 @@ AudioManager:
   Rolloff Scale: 1
   m_SpeedOfSound: 347
   Doppler Factor: 1
-  Default Speaker Mode: 2
+  Default Speaker Mode: 3
   m_DSPBufferSize: 0
   m_DisableAudio: 0

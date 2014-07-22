@@ -106,6 +106,17 @@ public class PlayerSphericalMovement : MonoBehaviour
         ).toCartesian;
         transform.LookAt (Vector3.zero);
         transform.Rotate (Vector3.right, 90);
+        if (this.gameObject.tag == "Player") {
+            if (playerDirection.x < 0) {
+                transform.Rotate (Vector3.up, 180);
+            } else if (playerDirection.x > 0) {
+                //transform.Rotate (Vector3.up, 0.0);
+            } else if (playerDirection.y < 0) {
+                transform.Rotate (Vector3.up, 270);
+            } else if (playerDirection.y > 0) {
+                transform.Rotate (Vector3.up, 90);
+            }
+        }
     }
 
     void ChangeDirectionIfAble (Vector2 nextMoveSpeed)

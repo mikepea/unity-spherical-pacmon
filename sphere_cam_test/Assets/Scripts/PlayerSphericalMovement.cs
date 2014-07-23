@@ -107,13 +107,15 @@ public class PlayerSphericalMovement : MonoBehaviour
         transform.LookAt (Vector3.zero);
         transform.Rotate (Vector3.right, 90);
         if (this.gameObject.tag == "Player") {
-            if (playerDirection.x < 0) {
+            Vector2 directionToFace = playerDirection;
+            if (playerDirection == Vector2.zero) {
+                directionToFace = playerIntendedDirection;
+            }
+            if (directionToFace.x < 0) {
                 transform.Rotate (Vector3.up, 180);
-            } else if (playerDirection.x > 0) {
-                //transform.Rotate (Vector3.up, 0.0);
-            } else if (playerDirection.y < 0) {
+            } else if (directionToFace.y < 0) {
                 transform.Rotate (Vector3.up, 270);
-            } else if (playerDirection.y > 0) {
+            } else if (directionToFace.y > 0) {
                 transform.Rotate (Vector3.up, 90);
             }
         }

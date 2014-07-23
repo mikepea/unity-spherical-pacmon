@@ -1,12 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerSphericalMovement.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerCollision1.cs" Line="35" Column="13" />
+      <File FileName="Assets/Scripts/PlayerCollision1.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Map.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/EnterNextScene.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/GlobalGameDetails.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PlayerSphericalMovement.cs" Line="120" Column="9" />
+      <File FileName="Assets/Scripts/PlayerSphericalMovement.cs" Line="125" Column="47" />
+      <File FileName="Assets/Scripts/SphericalCoordinates.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

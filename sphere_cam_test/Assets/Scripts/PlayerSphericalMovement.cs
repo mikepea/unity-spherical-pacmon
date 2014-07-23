@@ -105,20 +105,26 @@ public class PlayerSphericalMovement : MonoBehaviour
             map.degreesToRadians (currentAngleY)
         ).toCartesian;
         transform.LookAt (Vector3.zero);
-        transform.Rotate (Vector3.right, 90);
-        if (this.gameObject.tag == "Player") {
-            Vector2 directionToFace = playerDirection;
-            if (playerDirection == Vector2.zero) {
-                directionToFace = playerIntendedDirection;
-            }
-            if (directionToFace.x < 0) {
-                transform.Rotate (Vector3.up, 180);
-            } else if (directionToFace.y < 0) {
-                transform.Rotate (Vector3.up, 270);
-            } else if (directionToFace.y > 0) {
-                transform.Rotate (Vector3.up, 90);
-            }
+        TransformPlayerForSpriteAnimation ();
+    }
+
+    void TransformPlayerForSpriteAnimation ()
+    {
+        Vector2 directionToFace = playerDirection;
+        if (playerDirection == Vector2.zero) {
+            directionToFace = playerIntendedDirection;
         }
+        if (this.gameObject.tag == "Player") {
+            if (directionToFace.x < 0) {
+                transform.Rotate (Vector3.forward, 180);
+            } else if (directionToFace.y > 0) {
+                transform.Rotate (Vector3.forward, 90);
+            } else if (directionToFace.y < 0) {
+                transform.Rotate (Vector3.forward, 270);
+            }
+        } else if (this.gameObject.tag == "Baddy") {
+        }
+
     }
 
     void ChangeDirectionIfAble (Vector2 nextMoveSpeed)

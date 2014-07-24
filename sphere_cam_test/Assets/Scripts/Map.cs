@@ -199,6 +199,10 @@ public class Map
             return true;
         } else if (y < 0) {
             return true;
+        } else if (x < 0) {
+            return WallAtGridReference(x + numColumns, y);
+        } else if (x > numColumns ) {
+            return WallAtGridReference(x - numColumns, y);
         } else if (mapData [y, x] == 1) {
             return true;
         } else {

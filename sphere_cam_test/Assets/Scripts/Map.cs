@@ -210,6 +210,52 @@ public class Map
         }
     }
 
+    public Texture2D TileBasedMap (int xOffsetPixels, int yOffsetPixels)
+    {
+        int tileSize = 40;
+        Texture2D texture = new Texture2D (numColumns * tileSize, numRows * tileSize);
+        for ( int x = 0; x < numColumns; x++ ) {
+            for ( int y = 0; y < numRows; y++ ) {
+              int tileNum = 0;
+              if ( WallAtGridReference(x, y) ) {
+                if ( WallAtGridReference(x - 1, y) ) {
+                  tileNum += 1;
+                }
+                if ( WallAtGridReference(x, y - 1) ) {
+                  tileNum += 2;
+                }
+                if ( WallAtGridReference(x + 1, y) ) {
+                  tileNum += 4;
+                }
+                if ( WallAtGridReference(x, y + 1) ) {
+                  tileNum += 8;
+                }
+                if ( tileNum == 0 ) {
+                  tileNum = 16;
+                }
+                if ( tileNum == 3 ) {
+                  if ( ! WallAtGridReference(x-1, y-1) ) {
+                    tileNum = 17;
+                  }
+                } else if ( tileNum == 6 ) {
+                  if ( ! WallAtGridReference(x+1, y-1) ) {
+                    tileNum = 18;
+                  }
+                } else if ( tileNum == 9 ) {
+                  if ( ! WallAtGridReference(x-1, y+1) ) {
+                    tileNum = 19;
+                  }
+                } else if ( tileNum == 12 ) {
+                  if ( ! WallAtGridReference(x+1, y+1) ) {
+                    tileNum = 20;
+                  }
+                }
+              }
+            }
+        }
+        return texture;
+    }
+
     public Texture2D UVMappedTexture (int xPixels, int yPixels, int xOffsetPixels, int yOffsetPixels, bool enableGridLines)
     {
         Texture2D texture = new Texture2D (xPixels, yPixels);

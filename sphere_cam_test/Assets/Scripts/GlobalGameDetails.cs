@@ -12,4 +12,6 @@ public class GlobalGameDetails : MonoBehaviour
 
     public static string mapName = "map3";
 
+    public Texture2D mapTiles;
+
 }

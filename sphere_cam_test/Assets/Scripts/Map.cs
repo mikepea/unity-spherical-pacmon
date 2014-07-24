@@ -74,6 +74,14 @@ public class Map
                 mapData [row, i] = 8;
             } else if (entries [i] == "X") {
                 mapData [row, i] = 16;
+            } else if (entries [i] == "1") {
+                mapData [row, i] = 32;
+            } else if (entries [i] == "2") {
+                mapData [row, i] = 64;
+            } else if (entries [i] == "3") {
+                mapData [row, i] = 128;
+            } else if (entries [i] == "4") {
+                mapData [row, i] = 256;
             } else {
                 mapData [row, i] = 0;
             }
@@ -127,6 +135,14 @@ public class Map
             mapDataValue = 16;
         } else if ( entityName == "BaddyStart" ) {
             mapDataValue = 8;
+        } else if ( entityName == "Baddy1Start" ) {
+            mapDataValue = 32;
+        } else if ( entityName == "Baddy2Start" ) {
+            mapDataValue = 64;
+        } else if ( entityName == "Baddy3Start" ) {
+            mapDataValue = 128;
+        } else if ( entityName == "Baddy4Start" ) {
+            mapDataValue = 256;
         } else {
             throw new System.InvalidOperationException ("Invalid entityName " + entityName);
         }

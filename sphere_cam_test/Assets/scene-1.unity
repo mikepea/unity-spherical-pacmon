@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36fa9c69404048cba81da608cf79dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMarkerTag: BaddyStart
+  startMarkerTag: Baddy4Start
   inputHorizontalTag: P5Horizontal
   inputVerticalTag: P5Vertical
   speed: 10
@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36fa9c69404048cba81da608cf79dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMarkerTag: BaddyStart
+  startMarkerTag: Baddy1Start
   inputHorizontalTag: P2Horizontal
   inputVerticalTag: P2Vertical
   speed: 20
@@ -979,7 +979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36fa9c69404048cba81da608cf79dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMarkerTag: BaddyStart
+  startMarkerTag: Baddy2Start
   inputHorizontalTag: P3Horizontal
   inputVerticalTag: P3Vertical
   speed: 5
@@ -1167,7 +1167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36fa9c69404048cba81da608cf79dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMarkerTag: BaddyStart
+  startMarkerTag: Baddy3Start
   inputHorizontalTag: P4Horizontal
   inputVerticalTag: P4Vertical
   speed: 10

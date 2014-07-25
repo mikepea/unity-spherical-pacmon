@@ -151,28 +151,18 @@ public class PlayerSphericalMovement : MonoBehaviour
         if (playerIntendedDirection.y != 0) {
             // player is going east/west, wants to go north/south
             if (map.WallAtGridReference (playerGridX, playerGridY - (int)playerIntendedDirection.y)) {
-                Debug.Log ("MIKEDEBUG: Wall at"
-                    + " X: " + playerGridX
-                    + " Y: " + (playerGridY - (int)playerIntendedDirection.y)
-                );
                 lastAutoDirectionChangeTime = 0;
             } else if (dist < nextMoveSpeed.x) {
                 // can turn -- we're on/about to be on a grid line
-                Debug.Log ("MIKEDEBUG: Turning North/South!");
                 currentAngleX = Mathf.Round (currentAngleX + (playerDirection.x * dist)); // normalise angle to grid
                 playerDirection = playerIntendedDirection;
             }
         } else if (playerIntendedDirection.x != 0) {
             // player is going north/south, wants to go east/west
             if (map.WallAtGridReference (map.NormalizeGridX (playerGridX + (int)playerIntendedDirection.x), playerGridY)) {
-                Debug.Log ("MIKEDEBUG: Wall at"
-                    + " X: " + (playerGridX + (int)playerIntendedDirection.x)
-                    + " Y: " + playerGridY
-                );
                 lastAutoDirectionChangeTime = 0;
             } else if (dist < nextMoveSpeed.y) {
                 // can turn -- we're on/about to be on a grid line
-                Debug.Log ("MIKEDEBUG: Turning East/West!");
                 currentAngleY = Mathf.Round (currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
                 playerDirection = playerIntendedDirection;
             }
@@ -233,6 +223,7 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         NormalizeAngles ();
 
+        /*
         Debug.Log ("MIKEDEBUG: "
             + " gridX: " + playerGridX
             + " gridY: " + playerGridY
@@ -244,6 +235,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             + " IdirX: " + playerIntendedDirection.x
             + " IdirY: " + playerIntendedDirection.y
         );
+        */
     }
 
 }

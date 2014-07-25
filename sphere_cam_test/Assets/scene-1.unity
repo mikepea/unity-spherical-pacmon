@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pillObject: {fileID: 100000, guid: 0b6ef070fb5934470b35c71c5454a1d8, type: 2}
+  powerPillObject: {fileID: 100000, guid: ec5f6143fb62a42c89022a6f5f955e52, type: 2}
 --- !u!1 &260144989
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,110 +682,6 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
---- !u!1 &959835690
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 959835691}
-  - 33: {fileID: 959835696}
-  - 136: {fileID: 959835695}
-  - 23: {fileID: 959835694}
-  - 114: {fileID: 959835692}
-  - 54: {fileID: 959835697}
-  m_Layer: 0
-  m_Name: Power Pill
-  m_TagString: Power Pill
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &959835691
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959835690}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: .100000001, y: 0, z: .100000001}
-  m_LocalScale: {x: .0500000007, y: .00100000005, z: .0500000007}
-  m_Children: []
-  m_Father: {fileID: 1793603776}
-  m_RootOrder: 7
---- !u!114 &959835692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959835690}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f36fa9c69404048cba81da608cf79dd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startMarkerTag: PlayerStart
-  inputHorizontalTag: 
-  inputVerticalTag: 
-  speed: .5
-  humanControl: 0
-  maxAutoDirectionChangeTime: 0
---- !u!23 &959835694
-Renderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959835690}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: cfeffab743b8345d9ae15dae88c861fd, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!136 &959835695
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959835690}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: .5
-  m_Height: .00100000005
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &959835696
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959835690}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &959835697
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 959835690}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1027486912
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,7 +1309,6 @@ Transform:
   - {fileID: 1341022210}
   - {fileID: 172795348}
   - {fileID: 1527557689}
-  - {fileID: 959835691}
   m_Father: {fileID: 0}
   m_RootOrder: 2
 --- !u!23 &1793603777

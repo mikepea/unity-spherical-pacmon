@@ -65,25 +65,25 @@ public class Map
 
         for (int i = 0; i < numColumns; i++) {
             if (entries [i] == "w") {
-                mapData [row, i] = 1;
+                mapData [row, i] = 1; // wall
             } else if (entries [i] == "p") {
-                mapData [row, i] = 2;
+                mapData [row, i] = 2; // pill
             } else if (entries [i] == "*") {
-                mapData [row, i] = 4;
+                mapData [row, i] = 4; // powerPill
             } else if (entries [i] == "G") {
-                mapData [row, i] = 8;
+                mapData [row, i] = 8;  // unused (old baddy start pos)
             } else if (entries [i] == "X") {
-                mapData [row, i] = 16;
+                mapData [row, i] = 16; // player home pos
             } else if (entries [i] == "1") {
-                mapData [row, i] = 32;
+                mapData [row, i] = 32; // baddy1 home pos
             } else if (entries [i] == "2") {
-                mapData [row, i] = 64;
+                mapData [row, i] = 64; // baddy2 home pos
             } else if (entries [i] == "3") {
-                mapData [row, i] = 128;
+                mapData [row, i] = 128; // baddy3 home pos
             } else if (entries [i] == "4") {
-                mapData [row, i] = 256;
+                mapData [row, i] = 256; // baddy4 home pos
             } else {
-                mapData [row, i] = 0;
+                mapData [row, i] = 0; // empty maze space.
             }
         }
     }
@@ -191,7 +191,16 @@ public class Map
 
     public bool PillAtGridReference (int x, int y)
     {
-        if (mapData [y, x] == 2) {
+        if (mapData [y, x] == 2 || mapData [y, x] == 4 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public bool PowerPillAtGridReference (int x, int y)
+    {
+        if (mapData [y, x] == 4 ) {
             return true;
         } else {
             return false;

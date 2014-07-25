@@ -14,7 +14,8 @@ public class PlayerCollision1 : MonoBehaviour
 
     void Start ()
     {
-        numPills = GameObject.FindGameObjectsWithTag ("Pill").Length;
+        numPills = GameObject.FindGameObjectsWithTag ("Pill").Length +
+                   GameObject.FindGameObjectsWithTag ("Power Pill").Length;
         playerLivesRemaining = playerMaxLives;
     }
 
@@ -57,16 +58,18 @@ public class PlayerCollision1 : MonoBehaviour
             } else {
                 PlayerHasDied ();
             }
-        } else if (other.gameObject.tag == "Pill") {
+        } else if (other.gameObject.tag == "Pill" || other.gameObject.tag == "Power Pill" ) {
             other.gameObject.SetActive (false);
-            numPills = GameObject.FindGameObjectsWithTag ("Pill").Length;
+            numPills = GameObject.FindGameObjectsWithTag ("Pill").Length + 
+                       GameObject.FindGameObjectsWithTag ("Power Pill").Length;
             Debug.Log (numPills + " pills remaining");
             if (numPills == 0) {
                 MapIsCleared ();
             }
-        } else if (other.gameObject.tag == "Power Pill") {
-            other.gameObject.SetActive (false);
-            chaseMode = true;
+            if (other.gameObject.tag == "Power Pill") {
+                other.gameObject.SetActive (false);
+                chaseMode = true;
+            }
         }
     }
 

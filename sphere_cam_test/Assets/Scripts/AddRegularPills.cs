@@ -5,6 +5,7 @@ public class AddRegularPills : MonoBehaviour
 {
 
     public GameObject pillObject;
+    public GameObject powerPillObject;
     private float latitudeMin = GlobalGameDetails.minAngleY;
     private float latitudeMax = GlobalGameDetails.maxAngleY;
 
@@ -26,10 +27,10 @@ public class AddRegularPills : MonoBehaviour
 
                     Debug.Log ("Placing pill at latitude: " + latitude + ", longitude: " + longitude);
                     SphericalCoordinates sc = new SphericalCoordinates (
-    					0.5f, 
-    					degreesToRadians (longitude), 
-    					degreesToRadians (latitude),
-    					0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f)
+           				      0.5f, 
+        				        degreesToRadians (longitude), 
+        				        degreesToRadians (latitude),
+        				        0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f)
                     );
                     Vector3 newPillPosition = sc.toCartesian;
                     GameObject pill = Instantiate (pillObject) as GameObject;
@@ -46,5 +47,5 @@ public class AddRegularPills : MonoBehaviour
     {
         return (degrees * Mathf.PI / 180f);
     }
-	
+    
 }

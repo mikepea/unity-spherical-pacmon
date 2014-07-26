@@ -19,8 +19,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     private float currentAngleY = 0F;
     private float maxAngleY = GlobalGameDetails.maxAngleY;
     private float minAngleY = GlobalGameDetails.minAngleY;
-    private int playerGridX = 0;
-    private int playerGridY = 0;
+    private Vector2 playerGridRef = new Vector2 (0, 0);
     private int lastAutoDirectionChangeTime = 0;
     public  int maxAutoDirectionChangeTime;
 
@@ -35,10 +34,8 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void PutPlayerAtStartPosition ()
     {
-        int[] playerStartGridRef = map.FindEntityGridCell (startMarkerTag);
-        playerGridX = playerStartGridRef [0];
-        playerGridY = playerStartGridRef [1];
-        float[] mapRef = map.LatitudeLongitudeAtGridReference (playerGridX, playerGridY);
+        playerGridRef = map.FindEntityGridCell (startMarkerTag);
+        float[] mapRef = map.LatitudeLongitudeAtGridReference (playerGridRef);
         currentAngleX = mapRef [1];
         currentAngleY = mapRef [0];
     }
@@ -150,7 +147,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         float dist = map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerIntendedDirection.y != 0) {
             // player is going east/west, wants to go north/south
-            if (map.WallAtGridReference (playerGridX, playerGridY - (int)playerIntendedDirection.y)) {
+            if (map.WallAtGridReference ((int)playerGridRef.x, (int)playerGridRef.y - (int)playerIntendedDirection.y)) {
                 lastAutoDirectionChangeTime = 0;
             } else if (dist < nextMoveSpeed.x) {
                 // can turn -- we're on/about to be on a grid line
@@ -159,7 +156,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             }
         } else if (playerIntendedDirection.x != 0) {
             // player is going north/south, wants to go east/west
-            if (map.WallAtGridReference (map.NormalizeGridX (playerGridX + (int)playerIntendedDirection.x), playerGridY)) {
+            if (map.WallAtGridReference (map.NormalizeGridX ((int)playerGridRef.x + (int)playerIntendedDirection.x), (int)playerGridRef.y)) {
                 lastAutoDirectionChangeTime = 0;
             } else if (dist < nextMoveSpeed.y) {
                 // can turn -- we're on/about to be on a grid line
@@ -174,7 +171,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         float dist = map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerDirection.y != 0
             && dist < nextMoveSpeed.y
-            && map.WallAtGridReference (playerGridX, playerGridY - (int)playerDirection.y)
+            && map.WallAtGridReference ((int)playerGridRef.x, (int)playerGridRef.y - (int)playerDirection.y)
             ) {
             // going north/south, blocked by wall.
             currentAngleY = Mathf.Round (currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
@@ -182,7 +179,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             lastAutoDirectionChangeTime = 0;
         } else if (playerDirection.x != 0
             && dist < nextMoveSpeed.x
-            && map.WallAtGridReference (map.NormalizeGridX (playerGridX + (int)playerDirection.x), playerGridY)
+            && map.WallAtGridReference (map.NormalizeGridX ((int)playerGridRef.x + (int)playerDirection.x), (int)playerGridRef.y)
                    ) {
             // going east/west, blocked by wall.
             currentAngleX = Mathf.Round (currentAngleX + (playerDirection.x * dist)); // normalise angle to grid
@@ -209,9 +206,7 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void UpdateNextPlayerPosition ()
     {
-        int[] gridRef = map.GridReferenceAtLatitudeLongitude (currentAngleY, currentAngleX);
-        playerGridX = gridRef [0];
-        playerGridY = gridRef [1];
+        playerGridRef = map.GridReferenceAtLatitudeLongitude (currentAngleY, currentAngleX);
         Vector2 nextMoveSpeed = new Vector2 (
                 (speed * Time.deltaTime * map.LatitudeSpeedAdjust (currentAngleY)),
                 (speed * Time.deltaTime)

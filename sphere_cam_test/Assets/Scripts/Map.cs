@@ -15,7 +15,6 @@ public class Map
     private bool mapLoaded = false;
     private long[,] mapData = new long[numRows, numColumns];
 
-
     public Map (string name)
     {
         Load ("Assets/Maps/" + name + ".csv");
@@ -127,10 +126,14 @@ public class Map
 
     }
 
-    public int[] FindEntityGridCell (string entityName)
+    public float[] LatitudeLongitudeAtGridReference (Vector2 gridRef)
+    {
+        return LatitudeLongitudeAtGridReference((int)gridRef.x, (int)gridRef.y);
+    }
+
+    public Vector2 FindEntityGridCell (string entityName)
     {
         long mapDataValue;
-        int[] gridRef = { -1, -1 };
         if ( entityName == "PlayerStart" ) {
             mapDataValue = 16;
         } else if ( entityName == "BaddyStart" ) {
@@ -148,21 +151,15 @@ public class Map
         }
         for ( int x=0; x<numColumns; x++ ) {
             for ( int y=0; y<numRows; y++ ) {
-                //if ( ( mapData [y, x] & mapDataValue ) == 1 ) {
                 if ( mapData [y, x] == mapDataValue ) {
-                    gridRef[0] = x;
-                    gridRef[1] = y;
+                    return new Vector2 (x, y);
                 }
             }
         }
-        if ( gridRef[0] == -1 ) {
-            throw new System.InvalidOperationException ("Entity " + entityName + " not found");
-        } else {
-            return gridRef;
-        }
+        throw new System.InvalidOperationException ("Entity " + entityName + " not found");
     }
 
-    public int[] GridReferenceAtLatitudeLongitude (float latitude, float longitude)
+    public Vector2 GridReferenceAtLatitudeLongitude (float latitude, float longitude)
     {
         // grid position is centered on lat/long, so:
         // grid [0,0] is latitude +72.5 to +67.5, longitude +177.5 to -177.5
@@ -182,11 +179,8 @@ public class Map
         int gridY = Mathf.FloorToInt ((latitudeRange - (latitude - minLatitude)) / gridSpacing);
         int intLatitude = Mathf.FloorToInt (Mathf.Round (latitude + gridSpacing / 2));
         int intLongitude = Mathf.FloorToInt (Mathf.Round (longitude + gridSpacing / 2));
-        //Debug.Log ("intLatitude: " + intLatitude + ", intLongitude: " + intLongitude);
         int gridX = ((intLongitude + 180) % 360) / intGridSpacing;
-        //Debug.Log ("gridX: " + gridX + ", gridY: " + gridY);
-        int[] gridRef = {gridX, gridY};
-        return gridRef;
+        return new Vector2 ( gridX, gridY );
     }
 
     public bool PillAtGridReference (int x, int y)
@@ -209,14 +203,14 @@ public class Map
 
     public bool PillAtMapReference (float latitude, float longitude)
     {
-        int[] gridRef = GridReferenceAtLatitudeLongitude (latitude, longitude);
-        return PillAtGridReference (gridRef [0], gridRef [1]);
+        Vector2 gridRef = GridReferenceAtLatitudeLongitude (latitude, longitude);
+        return PillAtGridReference ((int)gridRef.x, (int)gridRef.y);
     }
 
     public bool WallAtMapReference (float latitude, float longitude)
     {
-        int[] gridRef = GridReferenceAtLatitudeLongitude (latitude, longitude);
-        return WallAtGridReference (gridRef [1], gridRef [0]);
+        Vector2 gridRef = GridReferenceAtLatitudeLongitude (latitude, longitude);
+        return WallAtGridReference ((int)gridRef.x, (int)gridRef.y);
     }
 
     public bool WallAtGridReference (int x, int y)
@@ -234,6 +228,13 @@ public class Map
         } else {
             return false;
         }
+    }
+
+    public bool WallAtGridReference (Vector2 gridRef)
+    {
+        int x = (int)gridRef.x;
+        int y = (int)gridRef.y;
+        return WallAtGridReference(x, y);
     }
 
     public Texture2D UVMappedTexture (int xPixels, int yPixels, int xOffsetPixels, int yOffsetPixels, bool enableGridLines)

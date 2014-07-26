@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerSphericalMovement : MonoBehaviour
 {
@@ -59,19 +60,45 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     Vector2 NextComputerDirection (Vector2 direction)
     {
-        if (lastAutoDirectionChangeTime % maxAutoDirectionChangeTime == 0) {
-            float r = Random.Range (0, 4);
-            if (r < 1) {
-                direction = Vector2.right;
-            } else if (r < 2) {
-                direction = (- Vector2.right);
-            } else if (r < 3) {
-                direction = Vector2.up;
-            } else {
-                direction = (- Vector2.up);
+
+        if ( this.gameObject.tag == "Player" ) {
+          // we don't support computer control of player
+          return direction;
+        } else {
+          // we are a baddy
+          List<Vector2> availableDirections = map.AvailableDirectionsAtGridRef(playerGridRef);
+          Vector2 target = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().GridRef();
+          if ( availableDirections.Count == 1 ) {
+            direction = availableDirections[0]; // always take only available dir.
+          } else if ( availableDirections.Count == 2 && direction != Vector2.zero ) {
+            availableDirections.Remove(-direction); // cannot reverse
+            direction = availableDirections[0];
+          } else {
+            //availableDirections.Remove(-direction); // cannot reverse
+            // work out which direction takes us closest to target
+            float lowest = 100000000.0F;
+            availableDirections.Remove(-direction); // cannot reverse
+            foreach ( Vector2 dir in availableDirections) {
+              // invert the Y value of dir, as DOWN actually increases Y in
+              // grid :(
+              Vector2 newLocation = playerGridRef + Vector2.Scale(dir, new Vector2 (0, -1));
+              float dist = Vector2.SqrMagnitude(newLocation - target);
+              Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
+              if ( dist < lowest ) {
+                lowest = dist;
+                direction = dir;
+              }
             }
+            Debug.Log(this.name + " going " + direction + " because WOO CHOICE");
+          }
+          return direction;
         }
-        return direction;
+
+    }
+
+    Vector2 GridRef ()
+    {
+        return playerGridRef;
     }
 
     void Stop ()
@@ -86,8 +113,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         if (humanControl == true) {
             playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
         } else {
-            playerIntendedDirection = NextComputerDirection (playerIntendedDirection);
-            lastAutoDirectionChangeTime++;
+            playerIntendedDirection = NextComputerDirection (playerDirection);
         }
 
         UpdateNextPlayerPosition ();
@@ -175,7 +201,11 @@ public class PlayerSphericalMovement : MonoBehaviour
             ) {
             // going north/south, blocked by wall.
             currentAngleY = Mathf.Round (currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
-            playerDirection = Vector2.zero;
+            if ( this.name == "Player" ) {
+              playerDirection = Vector2.zero;
+            } else {
+              playerDirection = playerIntendedDirection; // baddies dont stop
+            }
             lastAutoDirectionChangeTime = 0;
         } else if (playerDirection.x != 0
             && dist < nextMoveSpeed.x
@@ -183,7 +213,11 @@ public class PlayerSphericalMovement : MonoBehaviour
                    ) {
             // going east/west, blocked by wall.
             currentAngleX = Mathf.Round (currentAngleX + (playerDirection.x * dist)); // normalise angle to grid
-            playerDirection = Vector2.zero;
+            if ( this.name == "Player" ) {
+              playerDirection = Vector2.zero;
+            } else {
+              playerDirection = playerIntendedDirection; // baddies dont stop
+            }
             lastAutoDirectionChangeTime = 0;
         } else {
             // not about to hit wall, move as normal

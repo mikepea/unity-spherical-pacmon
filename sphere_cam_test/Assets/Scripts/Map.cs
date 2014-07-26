@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Text;
 using System.IO;
+using System.Collections.Generic;
 
 public class Map
 {
@@ -343,6 +344,31 @@ public class Map
     public int Columns ()
     {
         return numColumns;
+    }
+
+    public List<Vector2> AvailableDirectionsAtGridRef (int x, int y)
+    {
+       List<Vector2> directions = new List<Vector2>();
+       if ( ! WallAtGridReference(x-1, y) ) {
+         directions.Add(- Vector2.right);
+       }
+       if ( ! WallAtGridReference(x, y-1) ) {
+         directions.Add(Vector2.up);
+       }
+       if ( ! WallAtGridReference(x+1, y) ) {
+         directions.Add(Vector2.right);
+       }
+       if ( ! WallAtGridReference(x, y+1) ) {
+         directions.Add(- Vector2.up);
+       }
+       return directions;
+    }
+
+    public List<Vector2> AvailableDirectionsAtGridRef (Vector2 gridRef)
+    {
+      int x = (int)gridRef.x;
+      int y = (int)gridRef.y;
+      return AvailableDirectionsAtGridRef(x, y);
     }
 
 }

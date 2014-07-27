@@ -81,7 +81,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             foreach ( Vector2 dir in availableDirections) {
               // invert the Y value of dir, as DOWN actually increases Y in
               // grid :(
-              Vector2 newLocation = playerGridRef + Vector2.Scale(dir, new Vector2 (0, -1));
+              Vector2 newLocation = playerGridRef + dir;
               float dist = Vector2.SqrMagnitude(newLocation - target);
               Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
               if ( dist < lowest ) {
@@ -173,7 +173,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         float dist = map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerIntendedDirection.y != 0) {
             // player is going east/west, wants to go north/south
-            if (map.WallAtGridReference ((int)playerGridRef.x, (int)playerGridRef.y - (int)playerIntendedDirection.y)) {
+            if (map.WallAtGridReference ((int)playerGridRef.x, (int)playerGridRef.y + (int)playerIntendedDirection.y)) {
                 lastAutoDirectionChangeTime = 0;
             } else if (dist < nextMoveSpeed.x) {
                 // can turn -- we're on/about to be on a grid line
@@ -197,7 +197,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         float dist = map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerDirection.y != 0
             && dist < nextMoveSpeed.y
-            && map.WallAtGridReference ((int)playerGridRef.x, (int)playerGridRef.y - (int)playerDirection.y)
+            && map.WallAtGridReference ((int)playerGridRef.x, (int)playerGridRef.y + (int)playerDirection.y)
             ) {
             // going north/south, blocked by wall.
             currentAngleY = Mathf.Round (currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
@@ -254,8 +254,8 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         /*
         Debug.Log ("MIKEDEBUG: "
-            + " gridX: " + playerGridX
-            + " gridY: " + playerGridY
+            + this.name
+            + " gridRef: " + playerGridRef
             + " currentX: " + currentAngleX
             + " currentY: " + currentAngleY
             + " dist: " + map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection)

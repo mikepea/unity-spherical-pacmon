@@ -115,12 +115,12 @@ public class Map
     {
         // x = 0 => -180
         // x = [numColumns -1] => 175
-        // y = 0 => maxLatitude
+        // y = 0 => minLatitude
         // y = 14 => 0deg
-        // y = [numRows - 1] => minLatitude
+        // y = [numRows - 1] => maxLatitude
 
         float longitude = (float)x * gridSpacing - 180f;
-        float latitude = maxLatitude - (float)y * gridSpacing;
+        float latitude = minLatitude + (float)y * gridSpacing;
 
         float [] latLong = {latitude, longitude};
         return latLong;
@@ -163,10 +163,10 @@ public class Map
 
     public Vector2 FindEntityGridCell (string entityName)
     {
-        for ( int x=0; x<numColumns; x++ ) {
-            for ( int y=0; y<numRows; y++ ) {
-                if ( mapData [y, x] == EntityDataValue(entityName) ) {
-                    return new Vector2 (x, y);
+        for ( int col=0; col<numColumns; col++ ) {
+            for ( int row=0; row<numRows; row++ ) {
+                if ( mapData [row, col] == EntityDataValue(entityName) ) {
+                    return new Vector2 (col, (numRows - 1) - row);
                 }
             }
         }
@@ -175,7 +175,11 @@ public class Map
 
     public bool IsEntityAtGridRef (string entityName, int x, int y)
     {
-        if ( mapData [y, x] == EntityDataValue(entityName) ) {
+        if ( y < 0 || y >= numRows ) {
+          return false;
+        }
+
+        if ( mapData [(numRows - 1) - y, NormalizeGridX(x)] == EntityDataValue(entityName) ) {
           return true;
         } else {
           return false;
@@ -197,10 +201,11 @@ public class Map
 
         longitude = NormalizeLongitude (longitude);
 
-        float latitudeRange = maxLatitude - minLatitude;
-        latitude = latitude - (gridSpacing / 2);
-        int gridY = Mathf.FloorToInt ((latitudeRange - (latitude - minLatitude)) / gridSpacing);
-        int intLatitude = Mathf.FloorToInt (Mathf.Round (latitude + gridSpacing / 2));
+        //float latitudeRange = maxLatitude - minLatitude;
+        latitude = latitude + (gridSpacing / 2);
+        //int gridY = Mathf.FloorToInt ((latitudeRange - (latitude - minLatitude)) / gridSpacing);
+        int gridY = Mathf.FloorToInt ((latitude - minLatitude) / gridSpacing);
+        //int intLatitude = Mathf.FloorToInt (Mathf.Round (latitude + gridSpacing / 2));
         int intLongitude = Mathf.FloorToInt (Mathf.Round (longitude + gridSpacing / 2));
         int gridX = ((intLongitude + 180) % 360) / intGridSpacing;
         return new Vector2 ( gridX, gridY );

@@ -38,7 +38,7 @@ public class CreateMap : MonoBehaviour
         int numColumns = map.Columns();
         int numRows = map.Rows();
 
-        int bottomPadding = 100;
+        int bottomPadding = 140;
         int leftPadding = 100;
 
         Texture2D texture = new Texture2D (tileSize * 360 / tileDegrees, tileSize * 180 / tileDegrees);
@@ -51,7 +51,7 @@ public class CreateMap : MonoBehaviour
               //Debug.Log("Tile: " + tileNum + ", X: " + tilesX + ", Y: " + tilesY);
               Color[] tile = mapTiles.GetPixels(tilesX, tilesY, tileSize, tileSize);
               int textureX = x * tileSize;
-              int textureY = (numRows * tileSize) - (y * tileSize) + bottomPadding;
+              int textureY = (y * tileSize) + bottomPadding;
               Debug.Log("Texture: X: " + textureX + ", Y: " + textureY);
               texture.SetPixels(textureX, textureY, tileSize, tileSize, tile);
             }
@@ -72,32 +72,32 @@ public class CreateMap : MonoBehaviour
         if ( map.WallAtGridReference(x - 1, y) ) {
           tileNum += 1;
         }
-        if ( map.WallAtGridReference(x, y - 1) ) {
+        if ( map.WallAtGridReference(x, y + 1) ) {
           tileNum += 2;
         }
         if ( map.WallAtGridReference(x + 1, y) ) {
           tileNum += 4;
         }
-        if ( map.WallAtGridReference(x, y + 1) ) {
+        if ( map.WallAtGridReference(x, y - 1) ) {
           tileNum += 8;
         }
         if ( tileNum == 0 ) {
           tileNum = 16;
         }
         if ( tileNum == 3 ) {
-          if ( ! map.WallAtGridReference(x-1, y-1) ) {
+          if ( ! map.WallAtGridReference(x-1, y+1) ) {
             tileNum = 17;
           }
         } else if ( tileNum == 6 ) {
-          if ( ! map.WallAtGridReference(x+1, y-1) ) {
+          if ( ! map.WallAtGridReference(x+1, y+1) ) {
             tileNum = 18;
           }
         } else if ( tileNum == 9 ) {
-          if ( ! map.WallAtGridReference(x-1, y+1) ) {
+          if ( ! map.WallAtGridReference(x-1, y-1) ) {
             tileNum = 19;
           }
         } else if ( tileNum == 12 ) {
-          if ( ! map.WallAtGridReference(x+1, y+1) ) {
+          if ( ! map.WallAtGridReference(x+1, y-1) ) {
             tileNum = 20;
           }
         }

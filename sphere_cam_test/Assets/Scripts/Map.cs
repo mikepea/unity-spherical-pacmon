@@ -375,13 +375,13 @@ public class Map
        if ( ! WallAtGridReference(x-1, y) ) {
          directions.Add(- Vector2.right);
        }
-       if ( ! WallAtGridReference(x, y-1) ) {
+       if ( ! WallAtGridReference(x, y+1) ) {
          directions.Add(Vector2.up);
        }
        if ( ! WallAtGridReference(x+1, y) ) {
          directions.Add(Vector2.right);
        }
-       if ( ! WallAtGridReference(x, y+1) ) {
+       if ( ! WallAtGridReference(x, y-1) ) {
          directions.Add(- Vector2.up);
        }
        return directions;

@@ -112,13 +112,10 @@ public class PlayerSphericalMovement : MonoBehaviour
             availableDirections.Remove(-direction); // cannot reverse
             direction = availableDirections[0];
           } else {
-            //availableDirections.Remove(-direction); // cannot reverse
             // work out which direction takes us closest to target
             float lowest = 100000000.0F;
             availableDirections.Remove(-direction); // cannot reverse
             foreach ( Vector2 dir in availableDirections) {
-              // invert the Y value of dir, as DOWN actually increases Y in
-              // grid :(
               Vector2 newLocation = playerGridRef + dir;
               float dist = Vector2.SqrMagnitude(newLocation - target);
               Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);

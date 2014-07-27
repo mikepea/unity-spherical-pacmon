@@ -65,25 +65,25 @@ public class Map
 
         for (int i = 0; i < numColumns; i++) {
             if (entries [i] == "w") {
-                mapData [row, i] = 1; // wall
+                mapData [row, i] = EntityDataValue("Wall");
             } else if (entries [i] == "p") {
-                mapData [row, i] = 2; // pill
+                mapData [row, i] = EntityDataValue("Pill");
             } else if (entries [i] == "*") {
-                mapData [row, i] = 4; // powerPill
-            } else if (entries [i] == "G") {
-                mapData [row, i] = 8;  // unused (old baddy start pos)
+                mapData [row, i] = EntityDataValue("PowerPill");
+            } else if (entries [i] == "-") {
+                mapData [row, i] = EntityDataValue("BaddyDoor");
             } else if (entries [i] == "X") {
-                mapData [row, i] = 16; // player home pos
+                mapData [row, i] = EntityDataValue("PlayerStart");
             } else if (entries [i] == "1") {
-                mapData [row, i] = 32; // baddy1 home pos
+                mapData [row, i] = EntityDataValue("Baddy1Start");
             } else if (entries [i] == "2") {
-                mapData [row, i] = 64; // baddy2 home pos
+                mapData [row, i] = EntityDataValue("Baddy2Start");
             } else if (entries [i] == "3") {
-                mapData [row, i] = 128; // baddy3 home pos
+                mapData [row, i] = EntityDataValue("Baddy3Start");
             } else if (entries [i] == "4") {
-                mapData [row, i] = 256; // baddy4 home pos
+                mapData [row, i] = EntityDataValue("Baddy4Start");
             } else {
-                mapData [row, i] = 0; // empty maze space.
+                mapData [row, i] = EntityDataValue("EmptyCell");
             }
         }
     }
@@ -132,27 +132,40 @@ public class Map
         return LatitudeLongitudeAtGridReference((int)gridRef.x, (int)gridRef.y);
     }
 
-    public Vector2 FindEntityGridCell (string entityName)
+    public int EntityDataValue (string entityName)
     {
-        long mapDataValue;
-        if ( entityName == "PlayerStart" ) {
-            mapDataValue = 16;
+        if ( entityName == "EmptyCell" ) {
+            return 0;
+        } else if ( entityName == "Wall" ) {
+            return 1;
+        } else if ( entityName == "Pill" ) {
+            return 2;
+        } else if ( entityName == "PowerPill" ) {
+            return 4;
+        } else if ( entityName == "BaddyDoor" ) {
+            return 8;
+        } else if ( entityName == "PlayerStart" ) {
+            return 16;
         } else if ( entityName == "BaddyStart" ) {
-            mapDataValue = 8;
+            return 8;
         } else if ( entityName == "Baddy1Start" ) {
-            mapDataValue = 32;
+            return 32;
         } else if ( entityName == "Baddy2Start" ) {
-            mapDataValue = 64;
+            return 64;
         } else if ( entityName == "Baddy3Start" ) {
-            mapDataValue = 128;
+            return 128;
         } else if ( entityName == "Baddy4Start" ) {
-            mapDataValue = 256;
+            return 256;
         } else {
             throw new System.InvalidOperationException ("Invalid entityName " + entityName);
         }
+    }
+
+    public Vector2 FindEntityGridCell (string entityName)
+    {
         for ( int x=0; x<numColumns; x++ ) {
             for ( int y=0; y<numRows; y++ ) {
-                if ( mapData [y, x] == mapDataValue ) {
+                if ( mapData [y, x] == EntityDataValue(entityName) ) {
                     return new Vector2 (x, y);
                 }
             }

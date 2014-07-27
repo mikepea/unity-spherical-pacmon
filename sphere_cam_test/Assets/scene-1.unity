@@ -135,9 +135,11 @@ MonoBehaviour:
   startMarkerTag: Baddy4Start
   inputHorizontalTag: P5Horizontal
   inputVerticalTag: P5Vertical
+  regularSprite: {fileID: 2800000, guid: c22a8a70340dd40c38ce249154ea04a7, type: 3}
+  scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
+  deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
   speed: 10
   humanControl: 0
-  maxAutoDirectionChangeTime: 1000
 --- !u!23 &172795351
 Renderer:
   m_ObjectHideFlags: 0
@@ -257,7 +259,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 260144989}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!92 &260144992
 Behaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +344,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 395107394}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!92 &395107397
 Behaviour:
   m_ObjectHideFlags: 0
@@ -450,9 +452,11 @@ MonoBehaviour:
   startMarkerTag: Baddy1Start
   inputHorizontalTag: P2Horizontal
   inputVerticalTag: P2Vertical
+  regularSprite: {fileID: 2800000, guid: 7f49e195c923d45a7ad6a285d001d7ea, type: 3}
+  scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
+  deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
   speed: 20
   humanControl: 0
-  maxAutoDirectionChangeTime: 500
 --- !u!23 &705191609
 Renderer:
   m_ObjectHideFlags: 0
@@ -879,9 +883,11 @@ MonoBehaviour:
   startMarkerTag: Baddy2Start
   inputHorizontalTag: P3Horizontal
   inputVerticalTag: P3Vertical
+  regularSprite: {fileID: 2800000, guid: fb77cfbee0f7448caaa92a2ce64c2b85, type: 3}
+  scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
+  deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
   speed: 5
   humanControl: 0
-  maxAutoDirectionChangeTime: 2000
 --- !u!23 &1190214196
 Renderer:
   m_ObjectHideFlags: 0
@@ -1067,9 +1073,11 @@ MonoBehaviour:
   startMarkerTag: Baddy3Start
   inputHorizontalTag: P4Horizontal
   inputVerticalTag: P4Vertical
+  regularSprite: {fileID: 2800000, guid: fd92666853c5e46d4adefa88ce6ddf1f, type: 3}
+  scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
+  deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
   speed: 10
   humanControl: 0
-  maxAutoDirectionChangeTime: 10000
 --- !u!23 &1341022213
 Renderer:
   m_ObjectHideFlags: 0
@@ -1252,9 +1260,11 @@ MonoBehaviour:
   startMarkerTag: PlayerStart
   inputHorizontalTag: Horizontal
   inputVerticalTag: Vertical
+  regularSprite: {fileID: 2800000, guid: a5ab22596cb4747d8ac8a3ba31158152, type: 3}
+  scaredSprite: {fileID: 2800000, guid: a5ab22596cb4747d8ac8a3ba31158152, type: 3}
+  deadSprite: {fileID: 2800000, guid: a5ab22596cb4747d8ac8a3ba31158152, type: 3}
   speed: 20
   humanControl: 1
-  maxAutoDirectionChangeTime: 0
 --- !u!54 &1527557692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1390,7 +1400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0154fe609b784ee596af828df3f773f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 5
+  rotateSpeed: 0
 --- !u!114 &1793603783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1442,7 +1452,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1875379717}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!92 &1875379720
 Behaviour:
   m_ObjectHideFlags: 0
@@ -1514,7 +1524,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1938779255}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!92 &1938779257
 Behaviour:
   m_ObjectHideFlags: 0

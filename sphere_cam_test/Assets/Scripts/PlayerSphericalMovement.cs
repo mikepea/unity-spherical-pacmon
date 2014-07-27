@@ -13,6 +13,10 @@ public class PlayerSphericalMovement : MonoBehaviour
     public string inputHorizontalTag;
     public string inputVerticalTag;
 
+    public Texture2D regularSprite;
+    public Texture2D scaredSprite;
+    public Texture2D deadSprite;
+
     public float speed = 0.5F;
     public bool humanControl;
 
@@ -22,7 +26,10 @@ public class PlayerSphericalMovement : MonoBehaviour
     private float minAngleY = GlobalGameDetails.minAngleY;
     private Vector2 playerGridRef = new Vector2 (0, 0);
     private int lastAutoDirectionChangeTime = 0;
-    public  int maxAutoDirectionChangeTime;
+
+    private bool isScared = false;
+    private bool isDead = false;
+    private bool isHome = true;
 
     public Map map = new Map (GlobalGameDetails.mapName);
 
@@ -35,10 +42,31 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void PutPlayerAtStartPosition ()
     {
-        playerGridRef = map.FindEntityGridCell (startMarkerTag);
+        playerGridRef = map.FindEntityGridRef (startMarkerTag);
         float[] mapRef = map.LatitudeLongitudeAtGridReference (playerGridRef);
         currentAngleX = mapRef [1];
         currentAngleY = mapRef [0];
+    }
+
+    void EnterScaredMode ()
+    {
+        if ( ! isDead || ! isHome ) {
+          isScared = true;
+        }
+    }
+
+    public bool IsScared () {
+      return isScared;
+    }
+
+    public bool IsDead () {
+      return isDead;
+    }
+
+    void EnterDeadMode ()
+    {
+        isScared = false;
+        isDead = true;
     }
 
     Vector2 ProcessInputsIntoDirection (Vector2 direction)
@@ -65,9 +93,19 @@ public class PlayerSphericalMovement : MonoBehaviour
           // we don't support computer control of player
           return direction;
         } else {
+
           // we are a baddy
           List<Vector2> availableDirections = map.AvailableDirectionsAtGridRef(playerGridRef);
-          Vector2 target = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().GridRef();
+          Vector2 target;
+          if ( isScared == true ) {
+            target = new Vector2 (0,0); // TODO: scatter area per baddy.
+          } else if ( isDead == true ) {
+            target = map.FindEntityGridRef("Baddy2Start"); // the baddy home box centre
+          } else {
+            // TODO: Different hunt target per baddy
+            target = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().GridRef();
+          }
+
           if ( availableDirections.Count == 1 ) {
             direction = availableDirections[0]; // always take only available dir.
           } else if ( availableDirections.Count == 2 && direction != Vector2.zero ) {
@@ -116,9 +154,15 @@ public class PlayerSphericalMovement : MonoBehaviour
             playerIntendedDirection = NextComputerDirection (playerDirection);
         }
 
+        if ( this.name != "Player" ) {
+          UpdateBaddyState ();
+        }
         UpdateNextPlayerPosition ();
 
         UpdatePlayerObjectLocationAndRotation ();
+    }
+
+    void UpdateBaddyState () {
     }
 
     void UpdatePlayerObjectLocationAndRotation ()
@@ -146,6 +190,13 @@ public class PlayerSphericalMovement : MonoBehaviour
                 transform.Rotate (Vector3.forward, 270);
             }
         } else if (this.gameObject.tag == "Baddy") {
+            if ( isDead == true ) {
+              renderer.material.mainTexture = deadSprite;
+            } else if ( isScared == true ) {
+              renderer.material.mainTexture = scaredSprite;
+            } else {
+              renderer.material.mainTexture = regularSprite;
+            }
         }
 
     }

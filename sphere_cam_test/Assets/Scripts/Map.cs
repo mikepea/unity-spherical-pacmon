@@ -161,7 +161,7 @@ public class Map
         }
     }
 
-    public Vector2 FindEntityGridCell (string entityName)
+    public Vector2 FindEntityGridRef (string entityName)
     {
         for ( int col=0; col<numColumns; col++ ) {
             for ( int row=0; row<numRows; row++ ) {

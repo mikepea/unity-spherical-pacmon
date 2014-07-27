@@ -7,7 +7,6 @@ public class PlayerCollision1 : MonoBehaviour
 
     public int numPills;
     public int playerMaxLives = 3;
-    public bool chaseMode = false;
     public string gameOverScene;
 
     private int playerLivesRemaining;
@@ -53,8 +52,10 @@ public class PlayerCollision1 : MonoBehaviour
     void OnTriggerEnter (Collider other)
     {
         if (other.gameObject.tag == "Baddy") {
-            if (chaseMode) {
-                other.gameObject.SetActive (false);
+            if ( other.gameObject.GetComponent<PlayerSphericalMovement>().IsScared() == true ) {
+                other.gameObject.SendMessage ("EnterDeadMode");
+            } else if ( other.gameObject.GetComponent<PlayerSphericalMovement>().IsDead() == true ) {
+              // ignore the dead
             } else {
                 PlayerHasDied ();
             }
@@ -68,7 +69,10 @@ public class PlayerCollision1 : MonoBehaviour
             }
             if (other.gameObject.tag == "Power Pill") {
                 other.gameObject.SetActive (false);
-                chaseMode = true;
+                GameObject[] baddies = GameObject.FindGameObjectsWithTag ("Baddy");
+                foreach (GameObject baddy in baddies) {
+                    baddy.SendMessage ("EnterScaredMode");
+                }
             }
         }
     }

@@ -67,7 +67,7 @@ public class Map
             if (entries [i] == "w") {
                 mapData [row, i] = EntityDataValue("Wall");
             } else if (entries [i] == "p") {
-                mapData [row, i] = EntityDataValue("Pill");
+                mapData [row, i] = EntityDataValue("RegularPill");
             } else if (entries [i] == "*") {
                 mapData [row, i] = EntityDataValue("PowerPill");
             } else if (entries [i] == "-") {
@@ -138,7 +138,7 @@ public class Map
             return 0;
         } else if ( entityName == "Wall" ) {
             return 1;
-        } else if ( entityName == "Pill" ) {
+        } else if ( entityName == "RegularPill" ) {
             return 2;
         } else if ( entityName == "PowerPill" ) {
             return 4;
@@ -173,6 +173,15 @@ public class Map
         throw new System.InvalidOperationException ("Entity " + entityName + " not found");
     }
 
+    public bool IsEntityAtGridRef (string entityName, int x, int y)
+    {
+        if ( mapData [y, x] == EntityDataValue(entityName) ) {
+          return true;
+        } else {
+          return false;
+        }
+    }
+
     public Vector2 GridReferenceAtLatitudeLongitude (float latitude, float longitude)
     {
         // grid position is centered on lat/long, so:
@@ -199,7 +208,7 @@ public class Map
 
     public bool PillAtGridReference (int x, int y)
     {
-        if (mapData [y, x] == 2 || mapData [y, x] == 4 ) {
+        if (IsEntityAtGridRef("RegularPill", x, y) || IsEntityAtGridRef("PowerPill", x, y) ) {
             return true;
         } else {
             return false;
@@ -208,11 +217,7 @@ public class Map
 
     public bool PowerPillAtGridReference (int x, int y)
     {
-        if (mapData [y, x] == 4 ) {
-            return true;
-        } else {
-            return false;
-        }
+        return IsEntityAtGridRef("PowerPill", x, y);
     }
 
     public bool PillAtMapReference (float latitude, float longitude)
@@ -237,7 +242,7 @@ public class Map
             return WallAtGridReference(x + numColumns, y);
         } else if (x >= numColumns ) {
             return WallAtGridReference(x - numColumns, y);
-        } else if (mapData [y, x] == 1) {
+        } else if (IsEntityAtGridRef("Wall", x, y)) {
             return true;
         } else {
             return false;

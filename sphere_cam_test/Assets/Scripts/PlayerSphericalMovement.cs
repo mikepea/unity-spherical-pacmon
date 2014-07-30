@@ -212,6 +212,10 @@ public class PlayerSphericalMovement : MonoBehaviour
             return;
         }
 
+        if ( map.WallAtGridReference(playerGridRef + playerIntendedDirection) ) {
+            return;
+        }
+
         // turning left or right - need to confirm we're about to cross
         // a grid line, and normalise the player onto the grid line.
         // NB: They should *always* be on the grid line in the direction
@@ -220,16 +224,13 @@ public class PlayerSphericalMovement : MonoBehaviour
         float dist = map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerIntendedDirection.y != 0) {
             // player is going east/west, wants to go north/south
-            if (map.WallAtGridReference ((int)playerGridRef.x, (int)playerGridRef.y + (int)playerIntendedDirection.y)) {
-            } else if (dist < nextMoveSpeed.x) {
+            if (dist < nextMoveSpeed.x) {
                 // can turn -- we're on/about to be on a grid line
                 currentAngleX = Mathf.Round (currentAngleX + (playerDirection.x * dist)); // normalise angle to grid
                 playerDirection = playerIntendedDirection;
             }
         } else if (playerIntendedDirection.x != 0) {
-            // player is going north/south, wants to go east/west
-            if (map.WallAtGridReference (map.NormalizeGridX ((int)playerGridRef.x + (int)playerIntendedDirection.x), (int)playerGridRef.y)) {
-            } else if (dist < nextMoveSpeed.y) {
+            if (dist < nextMoveSpeed.y) {
                 // can turn -- we're on/about to be on a grid line
                 currentAngleY = Mathf.Round (currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
                 playerDirection = playerIntendedDirection;

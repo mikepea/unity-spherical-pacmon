@@ -243,7 +243,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         float dist = map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerDirection.y != 0
             && dist < nextMoveSpeed.y
-            && map.WallAtGridReference ((int)playerGridRef.x, (int)playerGridRef.y + (int)playerDirection.y)
+            && map.WallAtGridReference (playerGridRef + playerDirection)
             ) {
             // going north/south, blocked by wall.
             currentAngleY = Mathf.Round (currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
@@ -254,7 +254,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             }
         } else if (playerDirection.x != 0
             && dist < nextMoveSpeed.x
-            && map.WallAtGridReference (map.NormalizeGridX ((int)playerGridRef.x + (int)playerDirection.x), (int)playerGridRef.y)
+            && map.WallAtGridReference (playerGridRef + playerDirection)
                    ) {
             // going east/west, blocked by wall.
             currentAngleX = Mathf.Round (currentAngleX + (playerDirection.x * dist)); // normalise angle to grid

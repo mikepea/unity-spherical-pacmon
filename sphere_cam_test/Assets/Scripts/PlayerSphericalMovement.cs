@@ -31,6 +31,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     private bool isScared = false;
     private bool isDead = false;
     private bool isHome = true;
+    private int ticksInScaredMode = 0;
+    private int maxTicksInScaredMode = 200;
 
     public Map map = new Map (GlobalGameDetails.mapName);
 
@@ -39,6 +41,8 @@ public class PlayerSphericalMovement : MonoBehaviour
         sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f));
         transform.localPosition = sc.toCartesian;
         PutPlayerAtStartPosition ();
+        isDead = false;
+        isScared = false;
     }
 
     void PutPlayerAtStartPosition ()
@@ -47,12 +51,16 @@ public class PlayerSphericalMovement : MonoBehaviour
         float[] mapRef = map.LatitudeLongitudeAtGridReference (playerGridRef);
         currentAngleX = mapRef [1];
         currentAngleY = mapRef [0];
+        isScared = false;
+        isDead = false;
+        isHome = true;
     }
 
     void EnterScaredMode ()
     {
         if ( ! isDead || ! isHome ) {
           isScared = true;
+          ticksInScaredMode = 0;
         }
     }
 
@@ -154,6 +162,14 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         if ( this.name != "Player" ) {
           UpdateBaddyState ();
+          if ( isScared ) {
+            if ( ticksInScaredMode > maxTicksInScaredMode ) {
+              isScared = false;
+              ticksInScaredMode = 0;
+            } else {
+              ticksInScaredMode++;
+            }
+          }
         }
         UpdateNextPlayerPosition ();
 

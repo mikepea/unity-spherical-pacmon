@@ -115,6 +115,11 @@ public class PlayerSphericalMovement : MonoBehaviour
             target = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().GridRef();
           }
 
+          if ( map.IsEntityAtGridRef("BaddyDoor", playerGridRef - Vector2.up ) && ! isDead ) {
+              // remove down as a direction, as we cannot go thru BaddyDoor
+              availableDirections.Remove(-Vector2.up);
+          }
+
           if ( availableDirections.Count == 1 ) {
             direction = availableDirections[0]; // always take only available dir.
           } else if ( availableDirections.Count == 2 && direction != Vector2.zero ) {
@@ -160,16 +165,8 @@ public class PlayerSphericalMovement : MonoBehaviour
             playerIntendedDirection = NextComputerDirection (playerDirection);
         }
 
-        if ( this.name != "Player" ) {
+        if ( IAmABaddy() ) {
           UpdateBaddyState ();
-          if ( isScared ) {
-            if ( ticksInScaredMode > maxTicksInScaredMode ) {
-              isScared = false;
-              ticksInScaredMode = 0;
-            } else {
-              ticksInScaredMode++;
-            }
-          }
         }
         UpdateNextPlayerPosition ();
 
@@ -177,6 +174,19 @@ public class PlayerSphericalMovement : MonoBehaviour
     }
 
     void UpdateBaddyState () {
+        if ( isScared ) {
+            if ( ticksInScaredMode > maxTicksInScaredMode ) {
+                isScared = false;
+                ticksInScaredMode = 0;
+            } else {
+                ticksInScaredMode++;
+            }
+        } else if ( isDead ) {
+            if ( playerGridRef == map.FindEntityGridRef("Baddy2Start") ) {
+                // made it home!
+                isDead = false;
+            }
+        }
     }
 
     void UpdatePlayerObjectLocationAndRotation ()
@@ -203,7 +213,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             } else if (directionToFace.y < 0) {
                 transform.Rotate (Vector3.forward, 270);
             }
-        } else if (this.gameObject.tag == "Baddy") {
+        } else if ( IAmABaddy() ) {
             if ( isDead == true ) {
               renderer.material.mainTexture = deadSprite;
             } else if ( isScared == true ) {
@@ -213,6 +223,10 @@ public class PlayerSphericalMovement : MonoBehaviour
             }
         }
 
+    }
+
+    bool IAmABaddy() {
+        return ( this.gameObject.tag == "Baddy" );
     }
 
     void ChangeDirectionIfAble (Vector2 nextMoveSpeed)
@@ -258,6 +272,22 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void MoveUnlessBlockedByWall (Vector2 nextMoveSpeed)
     {
+        if ( map.IsEntityAtGridRef("BaddyDoor", playerGridRef + playerIntendedDirection) ) {
+          if ( IAmABaddy() ) {
+            // we want to enter/leave the baddy house
+            if ( isDead && ( playerIntendedDirection == - Vector2.up ) ) {
+              // sweet, door is open
+            } else if ( ! isDead && ( playerIntendedDirection == Vector2.up ) ) {
+              // sweet, leaving - door is open
+            } else {
+              // treat it like a wall
+              return;
+            }
+          } else {
+            return; // player cannot go thru door, ever
+          }
+        }
+
         float dist = map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
         if (playerDirection.y != 0
             && dist < nextMoveSpeed.y

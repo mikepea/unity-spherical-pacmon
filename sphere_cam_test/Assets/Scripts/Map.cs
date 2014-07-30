@@ -186,6 +186,13 @@ public class Map
         }
     }
 
+    public bool IsEntityAtGridRef (string entityName, Vector2 gridRef)
+    {
+        int x = (int)gridRef.x;
+        int y = (int)gridRef.y;
+        return IsEntityAtGridRef(entityName, x, y);
+    }
+
     public Vector2 GridReferenceAtLatitudeLongitude (float latitude, float longitude)
     {
         if (latitude > maxLatitude) {

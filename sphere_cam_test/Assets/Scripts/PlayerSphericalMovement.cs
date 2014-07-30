@@ -118,7 +118,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             availableDirections.Remove(-direction); // cannot reverse
             foreach ( Vector2 dir in availableDirections) {
               Vector2 newLocation = playerGridRef + dir;
-              float dist = Vector2.SqrMagnitude(newLocation - target);
+              float dist = map.DistanceBetween(newLocation, target);
               Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
               if ( dist < lowest ) {
                 lowest = dist;

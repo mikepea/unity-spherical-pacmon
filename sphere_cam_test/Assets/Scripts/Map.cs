@@ -100,7 +100,7 @@ public class Map
     }
 
     public float NormalizeLongitude (float longitude)
-    { 
+    {
         if (longitude > 180) {
             longitude = NormalizeLongitude (longitude - 360);
         } else if (longitude < -180) {
@@ -261,7 +261,7 @@ public class Map
         Debug.Log ("fiveDegrees: " + fiveDegrees);
 
         for (int x = 0; x < xPixels; x++) {
-            int gridX = x / (xScaling * intGridSpacing); 
+            int gridX = x / (xScaling * intGridSpacing);
             int xOffsetted = x - xOffsetPixels;
             if (xOffsetted < 0) {
                 xOffsetted += xPixels;
@@ -380,6 +380,19 @@ public class Map
       int x = (int)gridRef.x;
       int y = (int)gridRef.y;
       return AvailableDirectionsAtGridRef(x, y);
+    }
+
+    public float DistanceBetween (Vector2 point1, Vector2 point2)
+    {
+      if ( point1.x - point2.x > (float)numColumns / 2 ) {
+        Debug.Log("DistanceBetween: Wrapping " + point1 + " " + point2);
+        return Vector2.SqrMagnitude ( point1 - point2 - new Vector2 ((float)numColumns, 0) );
+      } else if ( point2.x - point1.x > (float)numColumns / 2 ) {
+        Debug.Log("DistanceBetween: Wrapping " + point1 + " " + point2);
+        return Vector2.SqrMagnitude ( point2 - point1 - new Vector2 ((float)numColumns, 0) );
+      } else {
+        return Vector2.SqrMagnitude(point1 - point2);
+      }
     }
 
 }

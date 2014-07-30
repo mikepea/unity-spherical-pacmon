@@ -39,7 +39,6 @@ public class CreateMap : MonoBehaviour
         int numRows = map.Rows();
 
         int bottomPadding = 140;
-        int leftPadding = 100;
 
         Texture2D texture = new Texture2D (tileSize * 360 / tileDegrees, tileSize * 180 / tileDegrees);
 

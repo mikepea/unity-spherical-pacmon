@@ -6,10 +6,6 @@ public class AddRegularPills : MonoBehaviour
 
     public GameObject pillObject;
     public GameObject powerPillObject;
-    private float latitudeMin = GlobalGameDetails.minAngleY;
-    private float latitudeMax = GlobalGameDetails.maxAngleY;
-
-    private float gridSpacing = GlobalGameDetails.cellSpacing;
 
     void Start ()
     {
@@ -26,7 +22,6 @@ public class AddRegularPills : MonoBehaviour
                     float latitude = latLongRef [0];
                     float longitude = latLongRef [1];
 
-                    Debug.Log ("Placing pill at latitude: " + latitude + ", longitude: " + longitude);
                     // TODO: DRY this out - we should get GlobalGameDetails to return
                     // a SphericalCoordinates instance for consistency
                     SphericalCoordinates sc = new SphericalCoordinates (

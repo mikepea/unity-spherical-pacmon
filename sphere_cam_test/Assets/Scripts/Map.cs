@@ -188,11 +188,6 @@ public class Map
 
     public Vector2 GridReferenceAtLatitudeLongitude (float latitude, float longitude)
     {
-        // grid position is centered on lat/long, so:
-        // grid [0,0] is latitude +72.5 to +67.5, longitude +177.5 to -177.5
-        // grid [max,0] is latitude +72.5 to +67.5, longitude +175 to +177.5
-        // grid [0,max] is latitude -67.5 to -72.5 , longitude +177.5 to +177.5
-
         if (latitude > maxLatitude) {
             latitude = maxLatitude;
         } else if (latitude < minLatitude) {
@@ -201,11 +196,8 @@ public class Map
 
         longitude = NormalizeLongitude (longitude);
 
-        //float latitudeRange = maxLatitude - minLatitude;
         latitude = latitude + (gridSpacing / 2);
-        //int gridY = Mathf.FloorToInt ((latitudeRange - (latitude - minLatitude)) / gridSpacing);
         int gridY = Mathf.FloorToInt ((latitude - minLatitude) / gridSpacing);
-        //int intLatitude = Mathf.FloorToInt (Mathf.Round (latitude + gridSpacing / 2));
         int intLongitude = Mathf.FloorToInt (Mathf.Round (longitude + gridSpacing / 2));
         int gridX = ((intLongitude + 180) % 360) / intGridSpacing;
         return new Vector2 ( gridX, gridY );
@@ -243,10 +235,6 @@ public class Map
             return true;
         } else if (y < 0) {
             return true;
-        } else if (x < 0) {
-            return WallAtGridReference(x + numColumns, y);
-        } else if (x >= numColumns ) {
-            return WallAtGridReference(x - numColumns, y);
         } else if (IsEntityAtGridRef("Wall", x, y)) {
             return true;
         } else {

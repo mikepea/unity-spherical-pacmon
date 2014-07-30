@@ -17,7 +17,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     public Texture2D scaredSprite;
     public Texture2D deadSprite;
 
-    public float speed = 0.5F;
+    public float speed = 20.0F;
     public bool humanControl;
 
     private float currentAngleX = 0F;
@@ -286,13 +286,24 @@ public class PlayerSphericalMovement : MonoBehaviour
         }
     }
 
+    Vector2 PlayerSpeed ()
+    {
+        float baseSpeed = speed;
+
+        if ( isDead == true ) {
+          baseSpeed = 50;
+        }
+        Vector2 newSpeed = new Vector2 (
+                (baseSpeed * Time.deltaTime * map.LatitudeSpeedAdjust (currentAngleY)),
+                (baseSpeed * Time.deltaTime)
+            );
+        return newSpeed;
+    }
+
     void UpdateNextPlayerPosition ()
     {
         playerGridRef = map.GridReferenceAtLatitudeLongitude (currentAngleY, currentAngleX);
-        Vector2 nextMoveSpeed = new Vector2 (
-                (speed * Time.deltaTime * map.LatitudeSpeedAdjust (currentAngleY)),
-                (speed * Time.deltaTime)
-        );
+        Vector2 nextMoveSpeed = PlayerSpeed();
 
         ChangeDirectionIfAble (nextMoveSpeed);
 

@@ -25,7 +25,6 @@ public class PlayerSphericalMovement : MonoBehaviour
     private float maxAngleY = GlobalGameDetails.maxAngleY;
     private float minAngleY = GlobalGameDetails.minAngleY;
     private Vector2 playerGridRef = new Vector2 (0, 0);
-    private int lastAutoDirectionChangeTime = 0;
 
     private bool isScared = false;
     private bool isDead = false;
@@ -222,7 +221,6 @@ public class PlayerSphericalMovement : MonoBehaviour
         if (playerIntendedDirection.y != 0) {
             // player is going east/west, wants to go north/south
             if (map.WallAtGridReference ((int)playerGridRef.x, (int)playerGridRef.y + (int)playerIntendedDirection.y)) {
-                lastAutoDirectionChangeTime = 0;
             } else if (dist < nextMoveSpeed.x) {
                 // can turn -- we're on/about to be on a grid line
                 currentAngleX = Mathf.Round (currentAngleX + (playerDirection.x * dist)); // normalise angle to grid
@@ -231,7 +229,6 @@ public class PlayerSphericalMovement : MonoBehaviour
         } else if (playerIntendedDirection.x != 0) {
             // player is going north/south, wants to go east/west
             if (map.WallAtGridReference (map.NormalizeGridX ((int)playerGridRef.x + (int)playerIntendedDirection.x), (int)playerGridRef.y)) {
-                lastAutoDirectionChangeTime = 0;
             } else if (dist < nextMoveSpeed.y) {
                 // can turn -- we're on/about to be on a grid line
                 currentAngleY = Mathf.Round (currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
@@ -254,7 +251,6 @@ public class PlayerSphericalMovement : MonoBehaviour
             } else {
               playerDirection = playerIntendedDirection; // baddies dont stop
             }
-            lastAutoDirectionChangeTime = 0;
         } else if (playerDirection.x != 0
             && dist < nextMoveSpeed.x
             && map.WallAtGridReference (map.NormalizeGridX ((int)playerGridRef.x + (int)playerDirection.x), (int)playerGridRef.y)
@@ -266,7 +262,6 @@ public class PlayerSphericalMovement : MonoBehaviour
             } else {
               playerDirection = playerIntendedDirection; // baddies dont stop
             }
-            lastAutoDirectionChangeTime = 0;
         } else {
             // not about to hit wall, move as normal
             currentAngleX = (currentAngleX + playerDirection.x * nextMoveSpeed.x) % 360;

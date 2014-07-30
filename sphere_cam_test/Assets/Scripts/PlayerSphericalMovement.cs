@@ -17,6 +17,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     public Texture2D scaredSprite;
     public Texture2D deadSprite;
 
+    public Vector2 playerScatterSpot;
+
     public float speed = 20.0F;
     public bool humanControl;
 
@@ -97,7 +99,7 @@ public class PlayerSphericalMovement : MonoBehaviour
           List<Vector2> availableDirections = map.AvailableDirectionsAtGridRef(playerGridRef);
           Vector2 target;
           if ( isScared == true ) {
-            target = new Vector2 (0,0); // TODO: scatter area per baddy.
+            target = playerScatterSpot;
           } else if ( isDead == true ) {
             target = map.FindEntityGridRef("Baddy2Start"); // the baddy home box centre
           } else {

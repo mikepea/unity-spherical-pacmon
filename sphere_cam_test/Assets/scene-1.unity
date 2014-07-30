@@ -138,6 +138,7 @@ MonoBehaviour:
   regularSprite: {fileID: 2800000, guid: c22a8a70340dd40c38ce249154ea04a7, type: 3}
   scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
   deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
+  playerScatterSpot: {x: 35, y: 0}
   speed: 10
   humanControl: 0
 --- !u!23 &172795351
@@ -455,7 +456,8 @@ MonoBehaviour:
   regularSprite: {fileID: 2800000, guid: 7f49e195c923d45a7ad6a285d001d7ea, type: 3}
   scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
   deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
-  speed: 20
+  playerScatterSpot: {x: 65, y: 28}
+  speed: 15
   humanControl: 0
 --- !u!23 &705191609
 Renderer:
@@ -886,7 +888,8 @@ MonoBehaviour:
   regularSprite: {fileID: 2800000, guid: fb77cfbee0f7448caaa92a2ce64c2b85, type: 3}
   scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
   deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
-  speed: 5
+  playerScatterSpot: {x: 35, y: 28}
+  speed: 15
   humanControl: 0
 --- !u!23 &1190214196
 Renderer:
@@ -1076,6 +1079,7 @@ MonoBehaviour:
   regularSprite: {fileID: 2800000, guid: fd92666853c5e46d4adefa88ce6ddf1f, type: 3}
   scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
   deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
+  playerScatterSpot: {x: 65, y: 0}
   speed: 10
   humanControl: 0
 --- !u!23 &1341022213
@@ -1244,7 +1248,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numPills: 0
   playerMaxLives: 3
-  chaseMode: 0
   gameOverScene: title-scene
 --- !u!114 &1527557691
 MonoBehaviour:
@@ -1263,6 +1266,7 @@ MonoBehaviour:
   regularSprite: {fileID: 2800000, guid: a5ab22596cb4747d8ac8a3ba31158152, type: 3}
   scaredSprite: {fileID: 2800000, guid: a5ab22596cb4747d8ac8a3ba31158152, type: 3}
   deadSprite: {fileID: 2800000, guid: a5ab22596cb4747d8ac8a3ba31158152, type: 3}
+  playerScatterSpot: {x: 0, y: 0}
   speed: 20
   humanControl: 1
 --- !u!54 &1527557692

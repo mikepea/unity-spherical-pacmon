@@ -331,17 +331,7 @@ public class Map
     public float LatitudeSpeedAdjust (float angle)
     {
         float a = Mathf.Abs (angle);
-        if (a >= 80) {
-            return 6.0F;
-        } else if (a >= 70) {
-            return 3.0F;
-        } else if (a >= 60) {
-            return 2.0F;
-        } else if (a >= 50) {
-            return 1.5F;
-        } else {
-            return 1.0F;
-        }
+        return ( 1.0F / Mathf.Cos(degreesToRadians(angle)) );
     }
 
     public float radiansToDegrees (float rads)

@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e07b3c00ca6403390a67b8b0ed14fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pillObject: {fileID: 100000, guid: 0b6ef070fb5934470b35c71c5454a1d8, type: 2}
+  pillObject: {fileID: 100000, guid: 9c6465d3411624d4399ad00f9c80f447, type: 2}
   powerPillObject: {fileID: 100000, guid: ec5f6143fb62a42c89022a6f5f955e52, type: 2}
 --- !u!1 &260144989
 GameObject:

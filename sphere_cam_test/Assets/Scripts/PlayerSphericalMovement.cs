@@ -95,6 +95,19 @@ public class PlayerSphericalMovement : MonoBehaviour
         return direction;
     }
 
+    Vector2 TargetLookahead (Vector2 dir)
+    {
+        if ( dir == Vector2.up ) {
+            return new Vector2 (-1, 0); // emulate 'up bug'
+        } else if ( dir == - Vector2.up) {
+            return new Vector2 (1, -1);
+        } else if ( dir == Vector2.right) {
+            return new Vector2 (1, 1);
+        } else {
+            return new Vector2 (-1, -1);
+        }
+    }
+
     Vector2 NextComputerDirection (Vector2 direction)
     {
 
@@ -103,7 +116,7 @@ public class PlayerSphericalMovement : MonoBehaviour
           return direction;
         } else {
 
-          // we are a baddy
+          // we are a baddy, work out which tile we are targetting
           List<Vector2> availableDirections = map.AvailableDirectionsAtGridRef(playerGridRef);
           Vector2 target;
           if ( isScared == true ) {
@@ -111,8 +124,20 @@ public class PlayerSphericalMovement : MonoBehaviour
           } else if ( isDead == true ) {
             target = map.FindEntityGridRef("Baddy2Start"); // the baddy home box centre
           } else {
-            // TODO: Different hunt target per baddy
-            target = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().GridRef();
+            // attack!
+            Vector2 playerLoc = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().GridRef();
+            Vector2 playerDir = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().PlayerDirection();
+            if ( this.name == "Baddy1" ) {
+              target = playerLoc;
+            } else if ( this.name == "Baddy2" ) {
+              target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (4, 4));
+            } else if ( this.name == "Baddy3" ) {
+              target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (6, 6));
+            } else if ( this.name == "Baddy4" ) {
+              target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (2, 2));
+            } else {
+              target = playerLoc;
+            }
           }
 
           if ( map.IsEntityAtGridRef("BaddyDoor", playerGridRef - Vector2.up ) && ! isDead ) {
@@ -148,6 +173,11 @@ public class PlayerSphericalMovement : MonoBehaviour
     Vector2 GridRef ()
     {
         return playerGridRef;
+    }
+
+    Vector2 PlayerDirection ()
+    {
+        return playerDirection;
     }
 
     void Stop ()

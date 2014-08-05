@@ -6,8 +6,11 @@
       <File FileName="Assets/Scripts/Map.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/EnterNextScene.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/GlobalGameDetails.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PlayerSphericalMovement.cs" Line="125" Column="47" />
+      <File FileName="Assets/Scripts/PlayerSphericalMovement.cs" Line="407" Column="1" />
       <File FileName="Assets/Scripts/SphericalCoordinates.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/AddRegularPills.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/EnsureRotated.cs" Line="16" Column="1" />
+      <File FileName="Assets/Scripts/RotateSphere.cs" Line="9" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

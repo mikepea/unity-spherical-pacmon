@@ -32,9 +32,16 @@ public class PlayerSphericalMovement : MonoBehaviour
     private bool isDead = false;
     private bool isHome = true;
     private int ticksInScaredMode = 0;
-    private int maxTicksInScaredMode = 200;
+    private int maxTicksInScaredMode = 300;
+    private int alertScaredModeTimeout = 50;
 
     public Map map = new Map (GlobalGameDetails.mapName);
+
+    private int tileSize = 200;
+    private int tile = 0;
+    private int lastTileChangeTicks = 0;
+    private int maxLastTileChangeTicks = 5;
+    private bool playerTileBounceDirection = true;
 
     void Start ()
     {
@@ -43,11 +50,21 @@ public class PlayerSphericalMovement : MonoBehaviour
         PutPlayerAtStartPosition ();
         isDead = false;
         isScared = false;
+
+        Texture2D sprite = new Texture2D (200, 200);
+        Color[] tileColor = regularSprite.GetPixels(tileSize * tile, 0, tileSize, tileSize);
+        sprite.SetPixels(tileColor);
+        sprite.Apply();
+        renderer.material.mainTexture = sprite;
+
     }
 
     void PutPlayerAtStartPosition ()
     {
         playerGridRef = map.FindEntityGridRef (startMarkerTag);
+        if ( playerGridRef == new Vector2 (-1, -1) ) {
+            this.gameObject.SetActive (false);
+        }
         float[] mapRef = map.LatitudeLongitudeAtGridReference (playerGridRef);
         currentAngleX = mapRef [1];
         currentAngleY = mapRef [0];
@@ -226,8 +243,81 @@ public class PlayerSphericalMovement : MonoBehaviour
             map.degreesToRadians (currentAngleY)
         ).toCartesian;
         transform.LookAt (Vector3.zero);
-        TransformPlayerForSpriteAnimation ();
+        UpdatePlayerAnimation();
     }
+    
+    void UpdatePlayerAnimation() {
+      if ( this.gameObject.tag == "Player" ) {
+        TransformPlayerForSpriteAnimation ();
+        UpdatePlayerSprite();
+      } else {
+        UpdateBaddySprite();
+      }
+    }
+
+    void UpdatePlayerSprite() {
+      int numPlayerTiles = 6;
+      Texture2D sprite = new Texture2D (200, 200);
+
+      if ( ! ( playerDirection == Vector2.zero ) ) {
+          lastTileChangeTicks++;
+          if ( lastTileChangeTicks > maxLastTileChangeTicks ) {
+              if ( playerTileBounceDirection ) {
+                tile++;
+              } else {
+                tile--;
+              }
+              if ( tile == 0 ) {
+                playerTileBounceDirection = true;
+              } else if ( tile == numPlayerTiles - 1 ) {
+                playerTileBounceDirection = false;
+              }
+
+              Color[] tileColor = regularSprite.GetPixels(tileSize * tile, 0, tileSize, tileSize);
+              sprite.SetPixels(tileColor);
+              sprite.Apply();
+              renderer.material.mainTexture = sprite;
+         }
+      }
+    }
+
+    void UpdateBaddySprite() {
+      int tile = 0;
+      Texture2D baseSprite;
+      Texture2D sprite = new Texture2D (200, 200);
+
+      if ( isDead == true ) {
+        baseSprite = deadSprite;
+      } else if ( isScared == true ) {
+        baseSprite = scaredSprite;
+        if ( ( maxTicksInScaredMode - ticksInScaredMode ) < alertScaredModeTimeout )  {
+          if ( ( ticksInScaredMode / 10 ) % 2 == 1 ) {
+            tile = 1;
+          }
+        }
+      } else {
+        baseSprite = regularSprite;
+        if ( playerDirection == Vector2.up ) {
+          tile = 0;
+        } else if ( playerDirection == Vector2.right ) {
+          tile = 1;
+        } else if ( playerDirection == - Vector2.up ) {
+          tile = 2;
+        } else if ( playerDirection == - Vector2.right ) {
+          tile = 3;
+        } else {
+          tile = 0;
+        }
+
+      }
+
+      Color[] tileColor = baseSprite.GetPixels(tileSize * tile, 0, tileSize, tileSize);
+      sprite.SetPixels(tileColor);
+      sprite.Apply();
+      renderer.material.mainTexture = sprite;
+
+    }
+
 
     void TransformPlayerForSpriteAnimation ()
     {
@@ -235,22 +325,12 @@ public class PlayerSphericalMovement : MonoBehaviour
         if (playerDirection == Vector2.zero) {
             directionToFace = playerIntendedDirection;
         }
-        if (this.gameObject.tag == "Player") {
-            if (directionToFace.x < 0) {
-                transform.Rotate (Vector3.forward, 180);
-            } else if (directionToFace.y > 0) {
-                transform.Rotate (Vector3.forward, 90);
-            } else if (directionToFace.y < 0) {
-                transform.Rotate (Vector3.forward, 270);
-            }
-        } else if ( IAmABaddy() ) {
-            if ( isDead == true ) {
-              renderer.material.mainTexture = deadSprite;
-            } else if ( isScared == true ) {
-              renderer.material.mainTexture = scaredSprite;
-            } else {
-              renderer.material.mainTexture = regularSprite;
-            }
+        if (directionToFace.x < 0) {
+            transform.Rotate (Vector3.forward, 180);
+        } else if (directionToFace.y > 0) {
+            transform.Rotate (Vector3.forward, 90);
+        } else if (directionToFace.y < 0) {
+            transform.Rotate (Vector3.forward, 270);
         }
 
     }

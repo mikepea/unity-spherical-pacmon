@@ -17,7 +17,6 @@ public class CreateMap : MonoBehaviour
 
         Map map = new Map (GlobalGameDetails.mapName);
 
-        //Texture2D baseTexture = map.UVMappedTexture (360 * 5, 180 * 5, xOffset, yOffset, enableGridLines);
         Texture2D texture = TileBasedMap(map);
 
         Shader mapShader = Shader.Find("Diffuse");

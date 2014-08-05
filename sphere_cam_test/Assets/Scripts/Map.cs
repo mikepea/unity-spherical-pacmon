@@ -256,48 +256,6 @@ public class Map
         return WallAtGridReference(x, y);
     }
 
-    public Texture2D UVMappedTexture (int xPixels, int yPixels, int xOffsetPixels, int yOffsetPixels, bool enableGridLines)
-    {
-        Texture2D texture = new Texture2D (xPixels, yPixels);
-        int xScaling = xPixels / 360;
-        int yScaling = yPixels / 180;
-        int fiveDegrees = 5 * xPixels / 360;
-
-        Debug.Log ("xPixels: " + xPixels + ", yPixels: " + yPixels);
-        Debug.Log ("xScaling: " + xScaling + ", yScaling: " + yScaling);
-        Debug.Log ("fiveDegrees: " + fiveDegrees);
-
-        for (int x = 0; x < xPixels; x++) {
-            int gridX = x / (xScaling * intGridSpacing);
-            int xOffsetted = x - xOffsetPixels;
-            if (xOffsetted < 0) {
-                xOffsetted += xPixels;
-            }
-
-            for (int y = 0; y < yPixels; y++) {
-                int gridY = gridYAtPixelY (y, yPixels);
-                int yOffsetted = y - yOffsetPixels;
-                if (yOffsetted < 0) {
-                    yOffsetted += yPixels;
-                }
-                if (gridY < 0 || gridY >= numRows) {
-                    texture.SetPixel (xOffsetted, yOffsetted, Color.red);
-                } else if (WallAtGridReference (gridX, gridY)) {
-                    texture.SetPixel (xOffsetted, yOffsetted, Color.blue);
-                } else {
-                    texture.SetPixel (xOffsetted, yOffsetted, Color.black);
-                }
-                if (enableGridLines) {
-                    if (y % fiveDegrees == 0 || x % fiveDegrees == 0) {
-                        texture.SetPixel (xOffsetted, yOffsetted, Color.white);
-                    }
-                }
-            }
-        }
-        return texture;
-
-    }
-
     private int gridYAtPixelY (int y, int yTotalPixels)
     {
         int yScaling = yTotalPixels / 180;

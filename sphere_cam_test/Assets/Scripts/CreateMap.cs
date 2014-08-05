@@ -40,13 +40,16 @@ public class CreateMap : MonoBehaviour
 
         int bottomPadding = 140;
 
+        int numTilesW = mapTiles.width / tileSize;
+        int numTilesH = mapTiles.height / tileSize;
+
         Texture2D texture = new Texture2D (tileSize * 360 / tileDegrees, tileSize * 180 / tileDegrees);
 
         for ( int x = 0; x < numColumns; x++ ) {
             for ( int y = 0; y < numRows; y++ ) {
               int tileNum = MapTileReferenceNumber(map, x, y);
-              int tilesX = ( (tileNum - 1) % 4 ) * tileSize;
-              int tilesY = ( 5 - ( (tileNum - 1) / 4 ) ) * tileSize;
+              int tilesX = ( (tileNum - 1) % numTilesW ) * tileSize;
+              int tilesY = ( (numTilesH - 1) - ( (tileNum - 1) / 4 ) ) * tileSize;
               //Debug.Log("Tile: " + tileNum + ", X: " + tilesX + ", Y: " + tilesY);
               Color[] tile = mapTiles.GetPixels(tilesX, tilesY, tileSize, tileSize);
               int textureX = x * tileSize;
@@ -65,7 +68,7 @@ public class CreateMap : MonoBehaviour
 
         if ( ! map.WallAtGridReference(x, y) ) {
           // our 'blank map tile'
-          return 21;
+          return 32;
         }
 
         if ( map.WallAtGridReference(x - 1, y) ) {
@@ -80,27 +83,87 @@ public class CreateMap : MonoBehaviour
         if ( map.WallAtGridReference(x, y - 1) ) {
           tileNum += 8;
         }
+
         if ( tileNum == 0 ) {
           tileNum = 16;
         }
+
         if ( tileNum == 3 ) {
-          if ( ! map.WallAtGridReference(x-1, y+1) ) {
-            tileNum = 17;
-          }
+          if ( ! map.WallAtGridReference(x-1, y+1) ) { tileNum = 17; }
         } else if ( tileNum == 6 ) {
-          if ( ! map.WallAtGridReference(x+1, y+1) ) {
-            tileNum = 18;
-          }
+          if ( ! map.WallAtGridReference(x+1, y+1) ) { tileNum = 18; }
         } else if ( tileNum == 9 ) {
-          if ( ! map.WallAtGridReference(x-1, y-1) ) {
-            tileNum = 19;
-          }
+          if ( ! map.WallAtGridReference(x-1, y-1) ) { tileNum = 19; }
         } else if ( tileNum == 12 ) {
-          if ( ! map.WallAtGridReference(x+1, y-1) ) {
-            tileNum = 20;
-          }
+          if ( ! map.WallAtGridReference(x+1, y-1) ) { tileNum = 20; }
+        } else if ( tileNum == 7 ) {
+          if ( ! map.WallAtGridReference(x-1, y+1) && ! map.WallAtGridReference(x+1, y+1) ) { tileNum = 21; }
+          else if ( ! map.WallAtGridReference(x-1, y+1) && map.WallAtGridReference(x+1, y+1) ) { tileNum = 37; }
+          else if ( map.WallAtGridReference(x-1, y+1) && ! map.WallAtGridReference(x+1, y+1) ) { tileNum = 41; }
+        } else if ( tileNum == 11 ) {
+          if ( ! map.WallAtGridReference(x-1, y-1) && ! map.WallAtGridReference(x-1, y+1) ) { tileNum = 24; }
+          else if ( ! map.WallAtGridReference(x-1, y-1) && map.WallAtGridReference(x-1, y+1) ) { tileNum = 40; }
+          else if ( map.WallAtGridReference(x-1, y-1) && ! map.WallAtGridReference(x-1, y+1) ) { tileNum = 44; }
+        } else if ( tileNum == 13 ) {
+          if ( ! map.WallAtGridReference(x-1, y-1) && ! map.WallAtGridReference(x+1, y-1) ) { tileNum = 23; }
+          else if ( ! map.WallAtGridReference(x-1, y-1) && map.WallAtGridReference(x+1, y-1) ) { tileNum = 43; }
+          else if ( map.WallAtGridReference(x-1, y-1) && ! map.WallAtGridReference(x+1, y-1) ) { tileNum = 39; }
+        } else if ( tileNum == 14 ) {
+          if ( ! map.WallAtGridReference(x+1, y-1) && ! map.WallAtGridReference(x+1, y+1) ) { tileNum = 22; }
+          else if ( ! map.WallAtGridReference(x+1, y-1) && map.WallAtGridReference(x+1, y+1) ) { tileNum = 42; }
+          else if ( map.WallAtGridReference(x+1, y-1) && ! map.WallAtGridReference(x+1, y+1) ) { tileNum = 38; }
+        } else if ( tileNum == 15 ) {
+          if ( ! map.WallAtGridReference(x-1, y+1) &&
+               ! map.WallAtGridReference(x+1, y+1) &&
+               ! map.WallAtGridReference(x+1, y-1) &&
+               ! map.WallAtGridReference(x-1, y-1)) { tileNum = 31; }
+          else if ( map.WallAtGridReference(x-1, y+1) &&
+               ! map.WallAtGridReference(x+1, y+1) &&
+               ! map.WallAtGridReference(x+1, y-1) &&
+               ! map.WallAtGridReference(x-1, y-1)) { tileNum = 25; }
+          else if ( ! map.WallAtGridReference(x-1, y+1) &&
+               map.WallAtGridReference(x+1, y+1) &&
+               ! map.WallAtGridReference(x+1, y-1) &&
+               ! map.WallAtGridReference(x-1, y-1)) { tileNum = 26; }
+          else if ( ! map.WallAtGridReference(x-1, y+1) &&
+               ! map.WallAtGridReference(x+1, y+1) &&
+               map.WallAtGridReference(x+1, y-1) &&
+               ! map.WallAtGridReference(x-1, y-1)) { tileNum = 27; }
+          else if ( ! map.WallAtGridReference(x-1, y+1) &&
+               ! map.WallAtGridReference(x+1, y+1) &&
+               ! map.WallAtGridReference(x+1, y-1) &&
+               map.WallAtGridReference(x-1, y-1)) { tileNum = 28; }
+          else if ( ! map.WallAtGridReference(x-1, y+1) &&
+               map.WallAtGridReference(x+1, y+1) &&
+               ! map.WallAtGridReference(x+1, y-1) &&
+               map.WallAtGridReference(x-1, y-1)) { tileNum = 29; }
+          else if ( map.WallAtGridReference(x-1, y+1) &&
+               ! map.WallAtGridReference(x+1, y+1) &&
+               map.WallAtGridReference(x+1, y-1) &&
+               ! map.WallAtGridReference(x-1, y-1)) { tileNum = 30; }
+          else if ( ! map.WallAtGridReference(x-1, y+1) &&
+               ! map.WallAtGridReference(x+1, y+1) &&
+               map.WallAtGridReference(x+1, y-1) &&
+               map.WallAtGridReference(x-1, y-1)) { tileNum = 45; }
+          else if ( map.WallAtGridReference(x-1, y+1) &&
+               ! map.WallAtGridReference(x+1, y+1) &&
+               ! map.WallAtGridReference(x+1, y-1) &&
+               map.WallAtGridReference(x-1, y-1)) { tileNum = 46; }
+          else if ( map.WallAtGridReference(x-1, y+1) &&
+               map.WallAtGridReference(x+1, y+1) &&
+               ! map.WallAtGridReference(x+1, y-1) &&
+               ! map.WallAtGridReference(x-1, y-1)) { tileNum = 47; }
+          else if ( ! map.WallAtGridReference(x-1, y+1) &&
+               map.WallAtGridReference(x+1, y+1) &&
+               map.WallAtGridReference(x+1, y-1) &&
+               ! map.WallAtGridReference(x-1, y-1)) { tileNum = 48; }
+          else if ( ! map.WallAtGridReference(x-1, y+1) ) { tileNum = 25; }
+          else if ( ! map.WallAtGridReference(x+1, y+1) ) { tileNum = 26; }
+          else if ( ! map.WallAtGridReference(x+1, y-1) ) { tileNum = 27; }
+          else if ( ! map.WallAtGridReference(x-1, y-1) ) { tileNum = 28; }
         }
         return tileNum;
+
     }
 
 }

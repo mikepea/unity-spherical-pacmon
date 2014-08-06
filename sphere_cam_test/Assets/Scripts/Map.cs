@@ -170,7 +170,7 @@ public class Map
                 }
             }
         }
-        throw new System.InvalidOperationException ("Entity " + entityName + " not found");
+        return new Vector2 (-1, -1);
     }
 
     public bool IsEntityAtGridRef (string entityName, int x, int y)

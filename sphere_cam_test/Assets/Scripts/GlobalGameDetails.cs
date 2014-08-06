@@ -10,6 +10,7 @@ public class GlobalGameDetails : MonoBehaviour
     public static int mapRows = 29;
     public static int mapColumns = 72;
 
+    //public static string mapName = "logo";
     public static string mapName = "map3";
 
     public Texture2D mapTiles;

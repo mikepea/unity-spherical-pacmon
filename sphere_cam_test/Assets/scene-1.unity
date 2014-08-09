@@ -140,6 +140,7 @@ MonoBehaviour:
   playerScatterSpot: {x: 35, y: 0}
   speed: 10
   humanControl: 0
+  animatePlayer: 0
 --- !u!23 &172795351
 Renderer:
   m_ObjectHideFlags: 0
@@ -457,6 +458,7 @@ MonoBehaviour:
   playerScatterSpot: {x: 65, y: 28}
   speed: 15
   humanControl: 0
+  animatePlayer: 0
 --- !u!23 &705191609
 Renderer:
   m_ObjectHideFlags: 0
@@ -888,6 +890,7 @@ MonoBehaviour:
   playerScatterSpot: {x: 35, y: 28}
   speed: 15
   humanControl: 0
+  animatePlayer: 0
 --- !u!23 &1190214196
 Renderer:
   m_ObjectHideFlags: 0
@@ -1078,6 +1081,7 @@ MonoBehaviour:
   playerScatterSpot: {x: 65, y: 0}
   speed: 10
   humanControl: 0
+  animatePlayer: 0
 --- !u!23 &1341022213
 Renderer:
   m_ObjectHideFlags: 0
@@ -1307,6 +1311,7 @@ MonoBehaviour:
   playerScatterSpot: {x: 0, y: 0}
   speed: 20
   humanControl: 1
+  animatePlayer: 0
 --- !u!54 &1527557692
 Rigidbody:
   m_ObjectHideFlags: 0

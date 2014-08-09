@@ -23,6 +23,7 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     public float speed = 20.0F;
     public bool humanControl;
+    public bool animatePlayer;
 
     private float currentAngleX = 0F;
     private float currentAngleY = 0F;
@@ -270,6 +271,11 @@ public class PlayerSphericalMovement : MonoBehaviour
     }
 
     void UpdatePlayerSprite() {
+
+      if ( ! animatePlayer ) {
+        return;
+      }
+
       int numPlayerTiles = 6;
       Texture2D sprite = new Texture2D (200, 200);
 
@@ -296,6 +302,11 @@ public class PlayerSphericalMovement : MonoBehaviour
     }
 
     void UpdateBaddySprite() {
+
+      if ( ! animatePlayer ) {
+        return;
+      }
+
       int tile = 0;
       Texture2D baseSprite;
       Texture2D sprite = new Texture2D (200, 200);

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using InControl;
 
 public class PlayerSphericalMovement : MonoBehaviour
 {
@@ -10,8 +11,9 @@ public class PlayerSphericalMovement : MonoBehaviour
     private Vector2 playerIntendedDirection = new Vector2 (0, 0);
 
     public string startMarkerTag;
-    public string inputHorizontalTag;
-    public string inputVerticalTag;
+
+    public int inputManagerDeviceIndex;
+    private InputDevice inputdev;
 
     public Texture2D regularSprite;
     public Texture2D scaredSprite;
@@ -57,6 +59,8 @@ public class PlayerSphericalMovement : MonoBehaviour
         sprite.Apply();
         renderer.material.mainTexture = sprite;
 
+        inputdev = InputManager.Devices[inputManagerDeviceIndex];
+
     }
 
     void PutPlayerAtStartPosition ()
@@ -97,19 +101,23 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     Vector2 ProcessInputsIntoDirection (Vector2 direction)
     {
-        float h = Input.GetAxisRaw (inputHorizontalTag);
-        float v = Input.GetAxisRaw (inputVerticalTag);
+        if ( humanControl ) {
+          float h = inputdev.Direction.X;
+          float v = inputdev.Direction.Y;
 
-        if (h == 1) {
-            direction = Vector2.right;
-        } else if (h == -1) {
-            direction = (- Vector2.right);
-        } else if (v == 1) {
-            direction = Vector2.up;
-        } else if (v == -1) {
-            direction = (- Vector2.up);
+          if (h == 1) {
+              direction = Vector2.right;
+          } else if (h == -1) {
+              direction = (- Vector2.right);
+          } else if (v == 1) {
+              direction = Vector2.up;
+          } else if (v == -1) {
+              direction = (- Vector2.up);
+          }
         }
-        return direction;
+
+        return NextComputerDirection (playerDirection, direction);
+
     }
 
     Vector2 TargetLookahead (Vector2 dir)
@@ -125,12 +133,14 @@ public class PlayerSphericalMovement : MonoBehaviour
         }
     }
 
-    Vector2 NextComputerDirection (Vector2 direction)
+    Vector2 NextComputerDirection (Vector2 current, Vector2 intended)
     {
+
+        Vector2 direction = current;
 
         if ( this.gameObject.tag == "Player" ) {
           // we don't support computer control of player
-          return direction;
+          return intended;
         } else {
 
           // we are a baddy, work out which tile we are targetting
@@ -164,14 +174,22 @@ public class PlayerSphericalMovement : MonoBehaviour
 
           if ( availableDirections.Count == 1 ) {
             direction = availableDirections[0]; // always take only available dir.
-          } else if ( availableDirections.Count == 2 && direction != Vector2.zero ) {
-            availableDirections.Remove(-direction); // cannot reverse
+          } else if ( availableDirections.Count == 2 && current != Vector2.zero ) {
+            availableDirections.Remove(-current); // cannot reverse
             direction = availableDirections[0];
           } else {
             // work out which direction takes us closest to target
             float lowest = 100000000.0F;
-            availableDirections.Remove(-direction); // cannot reverse
+            availableDirections.Remove(-current); // cannot reverse
+
             foreach ( Vector2 dir in availableDirections) {
+
+              if ( humanControl && dir == intended ) {
+                // override with the choice of the player.
+                direction = intended;
+                break;
+              }
+
               Vector2 newLocation = playerGridRef + dir;
               float dist = map.DistanceBetween(newLocation, target);
               Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
@@ -206,11 +224,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     void FixedUpdate ()
     {
 
-        if (humanControl == true) {
-            playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
-        } else {
-            playerIntendedDirection = NextComputerDirection (playerDirection);
-        }
+        playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
 
         if ( IAmABaddy() ) {
           UpdateBaddyState ();

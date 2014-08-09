@@ -133,8 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: Baddy4Start
-  inputHorizontalTag: P5Horizontal
-  inputVerticalTag: P5Vertical
+  inputManagerDeviceIndex: 4
   regularSprite: {fileID: 2800000, guid: c22a8a70340dd40c38ce249154ea04a7, type: 3}
   scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
   deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
@@ -451,8 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: Baddy1Start
-  inputHorizontalTag: P2Horizontal
-  inputVerticalTag: P2Vertical
+  inputManagerDeviceIndex: 1
   regularSprite: {fileID: 2800000, guid: 7f49e195c923d45a7ad6a285d001d7ea, type: 3}
   scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
   deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
@@ -883,8 +881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: Baddy2Start
-  inputHorizontalTag: P3Horizontal
-  inputVerticalTag: P3Vertical
+  inputManagerDeviceIndex: 2
   regularSprite: {fileID: 2800000, guid: fb77cfbee0f7448caaa92a2ce64c2b85, type: 3}
   scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
   deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
@@ -1074,8 +1071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: Baddy3Start
-  inputHorizontalTag: P4Horizontal
-  inputVerticalTag: P4Vertical
+  inputManagerDeviceIndex: 3
   regularSprite: {fileID: 2800000, guid: fd92666853c5e46d4adefa88ce6ddf1f, type: 3}
   scaredSprite: {fileID: 2800000, guid: 54d3c5c996cd64139adc73f67a42262d, type: 3}
   deadSprite: {fileID: 2800000, guid: b1fa8c098d4b14579bce2e785686980d, type: 3}
@@ -1122,6 +1118,89 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1341022209}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1407099956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1407099957}
+  - 23: {fileID: 1407099960}
+  - 102: {fileID: 1407099959}
+  - 114: {fileID: 1407099958}
+  m_Layer: 0
+  m_Name: Score
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1407099957
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1407099956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .5, y: 0, z: 0}
+  m_LocalScale: {x: .100000016, y: .100000001, z: .100000016}
+  m_Children: []
+  m_Father: {fileID: 1793603776}
+  m_RootOrder: 6
+--- !u!114 &1407099958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1407099956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2bb7ea31b8b4878af36669896736f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateRight: 0
+--- !u!102 &1407099959
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1407099956}
+  m_Text: Hello
+  m_OffsetZ: 0
+  m_CharacterSize: .5
+  m_LineSpacing: 1
+  m_Anchor: 4
+  m_Alignment: 1
+  m_TabSize: 4
+  m_FontSize: 0
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &1407099960
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1407099956}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!1 &1527557685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,8 +1300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: PlayerStart
-  inputHorizontalTag: Horizontal
-  inputVerticalTag: Vertical
+  inputManagerDeviceIndex: 0
   regularSprite: {fileID: 2800000, guid: a5ab22596cb4747d8ac8a3ba31158152, type: 3}
   scaredSprite: {fileID: 2800000, guid: a5ab22596cb4747d8ac8a3ba31158152, type: 3}
   deadSprite: {fileID: 2800000, guid: a5ab22596cb4747d8ac8a3ba31158152, type: 3}
@@ -1282,6 +1360,7 @@ Transform:
   - {fileID: 1341022210}
   - {fileID: 172795348}
   - {fileID: 1527557689}
+  - {fileID: 1407099957}
   m_Father: {fileID: 0}
   m_RootOrder: 2
 --- !u!23 &1793603777
@@ -1547,3 +1626,49 @@ Transform:
   - {fileID: 812374952}
   m_Father: {fileID: 1048774873}
   m_RootOrder: 2
+--- !u!1 &2093843692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2093843694}
+  - 114: {fileID: 2093843693}
+  m_Layer: 0
+  m_Name: InControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2093843693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2093843692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logDebugInfo: 0
+  invertYAxis: 0
+  enableXInput: 0
+  useFixedUpdate: 0
+  dontDestroyOnLoad: 0
+  customProfiles:
+  - InControlKeyboardOverlayProfile
+--- !u!4 &2093843694
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2093843692}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3

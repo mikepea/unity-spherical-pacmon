@@ -46,8 +46,19 @@ public class PlayerSphericalMovement : MonoBehaviour
     private int tileSize = 200;
     private int tile = 0;
     private int lastTileChangeTicks = 0;
-    private int maxLastTileChangeTicks = 5;
+    private int maxLastTileChangeTicks = 1;
     private bool playerTileBounceDirection = true;
+
+    private Color[] tileColor;
+
+    private float iX=0;
+    private float iY=1;
+    public int _uvTieX = 1;
+    public int _uvTieY = 1;
+    public int _fps = 10;
+    private Vector2 _size;
+    private Renderer _myRenderer;
+    private int _lastIndex = -1;
 
     void Start ()
     {
@@ -57,12 +68,9 @@ public class PlayerSphericalMovement : MonoBehaviour
         isDead = false;
         isScared = false;
 
-        sprite = new Texture2D (200, 200);
-        Color[] tileColor = regularSprite.GetPixels(tileSize * tile, 0, tileSize, tileSize);
-
-        sprite.SetPixels(tileColor);
-        sprite.Apply();
-        renderer.material.mainTexture = sprite;
+        _size = new Vector2 (1.0f / _uvTieX, 1.0f / _uvTieY);
+        _myRenderer = renderer;
+        _myRenderer.material.SetTextureScale ("_MainTex", _size);
 
         inputdev = InputManager.Devices[inputManagerDeviceIndex];
 
@@ -285,23 +293,21 @@ public class PlayerSphericalMovement : MonoBehaviour
       if ( ! ( playerDirection == Vector2.zero ) ) {
           lastTileChangeTicks++;
           if ( lastTileChangeTicks > maxLastTileChangeTicks ) {
+              lastTileChangeTicks = 0;
               if ( playerTileBounceDirection ) {
                 tile++;
               } else {
                 tile--;
               }
-              if ( tile == 0 ) {
+              if ( tile <= 0 ) {
                 playerTileBounceDirection = true;
-              } else if ( tile == numPlayerTiles - 1 ) {
+              } else if ( tile >= numPlayerTiles - 1 ) {
                 playerTileBounceDirection = false;
               }
 
-              Color[] tileColor = regularSprite.GetPixels(tileSize * tile, 0, tileSize, tileSize);
-              sprite.SetPixels(tileColor);
-              sprite.Apply();
-              renderer.material.mainTexture = sprite;
          }
       }
+      AlterTextureSpriteTile(tile);
     }
 
     void UpdateBaddySprite() {
@@ -310,16 +316,12 @@ public class PlayerSphericalMovement : MonoBehaviour
         return;
       }
 
-      int tile = 0;
-
       if ( isDead == true ) {
         baseSprite = deadSprite;
       } else if ( isScared == true ) {
         baseSprite = scaredSprite;
-        if ( ( maxTicksInScaredMode - ticksInScaredMode ) < alertScaredModeTimeout )  {
-          if ( ( ticksInScaredMode / 10 ) % 2 == 1 ) {
-            tile = 1;
-          }
+        if ( ( maxTicksInScaredMode - ticksInScaredMode ) < alertScaredModeTimeout ) {
+          tile = ( ticksInScaredMode / 10 ) % 2;
         }
       } else {
         baseSprite = regularSprite;
@@ -336,14 +338,20 @@ public class PlayerSphericalMovement : MonoBehaviour
         }
 
       }
-
-      Color[] tileColor = baseSprite.GetPixels(tileSize * tile, 0, tileSize, tileSize);
-      sprite.SetPixels(tileColor);
-      sprite.Apply();
-      renderer.material.mainTexture = sprite;
-
+      AlterTextureSpriteTile(tile);
     }
 
+    void AlterTextureSpriteTile(int index) {
+
+      if (index != _lastIndex) {
+        iX = index % _uvTieX;
+        iY = index / _uvTieY;
+        Vector2 offset = new Vector2(iX*_size.x, (1-_size.y*iY));
+        _myRenderer.material.SetTextureOffset ("_MainTex", offset);
+        _lastIndex = index;
+      }
+
+    }
 
     void TransformPlayerForSpriteAnimation ()
     {

@@ -141,6 +141,9 @@ MonoBehaviour:
   speed: 10
   humanControl: 0
   animatePlayer: 1
+  _uvTieX: 4
+  _uvTieY: 1
+  _fps: 10
 --- !u!23 &172795351
 Renderer:
   m_ObjectHideFlags: 0
@@ -459,6 +462,9 @@ MonoBehaviour:
   speed: 15
   humanControl: 0
   animatePlayer: 1
+  _uvTieX: 4
+  _uvTieY: 1
+  _fps: 10
 --- !u!23 &705191609
 Renderer:
   m_ObjectHideFlags: 0
@@ -891,6 +897,9 @@ MonoBehaviour:
   speed: 15
   humanControl: 0
   animatePlayer: 1
+  _uvTieX: 4
+  _uvTieY: 1
+  _fps: 10
 --- !u!23 &1190214196
 Renderer:
   m_ObjectHideFlags: 0
@@ -1082,6 +1091,9 @@ MonoBehaviour:
   speed: 10
   humanControl: 0
   animatePlayer: 1
+  _uvTieX: 4
+  _uvTieY: 1
+  _fps: 10
 --- !u!23 &1341022213
 Renderer:
   m_ObjectHideFlags: 0
@@ -1255,8 +1267,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: .5
-  m_Height: .00100000005
+  m_Radius: .100000001
+  m_Height: .100000001
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1527557688
@@ -1312,6 +1324,9 @@ MonoBehaviour:
   speed: 20
   humanControl: 1
   animatePlayer: 1
+  _uvTieX: 6
+  _uvTieY: 1
+  _fps: 10
 --- !u!54 &1527557692
 Rigidbody:
   m_ObjectHideFlags: 0

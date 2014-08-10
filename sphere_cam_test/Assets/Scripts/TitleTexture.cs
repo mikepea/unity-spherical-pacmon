@@ -13,12 +13,12 @@ public class TitleTexture : MonoBehaviour
     void Start ()
     {
         
-        Map map = new Map (GlobalGameDetails.mapName);
+        Map map = new Map ("logo");
         
-        Texture2D texture = map.UVMappedTexture (360 * 5, 180 * 5, xOffset, yOffset, enableGridLines);
+        //Texture2D texture = map.UVMappedTexture (360 * 5, 180 * 5, xOffset, yOffset, enableGridLines);
         
-        texture.Apply ();
-        renderer.material.mainTexture = texture;
+        //texture.Apply ();
+        //renderer.material.mainTexture = texture;
 
     }
 }

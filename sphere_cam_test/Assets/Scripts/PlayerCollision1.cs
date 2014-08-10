@@ -9,6 +9,7 @@ public class PlayerCollision1 : MonoBehaviour
     public int playerMaxLives = 3;
     public string gameOverScene;
 
+    private int score;
     private int playerLivesRemaining;
 
     void Start ()
@@ -16,6 +17,12 @@ public class PlayerCollision1 : MonoBehaviour
         numPills = GameObject.FindGameObjectsWithTag ("Pill").Length +
                    GameObject.FindGameObjectsWithTag ("Power Pill").Length;
         playerLivesRemaining = playerMaxLives;
+        score = 0;
+    }
+
+    int Score ()
+    {
+        return score;
     }
 
     void MapIsCleared ()
@@ -53,6 +60,7 @@ public class PlayerCollision1 : MonoBehaviour
     {
         if (other.gameObject.tag == "Baddy") {
             if ( other.gameObject.GetComponent<PlayerSphericalMovement>().IsScared() == true ) {
+                score += 200;
                 other.gameObject.SendMessage ("EnterDeadMode");
             } else if ( other.gameObject.GetComponent<PlayerSphericalMovement>().IsDead() == true ) {
               // ignore the dead
@@ -60,6 +68,7 @@ public class PlayerCollision1 : MonoBehaviour
                 PlayerHasDied ();
             }
         } else if (other.gameObject.tag == "Pill" || other.gameObject.tag == "Power Pill" ) {
+            score += 10;
             other.gameObject.SetActive (false);
             numPills = GameObject.FindGameObjectsWithTag ("Pill").Length + 
                        GameObject.FindGameObjectsWithTag ("Power Pill").Length;
@@ -75,6 +84,16 @@ public class PlayerCollision1 : MonoBehaviour
                 }
             }
         }
+    }
+
+    void FixedUpdate ()
+    {
+        DisplayScore();
+    }
+
+    void DisplayScore() 
+    {
+        Debug.Log("Score is " + score);
     }
 
 }

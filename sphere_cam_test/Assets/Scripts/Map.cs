@@ -49,7 +49,7 @@ public class Map
                 } while (line != null);
 
                 theReader.Close ();
-                Debug.Log ("Map Loaded");
+                //Debug.Log ("Map Loaded");
                 mapLoaded = true;
                 return true;
             }
@@ -340,10 +340,10 @@ public class Map
     public float DistanceBetween (Vector2 point1, Vector2 point2)
     {
       if ( point1.x - point2.x > (float)numColumns / 2 ) {
-        Debug.Log("DistanceBetween: Wrapping " + point1 + " " + point2);
+        //Debug.Log("DistanceBetween: Wrapping " + point1 + " " + point2);
         return Vector2.SqrMagnitude ( point1 - point2 - new Vector2 ((float)numColumns, 0) );
       } else if ( point2.x - point1.x > (float)numColumns / 2 ) {
-        Debug.Log("DistanceBetween: Wrapping " + point1 + " " + point2);
+        //Debug.Log("DistanceBetween: Wrapping " + point1 + " " + point2);
         return Vector2.SqrMagnitude ( point2 - point1 - new Vector2 ((float)numColumns, 0) );
       } else {
         return Vector2.SqrMagnitude(point1 - point2);

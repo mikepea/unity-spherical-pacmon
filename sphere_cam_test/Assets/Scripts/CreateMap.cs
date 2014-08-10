@@ -53,7 +53,7 @@ public class CreateMap : MonoBehaviour
               Color[] tile = mapTiles.GetPixels(tilesX, tilesY, tileSize, tileSize);
               int textureX = x * tileSize;
               int textureY = (y * tileSize) + bottomPadding;
-              Debug.Log("Texture: X: " + textureX + ", Y: " + textureY);
+              //Debug.Log("Texture: X: " + textureX + ", Y: " + textureY);
               texture.SetPixels(textureX, textureY, tileSize, tileSize, tile);
             }
         }
@@ -63,7 +63,7 @@ public class CreateMap : MonoBehaviour
     public int MapTileReferenceNumber (Map map, int x, int y)
     {
         int tileNum = 0;
-        Debug.Log("MapTileReference: X: " + x + ", Y: " + y);
+        //Debug.Log("MapTileReference: X: " + x + ", Y: " + y);
 
         if ( ! map.WallAtGridReference(x, y) ) {
           // our 'blank map tile'

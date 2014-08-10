@@ -15,13 +15,6 @@ public class PlayerSphericalMovement : MonoBehaviour
     public int inputManagerDeviceIndex;
     private InputDevice inputdev;
 
-    public Texture2D regularSprite;
-    public Texture2D scaredSprite;
-    public Texture2D deadSprite;
-
-    private Texture2D baseSprite;
-    private Texture2D sprite;
-
     public Vector2 playerScatterSpot;
 
     public float speed = 20.0F;
@@ -43,13 +36,10 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     public Map map = new Map (GlobalGameDetails.mapName);
 
-    private int tileSize = 200;
     private int tile = 0;
     private int lastTileChangeTicks = 0;
     private int maxLastTileChangeTicks = 1;
     private bool playerTileBounceDirection = true;
-
-    private Color[] tileColor;
 
     private float iX=0;
     private float iY=1;
@@ -205,13 +195,12 @@ public class PlayerSphericalMovement : MonoBehaviour
 
               Vector2 newLocation = playerGridRef + dir;
               float dist = map.DistanceBetween(newLocation, target);
-              Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
+              //Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
               if ( dist < lowest ) {
                 lowest = dist;
                 direction = dir;
               }
             }
-            Debug.Log(this.name + " going " + direction + " because WOO CHOICE");
           }
           return direction;
         }
@@ -316,28 +305,30 @@ public class PlayerSphericalMovement : MonoBehaviour
         return;
       }
 
-      if ( isDead == true ) {
-        baseSprite = deadSprite;
-      } else if ( isScared == true ) {
-        baseSprite = scaredSprite;
+      if ( isScared == true ) {
         if ( ( maxTicksInScaredMode - ticksInScaredMode ) < alertScaredModeTimeout ) {
-          tile = ( ticksInScaredMode / 10 ) % 2;
+          tile = ( ticksInScaredMode / 10 ) % 2 + 8;
+        } else {
+          tile = 8;
         }
       } else {
-        baseSprite = regularSprite;
         if ( playerDirection == Vector2.up ) {
-          tile = 0;
+          tile = 0 + 1*_uvTieX;
         } else if ( playerDirection == Vector2.right ) {
-          tile = 1;
+          tile = 1 + 1*_uvTieX;
         } else if ( playerDirection == - Vector2.up ) {
-          tile = 2;
+          tile = 2 + 1*_uvTieX;
         } else if ( playerDirection == - Vector2.right ) {
-          tile = 3;
+          tile = 3 + 1*_uvTieX;
         } else {
-          tile = 0;
+          tile = 0 + 1*_uvTieX;
         }
-
       }
+
+      if ( isDead ) {
+        tile -= _uvTieX; // 3rd row
+      }
+
       AlterTextureSpriteTile(tile);
     }
 
@@ -345,8 +336,9 @@ public class PlayerSphericalMovement : MonoBehaviour
 
       if (index != _lastIndex) {
         iX = index % _uvTieX;
-        iY = index / _uvTieY;
-        Vector2 offset = new Vector2(iX*_size.x, (1-_size.y*iY));
+        iY = index / _uvTieX;
+        Vector2 offset = new Vector2(iX*_size.x, 1-(_size.y*iY));
+        Debug.Log(this.name + " using sprite tile " + tile + ", offset " + offset );
         _myRenderer.material.SetTextureOffset ("_MainTex", offset);
         _lastIndex = index;
       }

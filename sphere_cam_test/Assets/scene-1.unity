@@ -140,7 +140,7 @@ MonoBehaviour:
   playerScatterSpot: {x: 35, y: 0}
   speed: 10
   humanControl: 0
-  animatePlayer: 0
+  animatePlayer: 1
 --- !u!23 &172795351
 Renderer:
   m_ObjectHideFlags: 0
@@ -458,7 +458,7 @@ MonoBehaviour:
   playerScatterSpot: {x: 65, y: 28}
   speed: 15
   humanControl: 0
-  animatePlayer: 0
+  animatePlayer: 1
 --- !u!23 &705191609
 Renderer:
   m_ObjectHideFlags: 0
@@ -890,7 +890,7 @@ MonoBehaviour:
   playerScatterSpot: {x: 35, y: 28}
   speed: 15
   humanControl: 0
-  animatePlayer: 0
+  animatePlayer: 1
 --- !u!23 &1190214196
 Renderer:
   m_ObjectHideFlags: 0
@@ -1081,7 +1081,7 @@ MonoBehaviour:
   playerScatterSpot: {x: 65, y: 0}
   speed: 10
   humanControl: 0
-  animatePlayer: 0
+  animatePlayer: 1
 --- !u!23 &1341022213
 Renderer:
   m_ObjectHideFlags: 0
@@ -1311,7 +1311,7 @@ MonoBehaviour:
   playerScatterSpot: {x: 0, y: 0}
   speed: 20
   humanControl: 1
-  animatePlayer: 0
+  animatePlayer: 1
 --- !u!54 &1527557692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1447,7 +1447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0154fe609b784ee596af828df3f773f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 0
+  rotateSpeed: 5
 --- !u!114 &1793603783
 MonoBehaviour:
   m_ObjectHideFlags: 0

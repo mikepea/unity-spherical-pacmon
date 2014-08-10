@@ -19,6 +19,9 @@ public class PlayerSphericalMovement : MonoBehaviour
     public Texture2D scaredSprite;
     public Texture2D deadSprite;
 
+    private Texture2D baseSprite;
+    private Texture2D sprite;
+
     public Vector2 playerScatterSpot;
 
     public float speed = 20.0F;
@@ -54,8 +57,9 @@ public class PlayerSphericalMovement : MonoBehaviour
         isDead = false;
         isScared = false;
 
-        Texture2D sprite = new Texture2D (200, 200);
+        sprite = new Texture2D (200, 200);
         Color[] tileColor = regularSprite.GetPixels(tileSize * tile, 0, tileSize, tileSize);
+
         sprite.SetPixels(tileColor);
         sprite.Apply();
         renderer.material.mainTexture = sprite;
@@ -277,7 +281,6 @@ public class PlayerSphericalMovement : MonoBehaviour
       }
 
       int numPlayerTiles = 6;
-      Texture2D sprite = new Texture2D (200, 200);
 
       if ( ! ( playerDirection == Vector2.zero ) ) {
           lastTileChangeTicks++;
@@ -308,8 +311,6 @@ public class PlayerSphericalMovement : MonoBehaviour
       }
 
       int tile = 0;
-      Texture2D baseSprite;
-      Texture2D sprite = new Texture2D (200, 200);
 
       if ( isDead == true ) {
         baseSprite = deadSprite;

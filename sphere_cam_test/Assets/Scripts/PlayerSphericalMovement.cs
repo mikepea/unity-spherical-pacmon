@@ -71,6 +71,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         playerGridRef = map.FindEntityGridRef (startMarkerTag);
         if ( playerGridRef == new Vector2 (-1, -1) ) {
             this.gameObject.SetActive (false);
+            return;
         }
         float[] mapRef = map.LatitudeLongitudeAtGridReference (playerGridRef);
         currentAngleX = mapRef [1];
@@ -78,6 +79,8 @@ public class PlayerSphericalMovement : MonoBehaviour
         isScared = false;
         isDead = false;
         isHome = true;
+        UpdatePlayerObjectLocationAndRotation ();
+        this.renderer.enabled = true;
     }
 
     void EnterScaredMode ()
@@ -234,6 +237,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         UpdateNextPlayerPosition ();
 
         UpdatePlayerObjectLocationAndRotation ();
+        UpdatePlayerAnimation();
     }
 
     void UpdateBaddyState () {
@@ -259,9 +263,8 @@ public class PlayerSphericalMovement : MonoBehaviour
             map.degreesToRadians (currentAngleY)
         ).toCartesian;
         transform.LookAt (Vector3.zero);
-        UpdatePlayerAnimation();
     }
-    
+
     void UpdatePlayerAnimation() {
       if ( this.gameObject.tag == "Player" ) {
         TransformPlayerForSpriteAnimation ();
@@ -277,9 +280,24 @@ public class PlayerSphericalMovement : MonoBehaviour
         return;
       }
 
-      int numPlayerTiles = 6;
+      int numAnimTiles = _uvTieX;
 
-      if ( ! ( playerDirection == Vector2.zero ) ) {
+      if ( isDead ) {
+          lastTileChangeTicks++;
+          if ( tile >= _uvTieX ) {
+            tile = 0;
+          } else {
+            if ( lastTileChangeTicks > maxLastTileChangeTicks ) {
+              lastTileChangeTicks = 0;
+              tile++;
+            }
+          }
+
+          if ( tile >= numAnimTiles ) {
+            ResetPlayerPositions();
+          }
+
+      } else if ( ! ( playerDirection == Vector2.zero ) ) {
           lastTileChangeTicks++;
           if ( lastTileChangeTicks > maxLastTileChangeTicks ) {
               lastTileChangeTicks = 0;
@@ -288,9 +306,10 @@ public class PlayerSphericalMovement : MonoBehaviour
               } else {
                 tile--;
               }
-              if ( tile <= 0 ) {
+              if ( tile <= _uvTieX ) {
                 playerTileBounceDirection = true;
-              } else if ( tile >= numPlayerTiles - 1 ) {
+                tile = _uvTieX;
+              } else if ( tile >= _uvTieX + numAnimTiles - 1 ) {
                 playerTileBounceDirection = false;
               }
 
@@ -347,6 +366,9 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void TransformPlayerForSpriteAnimation ()
     {
+        if ( isDead ) {
+          return;
+        }
         Vector2 directionToFace = playerDirection;
         if (playerDirection == Vector2.zero) {
             directionToFace = playerIntendedDirection;
@@ -363,6 +385,14 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     bool IAmABaddy() {
         return ( this.gameObject.tag == "Baddy" );
+    }
+
+    void HasDied() {
+        isDead = true;
+    }
+
+    void GameOver() {
+        //
     }
 
     void ChangeDirectionIfAble (Vector2 nextMoveSpeed)
@@ -470,7 +500,9 @@ public class PlayerSphericalMovement : MonoBehaviour
     {
         float baseSpeed = speed;
 
-        if ( isDead == true ) {
+        if ( isDead && this.name == "Player" ) {
+          baseSpeed = 0;
+        } else if ( isDead ) {
           baseSpeed = 50;
         }
         Vector2 newSpeed = new Vector2 (
@@ -504,6 +536,20 @@ public class PlayerSphericalMovement : MonoBehaviour
             + " IdirY: " + playerIntendedDirection.y
         );
         */
+    }
+
+    void ResetPlayerPositions ()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+        foreach (GameObject player in players) {
+            player.SendMessage ("Stop");
+            player.SendMessage ("PutPlayerAtStartPosition");
+        }
+        GameObject[] baddies = GameObject.FindGameObjectsWithTag ("Baddy");
+        foreach (GameObject baddy in baddies) {
+            baddy.SendMessage ("Stop");
+            baddy.SendMessage ("PutPlayerAtStartPosition");
+        }
     }
 
 }

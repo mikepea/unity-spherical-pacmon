@@ -8,6 +8,7 @@ public class PlayerCollision1 : MonoBehaviour
     public int numPills;
     public int playerMaxLives = 3;
     public string gameOverScene;
+    public bool superPlayer;
 
     private int score;
     private int playerLivesRemaining;
@@ -31,28 +32,25 @@ public class PlayerCollision1 : MonoBehaviour
         Application.LoadLevel (Application.loadedLevel);
     }
 
-    void ResetPlayerPositions ()
-    {
-        GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
-        foreach (GameObject player in players) {
-            player.SendMessage ("Stop");
-            player.SendMessage ("PutPlayerAtStartPosition");
-        }
+    void DisableAllBaddies() {
         GameObject[] baddies = GameObject.FindGameObjectsWithTag ("Baddy");
         foreach (GameObject baddy in baddies) {
-            baddy.SendMessage ("Stop");
-            baddy.SendMessage ("PutPlayerAtStartPosition");
+            baddy.renderer.enabled = false; // dont SetActive(false), as cannot then find it.
         }
     }
 
     void PlayerHasDied ()
     {
+        DisableAllBaddies();
         if (playerLivesRemaining == 0) {
-            Application.LoadLevel (gameOverScene);
-            playerLivesRemaining = playerMaxLives;
+            //Application.LoadLevel (gameOverScene);
+            //playerLivesRemaining = playerMaxLives;
+            this.SendMessage ("HasDied");
+            this.SendMessage ("GameOver");
         } else {
             playerLivesRemaining--;
-            ResetPlayerPositions ();
+            this.SendMessage ("HasDied");
+            //ResetPlayerPositions ();
         }
     }
 
@@ -65,7 +63,9 @@ public class PlayerCollision1 : MonoBehaviour
             } else if ( other.gameObject.GetComponent<PlayerSphericalMovement>().IsDead() == true ) {
               // ignore the dead
             } else {
-                PlayerHasDied ();
+                if ( ! superPlayer ) {
+                  PlayerHasDied ();
+                }
             }
         } else if (other.gameObject.tag == "Pill" || other.gameObject.tag == "Power Pill" ) {
             score += 10;

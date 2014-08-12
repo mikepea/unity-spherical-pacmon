@@ -10,7 +10,11 @@ public class AddRegularPills : MonoBehaviour
     void Start ()
     {
 
-        Map map = new Map (GlobalGameDetails.mapName);
+        GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
+        GameObject state = states[0];
+        string mapName = state.GetComponent<GlobalGameDetails>().MapName();
+        Map map = new Map (mapName);
+        Debug.Log("In AddRegularPills.Start, mapName = " + mapName);
 
         int pillCount = 0;
         int powerPillCount = 0;

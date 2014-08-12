@@ -29,7 +29,9 @@ public class PlayerCollision1 : MonoBehaviour
     void MapIsCleared ()
     {
         Debug.Log ("MAP COMPLETE!");
-        Application.LoadLevel (Application.loadedLevel);
+        GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
+        GameObject state = states[0];
+        state.SendMessage("NextMap");
     }
 
     void DisableAllBaddies() {

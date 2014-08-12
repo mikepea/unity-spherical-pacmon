@@ -34,7 +34,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     private int maxTicksInScaredMode = 300;
     private int alertScaredModeTimeout = 50;
 
-    public Map map = new Map (GlobalGameDetails.mapName);
+    private Map map;
 
     private int tile = 0;
     private int lastTileChangeTicks = 0;
@@ -52,6 +52,13 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void Start ()
     {
+
+        GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
+        GameObject state = states[0];
+        string mapName = state.GetComponent<GlobalGameDetails>().MapName();
+        map = new Map (mapName);
+        Debug.Log("In PlayerSphericalMovement.Start, mapName = " + mapName);
+
         sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f));
         transform.localPosition = sc.toCartesian;
         PutPlayerAtStartPosition ();

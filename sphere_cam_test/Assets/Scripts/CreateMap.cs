@@ -15,7 +15,12 @@ public class CreateMap : MonoBehaviour
     void Start ()
     {
 
-        Map map = new Map (GlobalGameDetails.mapName);
+        GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
+        GameObject state = states[0];
+        string mapName = state.GetComponent<GlobalGameDetails>().MapName();
+        Map map = new Map (mapName);
+
+        Debug.Log("In CreateMap.Start, mapName = " + mapName);
 
         Texture2D texture = TileBasedMap(map);
 

@@ -69,13 +69,9 @@ public class PlayerCollision1 : MonoBehaviour
             }
         } else if (other.gameObject.tag == "Pill" || other.gameObject.tag == "Power Pill" ) {
             score += 10;
-            other.gameObject.SetActive (false);
-            numPills = GameObject.FindGameObjectsWithTag ("Pill").Length + 
-                       GameObject.FindGameObjectsWithTag ("Power Pill").Length;
-            Debug.Log (numPills + " pills remaining");
-            if (numPills == 0) {
-                MapIsCleared ();
-            }
+            other.audio.Play();
+            other.renderer.enabled = false;
+            Destroy(other.gameObject, 0.5f);
             if (other.gameObject.tag == "Power Pill") {
                 other.gameObject.SetActive (false);
                 GameObject[] baddies = GameObject.FindGameObjectsWithTag ("Baddy");
@@ -89,6 +85,11 @@ public class PlayerCollision1 : MonoBehaviour
     void FixedUpdate ()
     {
         DisplayScore();
+        numPills = GameObject.FindGameObjectsWithTag ("Pill").Length + 
+                   GameObject.FindGameObjectsWithTag ("Power Pill").Length;
+        if (numPills == 0) {
+          MapIsCleared ();
+        }
     }
 
     void DisplayScore() 

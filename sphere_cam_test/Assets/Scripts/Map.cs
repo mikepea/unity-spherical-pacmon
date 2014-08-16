@@ -18,7 +18,7 @@ public class Map
 
     public Map (string name)
     {
-        Load ("Assets/Maps/" + name + ".csv");
+        Load ("Assets/Resources/Maps/" + name + ".csv");
     }
 
     private bool Load (string fileName)

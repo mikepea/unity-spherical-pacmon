@@ -11,8 +11,7 @@ public class GlobalGameDetails : MonoBehaviour
     public static int mapColumns = 72;
     public static GlobalGameDetails i;
 
-    //public static string mapName = "logo";
-    private int mapNumber = 0;
+    public int mapNumber = 0;
 
     public Texture2D mapTiles;
 
@@ -22,7 +21,8 @@ public class GlobalGameDetails : MonoBehaviour
 
     public void NextMap() {
         mapNumber++;
-        Application.LoadLevel(2);
+        //Application.LoadLevel(2);
+        Application.LoadLevel(0);
     }
 
     public void Awake() {

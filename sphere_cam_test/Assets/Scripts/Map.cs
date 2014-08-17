@@ -18,7 +18,7 @@ public class Map
 
     public Map (string name)
     {
-        Load ("Assets/Resources/Maps/" + name + ".csv");
+        Load ("Maps/" + name);
     }
 
     private bool Load (string fileName)
@@ -28,36 +28,28 @@ public class Map
             return true;
         }
 
-        try {
+        int rowCount = 0;
 
-            int rowCount = 0;
-            string line;
-
-            StreamReader theReader = new StreamReader (fileName, Encoding.Default);
-
-            using (theReader) {
-                do {
-                    line = theReader.ReadLine ();
-                    if (line != null) {
-                        if (line.StartsWith ("#")) {
-                            continue;
-                        }
-                        string[] entries = line.Split (',');
-                        ProcessMapRow (rowCount, entries);
-                        rowCount++;
-                    }
-                } while (line != null);
-
-                theReader.Close ();
-                //Debug.Log ("Map Loaded");
-                mapLoaded = true;
-                return true;
-            }
-
-        } catch (IOException e) {
-            Debug.Log (e.Message);
+        TextAsset mapFile = Resources.Load(fileName) as TextAsset;
+        if ( mapFile == null ){
+            Debug.Log ("Could not load Map Resource: " + fileName);
             return false;
         }
+
+        string[] lines = mapFile.text.Split("\n"[0]); 
+
+        foreach ( string line in lines ) {
+          if (line.StartsWith ("#")) {
+            continue;
+          } else if ( line == "" || line == null ) {
+            continue;
+          }
+          string[] entries = line.Split (',');
+          ProcessMapRow (rowCount, entries);
+          rowCount++;
+        }
+        return true;
+
     }
 
     private void ProcessMapRow (int row, string[] entries)

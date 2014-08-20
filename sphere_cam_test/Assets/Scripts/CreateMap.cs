@@ -18,6 +18,7 @@ public class CreateMap : MonoBehaviour
         GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
         GameObject state = states[0];
         string mapName = state.GetComponent<GlobalGameDetails>().MapName();
+        string mode = state.GetComponent<GlobalGameDetails>().GameMode();
         Map map = new Map (mapName);
 
         Debug.Log("In CreateMap.Start, mapName = " + mapName);

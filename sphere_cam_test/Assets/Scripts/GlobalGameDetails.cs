@@ -17,6 +17,8 @@ public class GlobalGameDetails : MonoBehaviour
 
     public Texture2D mapTiles;
 
+    private string gameMode = "Demo";
+
     public void Start() {
         if ( disableAudio ) {
           DisableAudio();
@@ -29,7 +31,6 @@ public class GlobalGameDetails : MonoBehaviour
 
     public void NextMap() {
         mapNumber++;
-        //Application.LoadLevel(2);
         Application.LoadLevel(0);
     }
 

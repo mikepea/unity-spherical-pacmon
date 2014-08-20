@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class PlayerCollision1 : MonoBehaviour
 {
 
@@ -12,6 +13,9 @@ public class PlayerCollision1 : MonoBehaviour
 
     private int score;
     private int playerLivesRemaining;
+
+    public AudioClip munch;
+    private float nextMunchSoundTime = 0;
 
     void Start ()
     {
@@ -26,12 +30,20 @@ public class PlayerCollision1 : MonoBehaviour
         return score;
     }
 
+    GameObject GlobalState() {
+        GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
+        return states[0];
+    }
+
+    bool AudioEnabled ()
+    {
+        return GlobalState().GetComponent<GlobalGameDetails>().AudioEnabled();
+    }
+
     void MapIsCleared ()
     {
         Debug.Log ("MAP COMPLETE!");
-        GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
-        GameObject state = states[0];
-        state.SendMessage("NextMap");
+        GlobalState().SendMessage("NextMap");
     }
 
     void DisableAllBaddies() {
@@ -71,7 +83,12 @@ public class PlayerCollision1 : MonoBehaviour
             }
         } else if (other.gameObject.tag == "Pill" || other.gameObject.tag == "Power Pill" ) {
             score += 10;
-            other.audio.Play();
+            if (Time.time >= nextMunchSoundTime) {
+              if ( AudioEnabled() ) {
+                audio.PlayOneShot(munch);
+              }
+              nextMunchSoundTime = Time.time + 0.24F;
+            }
             other.renderer.enabled = false;
             Destroy(other.gameObject, 0.5f);
             if (other.gameObject.tag == "Power Pill") {

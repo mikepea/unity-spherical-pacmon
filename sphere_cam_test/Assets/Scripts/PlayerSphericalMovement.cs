@@ -176,20 +176,31 @@ public class PlayerSphericalMovement : MonoBehaviour
         }
     }
 
+    Vector2 GetPlayerAiTarget() {
+      Vector2 target = Vector2.zero;
+      int random = Random.Range(0,3);
+      if ( random > 1 ) {
+        target = new Vector2 (40,20);
+      }
+      return target;
+    }
+
     Vector2 NextComputerDirection (Vector2 current, Vector2 intended)
     {
 
         Vector2 direction = current;
 
-        if ( this.gameObject.tag == "Player" ) {
-          // we don't support computer control of player
+        if ( this.gameObject.tag == "Player" && humanControl ) {
           return intended;
+
         } else {
 
-          // we are a baddy, work out which tile we are targetting
+          // under AI/partial AI control - work out where we want to head to.
           List<Vector2> availableDirections = map.AvailableDirectionsAtGridRef(playerGridRef);
           Vector2 target;
-          if ( isScared == true ) {
+          if ( this.gameObject.tag == "Player" ) {
+            target = GetPlayerAiTarget();
+          } else if ( isScared == true ) {
             target = playerScatterSpot;
           } else if ( isDead == true ) {
             target = map.FindEntityGridRef("Baddy2Start"); // the baddy home box centre

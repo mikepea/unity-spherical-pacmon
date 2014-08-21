@@ -46,6 +46,12 @@ public class InControlKeyboardOverlayProfile : UnityInputDeviceProfile
         Source = KeyCodeButton( KeyCode.DownArrow )
       },
 
+      new InputControlMapping {
+        Handle = "Action1 alt",
+        Target = InputControlType.Action1,
+        Source = KeyCodeButton( KeyCode.Space )
+      },
+
     };
 
 

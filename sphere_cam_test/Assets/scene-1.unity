@@ -157,6 +157,7 @@ GameObject:
   - 23: {fileID: 172795351}
   - 114: {fileID: 172795350}
   - 54: {fileID: 172795349}
+  - 82: {fileID: 172795354}
   m_Layer: 0
   m_Name: Baddy4
   m_TagString: Baddy
@@ -208,6 +209,8 @@ MonoBehaviour:
   speed: 10
   humanControl: 0
   animatePlayer: 1
+  startSound: {fileID: 0}
+  deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
   _uvTieX: 4
   _uvTieY: 3
   _fps: 10
@@ -251,6 +254,64 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 172795347}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!82 &172795354
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 172795347}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &195959928
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +483,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapNumber: 3
+  disableAudio: 0
   mapTiles: {fileID: 0}
+  nextGameModeKey: 5
 --- !u!4 &298740243
 Transform:
   m_ObjectHideFlags: 0
@@ -760,6 +823,7 @@ GameObject:
   - 23: {fileID: 705191609}
   - 114: {fileID: 705191607}
   - 54: {fileID: 705191606}
+  - 82: {fileID: 705191608}
   m_Layer: 0
   m_Name: Baddy1
   m_TagString: Baddy
@@ -811,9 +875,69 @@ MonoBehaviour:
   speed: 15
   humanControl: 0
   animatePlayer: 1
+  startSound: {fileID: 0}
+  deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
   _uvTieX: 4
   _uvTieY: 3
   _fps: 10
+--- !u!82 &705191608
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 705191604}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!23 &705191609
 Renderer:
   m_ObjectHideFlags: 0
@@ -1270,6 +1394,7 @@ GameObject:
   - 23: {fileID: 1190214196}
   - 114: {fileID: 1190214195}
   - 54: {fileID: 1190214194}
+  - 82: {fileID: 1190214199}
   m_Layer: 0
   m_Name: Baddy2
   m_TagString: Baddy
@@ -1321,6 +1446,8 @@ MonoBehaviour:
   speed: 15
   humanControl: 0
   animatePlayer: 1
+  startSound: {fileID: 0}
+  deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
   _uvTieX: 4
   _uvTieY: 3
   _fps: 10
@@ -1364,6 +1491,64 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1190214192}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!82 &1190214199
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1190214192}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &1341022209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,6 +1562,7 @@ GameObject:
   - 23: {fileID: 1341022213}
   - 114: {fileID: 1341022212}
   - 54: {fileID: 1341022211}
+  - 82: {fileID: 1341022216}
   m_Layer: 0
   m_Name: Baddy3
   m_TagString: Baddy
@@ -1428,6 +1614,8 @@ MonoBehaviour:
   speed: 10
   humanControl: 0
   animatePlayer: 1
+  startSound: {fileID: 0}
+  deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
   _uvTieX: 4
   _uvTieY: 3
   _fps: 10
@@ -1471,6 +1659,64 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1341022209}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!82 &1341022216
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1341022209}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &1407099956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1568,6 +1814,7 @@ GameObject:
   - 114: {fileID: 1527557691}
   - 54: {fileID: 1527557692}
   - 114: {fileID: 1527557690}
+  - 82: {fileID: 1527557693}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1642,6 +1889,7 @@ MonoBehaviour:
   playerMaxLives: 3
   gameOverScene: title-scene
   superPlayer: 0
+  munch: {fileID: 8300000, guid: 8ad4851df0d0844d1b718146d7b95abc, type: 3}
 --- !u!114 &1527557691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1659,6 +1907,8 @@ MonoBehaviour:
   speed: 20
   humanControl: 1
   animatePlayer: 1
+  startSound: {fileID: 8300000, guid: e44d045257255415fb65ee032b247de9, type: 3}
+  deadSound: {fileID: 8300000, guid: d92ff658947954a0089f5a6f10153017, type: 3}
   _uvTieX: 8
   _uvTieY: 2
   _fps: 10
@@ -1677,6 +1927,64 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!82 &1527557693
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1527557685}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &1793603775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1690,7 +1998,7 @@ GameObject:
   - 114: {fileID: 1793603781}
   - 114: {fileID: 1793603782}
   - 114: {fileID: 1793603778}
-  - 114: {fileID: 1793603783}
+  - 82: {fileID: 1793603780}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: MainSphere
@@ -1729,7 +2037,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 797d9795e5604438fbd828c236c67f6e, type: 2}
+  - {fileID: 2100000, guid: cee71be3c6bda4cbf95dd931d1127b5c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1745,11 +2053,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1793603775}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff58bd7e92ea74717adb84869c3e7eb8, type: 3}
+  m_Script: {fileID: 11500000, guid: a8442b56c5bf54a5787fee71307c9b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScene: alignment-scene
-  nextSceneKey: 5
+  scaredSound: {fileID: 8300000, guid: 745465b3574f042438a5e2cbd937ac8f, type: 3}
 --- !u!33 &1793603779
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1757,6 +2064,64 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1793603775}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!82 &1793603780
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1793603775}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &1793603781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1785,19 +2150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 5
---- !u!114 &1793603783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1793603775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff58bd7e92ea74717adb84869c3e7eb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextScene: title-scene
-  nextSceneKey: 6
 --- !u!1 &1875379717
 GameObject:
   m_ObjectHideFlags: 0

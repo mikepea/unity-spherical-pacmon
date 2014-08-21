@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using InControl;
 
+[RequireComponent(typeof(AudioSource))]
 public class PlayerSphericalMovement : MonoBehaviour
 {
 
@@ -20,6 +21,10 @@ public class PlayerSphericalMovement : MonoBehaviour
     public float speed = 20.0F;
     public bool humanControl;
     public bool animatePlayer;
+    private bool movementEnabled = false;
+
+    public AudioClip startSound;
+    public AudioClip deadSound;
 
     private float currentAngleX = 0F;
     private float currentAngleY = 0F;
@@ -33,12 +38,15 @@ public class PlayerSphericalMovement : MonoBehaviour
     private int ticksInScaredMode = 0;
     private int maxTicksInScaredMode = 300;
     private int alertScaredModeTimeout = 50;
+    private float gameStartTime = 0;
+    private float gameStartDelay = 4.0F;
 
     private Map map;
 
     private int tile = 0;
     private int lastTileChangeTicks = 0;
     private int maxLastTileChangeTicks = 1;
+    private int maxDeadLastTileChangeTicks = 10;
     private bool playerTileBounceDirection = true;
 
     private float iX=0;
@@ -50,14 +58,36 @@ public class PlayerSphericalMovement : MonoBehaviour
     private Renderer _myRenderer;
     private int _lastIndex = -1;
 
+    private GlobalGameDetails ggd;
+
+    GlobalGameDetails GlobalState() {
+        if (!ggd) {
+          GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
+          ggd = states[0].GetComponent<GlobalGameDetails>();
+        }
+        return ggd;
+    }
+
     void Start ()
     {
 
-        GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
-        GameObject state = states[0];
-        string mapName = state.GetComponent<GlobalGameDetails>().MapName();
+        string mapName = GlobalState().MapName();
         map = new Map (mapName);
-        Debug.Log("In PlayerSphericalMovement.Start, mapName = " + mapName);
+        //Debug.Log("In PlayerSphericalMovement.Start, mapName = " + mapName);
+
+        Debug.Log("Game Mode: " + GlobalState().GameMode());
+        string mode = GlobalState().GameMode();
+        if ( mode == "GameStart" ) {
+          gameStartTime = Time.time;
+          if ( this.name == "Player" ) {
+            if ( GlobalState().AudioEnabled() ) {
+              audio.PlayOneShot(startSound);
+            }
+            humanControl = true;
+          }
+        } else if ( mode == "GameDemo" ) {
+          humanControl = false;
+        }
 
         sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f));
         transform.localPosition = sc.toCartesian;
@@ -109,7 +139,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     void EnterDeadMode ()
     {
         isScared = false;
-        isDead = true;
+        HasDied();
     }
 
     Vector2 ProcessInputsIntoDirection (Vector2 direction)
@@ -235,8 +265,22 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void FixedUpdate ()
     {
+        if ( this.name == "Player" ) {
+          InputControl control = inputdev.GetControl( InputControlType.Action1 );
+          if ( control.IsPressed ) {
+            GlobalState().GameStart();
+          }
+        }
 
-        playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
+        if ( movementEnabled ) {
+          playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
+        } else {
+          if ( Time.time > gameStartTime + gameStartDelay) {
+            movementEnabled = true;
+            playerDirection = - Vector2.right; // so wakka wakka begins :)
+            GlobalState().SendMessage("GameInProgress");
+          }
+        }
 
         if ( IAmABaddy() ) {
           UpdateBaddyState ();
@@ -245,6 +289,7 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         UpdatePlayerObjectLocationAndRotation ();
         UpdatePlayerAnimation();
+
     }
 
     void UpdateBaddyState () {
@@ -294,7 +339,7 @@ public class PlayerSphericalMovement : MonoBehaviour
           if ( tile >= _uvTieX ) {
             tile = 0;
           } else {
-            if ( lastTileChangeTicks > maxLastTileChangeTicks ) {
+            if ( lastTileChangeTicks > maxDeadLastTileChangeTicks ) {
               lastTileChangeTicks = 0;
               tile++;
             }
@@ -364,7 +409,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         iX = index % _uvTieX;
         iY = index / _uvTieX;
         Vector2 offset = new Vector2(iX*_size.x, 1-(_size.y*iY));
-        Debug.Log(this.name + " using sprite tile " + tile + ", offset " + offset );
+        //Debug.Log(this.name + " using sprite tile " + tile + ", offset " + offset );
         _myRenderer.material.SetTextureOffset ("_MainTex", offset);
         _lastIndex = index;
       }
@@ -396,6 +441,10 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void HasDied() {
         isDead = true;
+        if ( GlobalState().AudioEnabled() ) {
+          audio.clip = deadSound;
+          audio.Play();
+        }
     }
 
     void GameOver() {

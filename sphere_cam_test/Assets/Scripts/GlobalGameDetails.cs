@@ -17,11 +17,17 @@ public class GlobalGameDetails : MonoBehaviour
 
     public Texture2D mapTiles;
 
-    private string gameMode = "Demo";
+    private string gameMode = "Init";
+
+    public string nextGameModeKey;
 
     public void Start() {
         if ( disableAudio ) {
           DisableAudio();
+        }
+
+        if ( gameMode == "Init" ) {
+          GameDemo();
         }
     }
 
@@ -58,6 +64,33 @@ public class GlobalGameDetails : MonoBehaviour
         DontDestroyOnLoad(this);
       } else {
         Destroy(gameObject);
+      }
+    }
+
+    public void GameStart() {
+      gameMode = "GameStart";
+      EnableAudio();
+      Application.LoadLevel(0);
+    }
+
+    public void GameDemo() {
+      gameMode = "GameDemo";
+      DisableAudio();
+      Application.LoadLevel(0);
+    }
+
+    public void GameInProgress() {
+      gameMode = "GameInProgress";
+    }
+
+    public void FixedUpdate() {
+      if (Input.GetKey (nextGameModeKey)) {
+        Debug.Log("nextGameModeKeyPressed: " + gameMode);
+        if ( gameMode == "GameDemo" ) {
+          GameStart();
+        } else {
+          GameDemo();
+        }
       }
     }
 

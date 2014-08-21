@@ -15,10 +15,13 @@ public class PlayerCollision1 : MonoBehaviour
     private int playerLivesRemaining;
 
     public AudioClip munch;
-    private float nextMunchSoundTime = 0;
+    private float lastPillMunchTime;
+    private float pillMunchDelay;
 
     void Start ()
     {
+        pillMunchDelay = munch.length;
+        lastPillMunchTime = - pillMunchDelay;
         numPills = GameObject.FindGameObjectsWithTag ("Pill").Length +
                    GameObject.FindGameObjectsWithTag ("Power Pill").Length;
         playerLivesRemaining = playerMaxLives;
@@ -83,12 +86,7 @@ public class PlayerCollision1 : MonoBehaviour
             }
         } else if (other.gameObject.tag == "Pill" || other.gameObject.tag == "Power Pill" ) {
             score += 10;
-            if (Time.time >= nextMunchSoundTime) {
-              if ( AudioEnabled() ) {
-                audio.PlayOneShot(munch);
-              }
-              nextMunchSoundTime = Time.time + 0.24F;
-            }
+            lastPillMunchTime = Time.time;
             other.renderer.enabled = false;
             Destroy(other.gameObject, 0.5f);
             if (other.gameObject.tag == "Power Pill") {
@@ -108,6 +106,17 @@ public class PlayerCollision1 : MonoBehaviour
                    GameObject.FindGameObjectsWithTag ("Power Pill").Length;
         if (numPills == 0) {
           MapIsCleared ();
+        }
+        if ( AudioEnabled() ) {
+          if ( lastPillMunchTime + pillMunchDelay > Time.time ) {
+            if ( ! audio.isPlaying ) {
+              audio.clip = munch;
+              audio.loop = true;
+              audio.Play();
+            }
+          } else {
+            audio.loop = false;
+          }
         }
     }
 

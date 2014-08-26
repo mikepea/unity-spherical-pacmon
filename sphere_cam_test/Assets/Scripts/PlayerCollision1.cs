@@ -18,6 +18,8 @@ public class PlayerCollision1 : MonoBehaviour
     private float lastPillMunchTime;
     private float pillMunchDelay;
 
+    private GameObject scoreboard;
+
     void Start ()
     {
         pillMunchDelay = munch.length;
@@ -26,6 +28,9 @@ public class PlayerCollision1 : MonoBehaviour
                    GameObject.FindGameObjectsWithTag ("Power Pill").Length;
         playerLivesRemaining = playerMaxLives;
         score = 0;
+
+        GameObject[] scoreboards = GameObject.FindGameObjectsWithTag("Scoreboard");
+        scoreboard = scoreboards[0];
     }
 
     int Score ()
@@ -122,7 +127,7 @@ public class PlayerCollision1 : MonoBehaviour
 
     void DisplayScore() 
     {
-        Debug.Log("Score is " + score);
+        scoreboard.GetComponent<TextMesh>().text = score.ToString();
     }
 
 }

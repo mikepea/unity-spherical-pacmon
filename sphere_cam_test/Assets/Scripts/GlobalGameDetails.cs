@@ -11,6 +11,8 @@ public class GlobalGameDetails : MonoBehaviour
     public static int mapColumns = 72;
     public static GlobalGameDetails i;
 
+    public float blindOffset;
+
     public int mapNumber = 0;
     public bool disableAudio;
     private bool audioEnabled = true;
@@ -35,6 +37,10 @@ public class GlobalGameDetails : MonoBehaviour
           GameDemo();
         }
 
+    }
+
+    public float BlindOffset() {
+        return blindOffset;
     }
 
     public void ZeroScore() {

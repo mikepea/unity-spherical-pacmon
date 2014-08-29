@@ -300,7 +300,10 @@ public class PlayerSphericalMovement : MonoBehaviour
         if ( this.name == "Player" ) {
           InputControl control = inputdev.GetControl( InputControlType.Action1 );
           if ( control.IsPressed ) {
-            GlobalState().GameStart();
+            string mode = GlobalState().GameMode();
+            if ( mode == "GameDemo" || mode == "GameOver" ) {
+              GlobalState().GameStart();
+            }
           }
         }
 
@@ -483,7 +486,9 @@ public class PlayerSphericalMovement : MonoBehaviour
     }
 
     void GameOver() {
-        //
+        GlobalState().GameOver();
+        SetInfoDisplayText("GAME OVER");
+        EnableInfoDisplay();
     }
 
     void ChangeDirectionIfAble (Vector2 nextMoveSpeed)

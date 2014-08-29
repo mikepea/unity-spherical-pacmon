@@ -13,13 +13,16 @@ public class GlobalGameDetails : MonoBehaviour
 
     public float blindOffset;
 
-    public int mapNumber = 0;
+    public int initialMapNumber = 0;
+    private int mapNumber = 0;
     public bool disableAudio;
     private bool audioEnabled = true;
 
     public Texture2D mapTiles;
 
     private string gameMode = "Init";
+    private float gameModeStartTime = 0;
+    private float demoStartDelay = 10; // seconds
 
     public string nextGameModeKey;
 
@@ -34,9 +37,14 @@ public class GlobalGameDetails : MonoBehaviour
 
         if ( gameMode == "Init" ) {
           ZeroScore();
+          ResetMapNumber();
           GameDemo();
         }
 
+    }
+
+    public void ResetMapNumber() {
+      mapNumber = initialMapNumber;
     }
 
     public float BlindOffset() {
@@ -90,6 +98,10 @@ public class GlobalGameDetails : MonoBehaviour
         return gameMode;
     }
 
+    public float GameModeStartTime() {
+        return gameModeStartTime;
+    }
+
     public void Awake() {
       if ( !i ) {
         i = this;
@@ -101,22 +113,27 @@ public class GlobalGameDetails : MonoBehaviour
 
     public void GameStart() {
       gameMode = "GameStart";
+      ZeroScore();
       EnableAudio();
       Application.LoadLevel(0);
     }
 
     public void GameOver() {
       gameMode = "GameOver";
+      gameModeStartTime = Time.time;
       DisableAudio();
     }
 
     public void GameDemo() {
       gameMode = "GameDemo";
+      gameModeStartTime = Time.time;
       DisableAudio();
+      ResetMapNumber();
       Application.LoadLevel(0);
     }
 
     public void GameInProgress() {
+      gameModeStartTime = Time.time;
       gameMode = "GameInProgress";
     }
 
@@ -129,6 +146,12 @@ public class GlobalGameDetails : MonoBehaviour
         } else {
           GameDemo();
         }
+      }
+
+      if ( GameMode() == "GameOver" && 
+           GameModeStartTime() + demoStartDelay < Time.time
+           ) {
+        GameDemo();
       }
     }
 

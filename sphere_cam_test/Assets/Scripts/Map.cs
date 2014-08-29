@@ -74,6 +74,12 @@ public class Map
                 mapData [row, i] = EntityDataValue("Baddy3Start");
             } else if (entries [i] == "4") {
                 mapData [row, i] = EntityDataValue("Baddy4Start");
+            } else if (entries [i] == "I") {
+                mapData [row, i] = EntityDataValue("InfoDisplay");
+            } else if (entries [i] == "S") {
+                mapData [row, i] = EntityDataValue("Scoreboard");
+            } else if (entries [i] == "H") {
+                mapData [row, i] = EntityDataValue("HiScoreboard");
             } else {
                 mapData [row, i] = EntityDataValue("EmptyCell");
             }
@@ -148,6 +154,12 @@ public class Map
             return 128;
         } else if ( entityName == "Baddy4Start" ) {
             return 256;
+        } else if ( entityName == "InfoDisplay" ) {
+            return 512;
+        } else if ( entityName == "Scoreboard" ) {
+            return 1024;
+        } else if ( entityName == "HiScoreboard" ) {
+            return 2048;
         } else {
             throw new System.InvalidOperationException ("Invalid entityName " + entityName);
         }

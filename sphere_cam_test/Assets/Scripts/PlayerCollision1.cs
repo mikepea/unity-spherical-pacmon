@@ -11,7 +11,6 @@ public class PlayerCollision1 : MonoBehaviour
     public string gameOverScene;
     public bool superPlayer;
 
-    private int score;
     private int playerLivesRemaining;
 
     public AudioClip munch;
@@ -19,6 +18,17 @@ public class PlayerCollision1 : MonoBehaviour
     private float pillMunchDelay;
 
     private GameObject scoreboard;
+    private GameObject hiscoreboard;
+
+    private GlobalGameDetails ggd;
+
+    GlobalGameDetails GlobalState() {
+        if (!ggd) {
+          GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
+          ggd = states[0].GetComponent<GlobalGameDetails>();
+        }
+        return ggd;
+    }
 
     void Start ()
     {
@@ -27,25 +37,16 @@ public class PlayerCollision1 : MonoBehaviour
         numPills = GameObject.FindGameObjectsWithTag ("Pill").Length +
                    GameObject.FindGameObjectsWithTag ("Power Pill").Length;
         playerLivesRemaining = playerMaxLives;
-        score = 0;
 
         GameObject[] scoreboards = GameObject.FindGameObjectsWithTag("Scoreboard");
         scoreboard = scoreboards[0];
-    }
-
-    int Score ()
-    {
-        return score;
-    }
-
-    GameObject GlobalState() {
-        GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
-        return states[0];
+        GameObject[] hiscoreboards = GameObject.FindGameObjectsWithTag("HiScoreboard");
+        hiscoreboard = hiscoreboards[0];
     }
 
     bool AudioEnabled ()
     {
-        return GlobalState().GetComponent<GlobalGameDetails>().AudioEnabled();
+        return GlobalState().AudioEnabled();
     }
 
     void MapIsCleared ()
@@ -80,7 +81,7 @@ public class PlayerCollision1 : MonoBehaviour
     {
         if (other.gameObject.tag == "Baddy") {
             if ( other.gameObject.GetComponent<PlayerSphericalMovement>().IsScared() == true ) {
-                score += 200;
+                IncreaseScore(200);
                 other.gameObject.SendMessage ("EnterDeadMode");
             } else if ( other.gameObject.GetComponent<PlayerSphericalMovement>().IsDead() == true ) {
               // ignore the dead
@@ -90,7 +91,7 @@ public class PlayerCollision1 : MonoBehaviour
                 }
             }
         } else if (other.gameObject.tag == "Pill" || other.gameObject.tag == "Power Pill" ) {
-            score += 10;
+            IncreaseScore(10);
             lastPillMunchTime = Time.time;
             other.renderer.enabled = false;
             Destroy(other.gameObject, 0.5f);
@@ -104,8 +105,29 @@ public class PlayerCollision1 : MonoBehaviour
         }
     }
 
+    int Score ()
+    {
+      return GlobalState().Score();
+    }
+
+    int HighScore() {
+      return GlobalState().HighScore();
+    }
+
+    void IncreaseScore(int increment) {
+      GlobalState().SendMessage("IncreaseScore", increment);
+    }
+
+    void UpdateHighScore() {
+      if ( Score() > HighScore() ) {
+        if ( GlobalState().GameMode() != "GameDemo" ) {
+          GlobalState().SendMessage("SetHighScore", Score());
+        }
+      }
+    }
     void FixedUpdate ()
     {
+        UpdateHighScore();
         DisplayScore();
         numPills = GameObject.FindGameObjectsWithTag ("Pill").Length + 
                    GameObject.FindGameObjectsWithTag ("Power Pill").Length;
@@ -127,7 +149,8 @@ public class PlayerCollision1 : MonoBehaviour
 
     void DisplayScore() 
     {
-        scoreboard.GetComponent<TextMesh>().text = score.ToString();
+        scoreboard.GetComponent<TextMesh>().text = Score().ToString();
+        hiscoreboard.GetComponent<TextMesh>().text = "HI: " + HighScore().ToString();
     }
 
 }

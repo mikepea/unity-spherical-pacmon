@@ -60,6 +60,8 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     private GlobalGameDetails ggd;
 
+    private GameObject infoDisplay;
+
     GlobalGameDetails GlobalState() {
         if (!ggd) {
           GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
@@ -71,6 +73,11 @@ public class PlayerSphericalMovement : MonoBehaviour
     void Start ()
     {
 
+        GameObject[] infoDisplays = GameObject.FindGameObjectsWithTag("InfoDisplay");
+        infoDisplay = infoDisplays[0];
+        SetInfoDisplayText("");
+        DisableInfoDisplay();
+
         string mapName = GlobalState().MapName();
         map = new Map (mapName);
         //Debug.Log("In PlayerSphericalMovement.Start, mapName = " + mapName);
@@ -80,6 +87,8 @@ public class PlayerSphericalMovement : MonoBehaviour
         if ( mode == "GameStart" ) {
           gameStartTime = Time.time;
           if ( this.name == "Player" ) {
+            SetInfoDisplayText("READY!");
+            EnableInfoDisplay();
             if ( GlobalState().AudioEnabled() ) {
               audio.PlayOneShot(startSound);
             }
@@ -101,6 +110,18 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         inputdev = InputManager.Devices[inputManagerDeviceIndex];
 
+    }
+
+    public void EnableInfoDisplay() {
+      infoDisplay.renderer.enabled = true;
+    }
+
+    public void DisableInfoDisplay() {
+      infoDisplay.renderer.enabled = false;
+    }
+
+    public void SetInfoDisplayText ( string message ) {
+      infoDisplay.GetComponent<TextMesh>().text = message;
     }
 
     void PutPlayerAtStartPosition ()
@@ -289,7 +310,10 @@ public class PlayerSphericalMovement : MonoBehaviour
           if ( Time.time > gameStartTime + gameStartDelay) {
             movementEnabled = true;
             playerDirection = - Vector2.right; // so wakka wakka begins :)
-            GlobalState().SendMessage("GameInProgress");
+            if ( GlobalState().GameMode() == "GameStart" ) {
+              DisableInfoDisplay();
+              GlobalState().SendMessage("GameInProgress");
+            }
           }
         }
 

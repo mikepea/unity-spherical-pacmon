@@ -21,14 +21,40 @@ public class GlobalGameDetails : MonoBehaviour
 
     public string nextGameModeKey;
 
+    private int score;
+    private int highScore;
+
     public void Start() {
+
         if ( disableAudio ) {
           DisableAudio();
         }
 
         if ( gameMode == "Init" ) {
+          ZeroScore();
           GameDemo();
         }
+
+    }
+
+    public void ZeroScore() {
+      score = 0;
+    }
+
+    public void IncreaseScore(int increment) {
+      score += increment;
+    }
+
+    public int Score() {
+        return score;
+    }
+
+    public int HighScore() {
+        return highScore;
+    }
+
+    public void SetHighScore(int score) {
+        highScore = score;
     }
 
     public string MapName() {
@@ -73,6 +99,11 @@ public class GlobalGameDetails : MonoBehaviour
       Application.LoadLevel(0);
     }
 
+    public void GameOver() {
+      gameMode = "GameOver";
+      DisableAudio();
+    }
+
     public void GameDemo() {
       gameMode = "GameDemo";
       DisableAudio();
@@ -84,6 +115,7 @@ public class GlobalGameDetails : MonoBehaviour
     }
 
     public void FixedUpdate() {
+      Debug.Log("MIKEDEBUG: " + GameMode() );
       if (Input.GetKey (nextGameModeKey)) {
         Debug.Log("nextGameModeKeyPressed: " + gameMode);
         if ( gameMode == "GameDemo" ) {

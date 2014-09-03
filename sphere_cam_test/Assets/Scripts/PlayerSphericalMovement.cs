@@ -19,7 +19,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     public Vector2 playerScatterSpot;
 
     public float speed = 20.0F;
-    public bool humanControl;
+    public bool humanControlEnabled;
+    private bool humanControl = false;
     public bool animatePlayer;
 
     public AudioClip startSound;
@@ -40,6 +41,9 @@ public class PlayerSphericalMovement : MonoBehaviour
     private float gameStartTime = 0;
     private float gameStartDelay = 4.0F;
     private float levelStartDelay = 4.0F;
+
+    private float lastControllerRefreshTime = 0.0F;
+    private float lastControllerRefreshDelay = 5.0F;
 
     private Map map;
 
@@ -73,6 +77,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     void Start ()
     {
 
+        RefreshControllers();
+
         GameObject[] infoDisplays = GameObject.FindGameObjectsWithTag("InfoDisplay");
         infoDisplay = infoDisplays[0];
         SetInfoDisplayText("");
@@ -80,9 +86,9 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         string mapName = GlobalState().MapName();
         map = new Map (mapName);
-        //Debug.Log("In PlayerSphericalMovement.Start, mapName = " + mapName);
+        Debug.Log(this.name + ": In PlayerSphericalMovement.Start, mapName = " + mapName);
+        Debug.Log(this.name + ": Game Mode: " + GlobalState().GameMode());
 
-        Debug.Log("Game Mode: " + GlobalState().GameMode());
         string mode = GlobalState().GameMode();
         if ( mode == "GameStart" ) {
           gameStartTime = Time.time;
@@ -110,8 +116,34 @@ public class PlayerSphericalMovement : MonoBehaviour
         _myRenderer = renderer;
         _myRenderer.material.SetTextureScale ("_MainTex", _size);
 
-        inputdev = InputManager.Devices[inputManagerDeviceIndex];
+    }
 
+    public void RefreshControllers() {
+      if ( humanControlEnabled ) {
+        List<InputDevice> devices = InputManager.Devices;
+        Debug.Log ( this.name + ": found " + devices.Count + " inputdevs");
+        if ( inputManagerDeviceIndex + 1 > devices.Count ) {
+          Debug.Log ( this.name + ": device " + inputManagerDeviceIndex + " is not present");
+          humanControl = false;
+        } else {
+          inputdev = devices[inputManagerDeviceIndex];
+          if ( IsNull(inputdev) ) {
+            Debug.Log ( this.name + ": device + " + inputManagerDeviceIndex + " is not Active");
+            humanControl = false;
+          } else {
+            if ( this.name != "Player" && inputdev.Name == "Keyboard Overlay" ) {
+              Debug.Log ( this.name + ": disabling, as cannot use Keyboard Overlay" );
+              humanControl = true;
+            } else {
+              Debug.Log ( this.name + ": using InputDevice " + inputManagerDeviceIndex + ": " + inputdev.Name + ":" + inputdev.Meta );
+            }
+          }
+        }
+      }
+    }
+
+    public static bool IsNull(System.Object aObj) {
+      return aObj == null || aObj.Equals(null);
     }
 
     public void EnableInfoDisplay() {
@@ -179,7 +211,10 @@ public class PlayerSphericalMovement : MonoBehaviour
               direction = Vector2.up;
           } else if (v == -1) {
               direction = (- Vector2.up);
+          } else {
+              direction = Vector2.zero;
           }
+          Debug.Log(this.name + ": being asked to go " + direction);
         }
 
         return NextComputerDirection (playerDirection, direction);
@@ -212,11 +247,14 @@ public class PlayerSphericalMovement : MonoBehaviour
       Vector2 target = Vector2.zero;
       if ( isScared ) {
         target = playerScatterSpot;
+        Debug.Log(this.name + " is scared, and heading to " + target);
       } else if ( isDead ) {
         target = map.FindEntityGridRef("Baddy2Start"); // the baddy home box centre
+        Debug.Log(this.name + " is dead, and heading to " + target);
       } else if ( humanControl ) {
         // don't help out the human!
         target = playerScatterSpot;
+        Debug.Log(this.name + " is human controlled, and heading to " + target);
       } else {
         // attack!
         Vector2 playerLoc = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().GridRef();
@@ -232,6 +270,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         } else {
           target = playerLoc;
         }
+        //Debug.Log(this.name + " is on the attack! and heading to " + target);
       }
       return target;
     }
@@ -270,22 +309,30 @@ public class PlayerSphericalMovement : MonoBehaviour
           float lowest = 100000000.0F;
           availableDirections.Remove(-current); // cannot reverse
 
-          foreach ( Vector2 dir in availableDirections) {
-
-            if ( humanControl && dir == intended ) {
-              // override with the choice of the player.
-              direction = intended;
-              break;
+            // just baddy humanControl override here.
+            if ( humanControl ) {
+              foreach ( Vector2 dir in availableDirections) {
+                if ( dir == intended ) {
+                  return dir; // override with the players choice
+                }
+              }
+              foreach ( Vector2 dir in availableDirections) {
+                if ( dir == current ) {
+                  return dir;  // prefer to continue in a straight line
+                }
+              }
             }
 
-            Vector2 newLocation = playerGridRef + dir;
-            float dist = map.DistanceBetween(newLocation, target);
-            //Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
-            if ( dist < lowest ) {
-              lowest = dist;
-              direction = dir;
+            foreach ( Vector2 dir in availableDirections) {
+              Vector2 newLocation = playerGridRef + dir;
+              float dist = map.DistanceBetween(newLocation, target);
+              //Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
+              if ( dist < lowest ) {
+                lowest = dist;
+                direction = dir;
+              }
             }
-          }
+
         }
         return direction;
     }
@@ -308,6 +355,11 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void FixedUpdate ()
     {
+        if ( lastControllerRefreshTime + lastControllerRefreshDelay < Time.time ) {
+          RefreshControllers();
+          lastControllerRefreshTime = Time.time;
+        }
+
         if ( this.name == "Player" ) {
           InputControl control = inputdev.GetControl( InputControlType.Action1 );
           if ( control.IsPressed ) {

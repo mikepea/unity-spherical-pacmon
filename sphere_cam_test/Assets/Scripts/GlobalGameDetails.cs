@@ -166,7 +166,7 @@ public class GlobalGameDetails : MonoBehaviour
     }
 
     public void FixedUpdate() {
-      Debug.Log("MIKEDEBUG: " + GameMode() );
+      //Debug.Log("MIKEDEBUG: " + GameMode() );
       if (Input.GetKey (nextGameModeKey)) {
         Debug.Log("nextGameModeKeyPressed: " + gameMode);
         if ( gameMode == "GameDemo" ) {

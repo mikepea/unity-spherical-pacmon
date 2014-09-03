@@ -264,7 +264,7 @@ MonoBehaviour:
   inputManagerDeviceIndex: 4
   playerScatterSpot: {x: 35, y: 0}
   speed: 10
-  humanControl: 0
+  humanControlEnabled: 1
   animatePlayer: 1
   startSound: {fileID: 0}
   deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
@@ -539,7 +539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blindOffset: .649999976
-  initialMapNumber: 1
+  initialMapNumber: 3
   disableAudio: 0
   mapTiles: {fileID: 0}
   nextGameModeKey: 5
@@ -1012,7 +1012,7 @@ MonoBehaviour:
   inputManagerDeviceIndex: 1
   playerScatterSpot: {x: 65, y: 28}
   speed: 15
-  humanControl: 0
+  humanControlEnabled: 1
   animatePlayer: 1
   startSound: {fileID: 0}
   deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
@@ -1750,7 +1750,7 @@ MonoBehaviour:
   inputManagerDeviceIndex: 2
   playerScatterSpot: {x: 35, y: 28}
   speed: 15
-  humanControl: 0
+  humanControlEnabled: 1
   animatePlayer: 1
   startSound: {fileID: 0}
   deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
@@ -2002,7 +2002,7 @@ MonoBehaviour:
   inputManagerDeviceIndex: 3
   playerScatterSpot: {x: 65, y: 0}
   speed: 10
-  humanControl: 0
+  humanControlEnabled: 1
   animatePlayer: 1
   startSound: {fileID: 0}
   deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
@@ -2257,7 +2257,7 @@ MonoBehaviour:
   inputManagerDeviceIndex: 0
   playerScatterSpot: {x: 0, y: 0}
   speed: 20
-  humanControl: 1
+  humanControlEnabled: 1
   animatePlayer: 1
   startSound: {fileID: 8300000, guid: e44d045257255415fb65ee032b247de9, type: 3}
   deadSound: {fileID: 8300000, guid: d92ff658947954a0089f5a6f10153017, type: 3}
@@ -2631,7 +2631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0154fe609b784ee596af828df3f773f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 5
+  rotateSpeed: 0
 --- !u!1 &1844267135
 GameObject:
   m_ObjectHideFlags: 0

@@ -208,77 +208,86 @@ public class PlayerSphericalMovement : MonoBehaviour
       return target;
     }
 
+    Vector2 GetBaddyAiTarget() {
+      Vector2 target = Vector2.zero;
+      if ( isScared ) {
+        target = playerScatterSpot;
+      } else if ( isDead ) {
+        target = map.FindEntityGridRef("Baddy2Start"); // the baddy home box centre
+      } else if ( humanControl ) {
+        // don't help out the human!
+        target = playerScatterSpot;
+      } else {
+        // attack!
+        Vector2 playerLoc = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().GridRef();
+        Vector2 playerDir = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().PlayerDirection();
+        if ( this.name == "Baddy1" ) {
+          target = playerLoc;
+        } else if ( this.name == "Baddy2" ) {
+          target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (4, 4));
+        } else if ( this.name == "Baddy3" ) {
+          target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (6, 6));
+        } else if ( this.name == "Baddy4" ) {
+          target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (2, 2));
+        } else {
+          target = playerLoc;
+        }
+      }
+      return target;
+    }
+
     Vector2 NextComputerDirection (Vector2 current, Vector2 intended)
     {
 
         Vector2 direction = current;
+        Vector2 target;
 
         if ( this.gameObject.tag == "Player" && humanControl ) {
           return intended;
-
-        } else {
-
-          // under AI/partial AI control - work out where we want to head to.
-          List<Vector2> availableDirections = map.AvailableDirectionsAtGridRef(playerGridRef);
-          Vector2 target;
-          if ( this.gameObject.tag == "Player" ) {
-            target = GetPlayerAiTarget();
-          } else if ( isScared == true ) {
-            target = playerScatterSpot;
-          } else if ( isDead == true ) {
-            target = map.FindEntityGridRef("Baddy2Start"); // the baddy home box centre
-          } else {
-            // attack!
-            Vector2 playerLoc = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().GridRef();
-            Vector2 playerDir = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().PlayerDirection();
-            if ( this.name == "Baddy1" ) {
-              target = playerLoc;
-            } else if ( this.name == "Baddy2" ) {
-              target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (4, 4));
-            } else if ( this.name == "Baddy3" ) {
-              target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (6, 6));
-            } else if ( this.name == "Baddy4" ) {
-              target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (2, 2));
-            } else {
-              target = playerLoc;
-            }
-          }
-
-          if ( map.IsEntityAtGridRef("BaddyDoor", playerGridRef - Vector2.up ) && ! isDead ) {
-              // remove down as a direction, as we cannot go thru BaddyDoor
-              availableDirections.Remove(-Vector2.up);
-          }
-
-          if ( availableDirections.Count == 1 ) {
-            direction = availableDirections[0]; // always take only available dir.
-          } else if ( availableDirections.Count == 2 && current != Vector2.zero ) {
-            availableDirections.Remove(-current); // cannot reverse
-            direction = availableDirections[0];
-          } else {
-            // work out which direction takes us closest to target
-            float lowest = 100000000.0F;
-            availableDirections.Remove(-current); // cannot reverse
-
-            foreach ( Vector2 dir in availableDirections) {
-
-              if ( humanControl && dir == intended ) {
-                // override with the choice of the player.
-                direction = intended;
-                break;
-              }
-
-              Vector2 newLocation = playerGridRef + dir;
-              float dist = map.DistanceBetween(newLocation, target);
-              //Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
-              if ( dist < lowest ) {
-                lowest = dist;
-                direction = dir;
-              }
-            }
-          }
-          return direction;
         }
 
+        if ( this.gameObject.tag == "Player" ) {
+          target = GetPlayerAiTarget();
+        } else {
+          target = GetBaddyAiTarget();
+        }
+
+        // under AI/partial AI control - work out where we want to head to.
+        List<Vector2> availableDirections = map.AvailableDirectionsAtGridRef(playerGridRef);
+
+        if ( map.IsEntityAtGridRef("BaddyDoor", playerGridRef - Vector2.up ) && ! isDead ) {
+          // remove down as a direction, as we cannot go thru BaddyDoor
+          availableDirections.Remove(-Vector2.up);
+        }
+
+        if ( availableDirections.Count == 1 ) {
+          direction = availableDirections[0]; // always take only available dir.
+        } else if ( availableDirections.Count == 2 && current != Vector2.zero ) {
+          availableDirections.Remove(-current); // cannot reverse
+          direction = availableDirections[0];
+        } else {
+          // work out which direction takes us closest to target
+          float lowest = 100000000.0F;
+          availableDirections.Remove(-current); // cannot reverse
+
+          foreach ( Vector2 dir in availableDirections) {
+
+            if ( humanControl && dir == intended ) {
+              // override with the choice of the player.
+              direction = intended;
+              break;
+            }
+
+            Vector2 newLocation = playerGridRef + dir;
+            float dist = map.DistanceBetween(newLocation, target);
+            //Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
+            if ( dist < lowest ) {
+              lowest = dist;
+              direction = dir;
+            }
+          }
+        }
+        return direction;
     }
 
     Vector2 GridRef ()

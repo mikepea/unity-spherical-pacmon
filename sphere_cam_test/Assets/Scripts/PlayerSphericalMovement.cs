@@ -91,8 +91,8 @@ public class PlayerSphericalMovement : MonoBehaviour
               audio.PlayOneShot(startSound);
             }
             humanControl = true;
+            StartLevel();
           }
-          StartLevel();
         } else if ( mode == "GameInProgress" ) {
           // new map started.
           StartLevel();
@@ -312,13 +312,13 @@ public class PlayerSphericalMovement : MonoBehaviour
         if ( GlobalState().MovementEnabled() ) {
           playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
         } else {
-          if ( Time.time > GlobalState().LevelStartTime() + levelStartDelay) {
+          if ( GlobalState().GameMode() == "StartLevel" &&
+               Time.time > GlobalState().LevelStartTime() + levelStartDelay) {
             GlobalState().SendMessage("EnableMovement");
             playerDirection = - Vector2.right; // so wakka wakka begins :)
-            if ( GlobalState().GameMode() == "StartLevel" && this.name == "Player" ) {
-                DisableInfoDisplay();
-                GlobalState().SendMessage("GameInProgress");
-            }
+            SetInfoDisplayText("");
+            DisableInfoDisplay();
+            GlobalState().SendMessage("GameInProgress");
           }
         }
 

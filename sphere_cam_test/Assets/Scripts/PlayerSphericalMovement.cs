@@ -212,7 +212,7 @@ public class PlayerSphericalMovement : MonoBehaviour
           } else if (v == -1) {
               direction = (- Vector2.up);
           } else {
-              direction = Vector2.zero;
+              // continue in existing direction
           }
           Debug.Log(this.name + ": being asked to go " + direction);
         }
@@ -525,6 +525,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         }
         Vector2 directionToFace = playerDirection;
         if (playerDirection == Vector2.zero) {
+            Debug.Log(this.name + ": stopped, so facing " + playerIntendedDirection);
             directionToFace = playerIntendedDirection;
         }
         if (directionToFace.x < 0) {

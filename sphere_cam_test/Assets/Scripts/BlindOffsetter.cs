@@ -12,7 +12,7 @@ public class BlindOffsetter : MonoBehaviour
         GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
         ggd = states[0].GetComponent<GlobalGameDetails>();
         float offset = ggd.BlindOffset();
-        Vector3 v = new Vector3 ( offset * multiplier, 0, 0.5F );
+        Vector3 v = new Vector3 ( 0, offset * multiplier, 0.5F );
         transform.localPosition = v;
     }
 	

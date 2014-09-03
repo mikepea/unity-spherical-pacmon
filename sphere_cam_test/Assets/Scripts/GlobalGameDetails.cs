@@ -18,10 +18,13 @@ public class GlobalGameDetails : MonoBehaviour
     public bool disableAudio;
     private bool audioEnabled = true;
 
+    private bool movementEnabled = false;
+
     public Texture2D mapTiles;
 
     private string gameMode = "Init";
     private float gameModeStartTime = 0;
+    private float levelStartTime = 0;
     private float demoStartDelay = 10; // seconds
 
     public string nextGameModeKey;
@@ -51,6 +54,22 @@ public class GlobalGameDetails : MonoBehaviour
         return blindOffset;
     }
 
+    public float LevelStartTime() {
+      return levelStartTime;
+    }
+
+    public bool MovementEnabled() {
+      return movementEnabled;
+    }
+
+    public void EnableMovement() {
+      movementEnabled = true;
+    }
+
+    public void DisableMovement() {
+      movementEnabled = false;
+    }
+
     public void ZeroScore() {
       score = 0;
     }
@@ -77,6 +96,8 @@ public class GlobalGameDetails : MonoBehaviour
 
     public void NextMap() {
         mapNumber++;
+        DisableMovement();
+        Debug.Log("MIKEDEBUG: (in NextMap) " + GameMode() );
         Application.LoadLevel(0);
     }
 
@@ -116,6 +137,13 @@ public class GlobalGameDetails : MonoBehaviour
       ZeroScore();
       EnableAudio();
       Application.LoadLevel(0);
+    }
+
+    public void StartLevel() {
+      gameMode = "StartLevel";
+      levelStartTime = Time.time;
+      gameModeStartTime = Time.time;
+      DisableMovement();
     }
 
     public void GameOver() {

@@ -131,7 +131,7 @@ public class PlayerCollision1 : MonoBehaviour
         DisplayScore();
         numPills = GameObject.FindGameObjectsWithTag ("Pill").Length + 
                    GameObject.FindGameObjectsWithTag ("Power Pill").Length;
-        if (numPills == 0) {
+        if ( this.name == "Player" && numPills == 0 ) {
           MapIsCleared ();
         }
         if ( AudioEnabled() ) {

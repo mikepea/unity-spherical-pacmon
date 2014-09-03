@@ -21,7 +21,6 @@ public class PlayerSphericalMovement : MonoBehaviour
     public float speed = 20.0F;
     public bool humanControl;
     public bool animatePlayer;
-    private bool movementEnabled = false;
 
     public AudioClip startSound;
     public AudioClip deadSound;
@@ -40,6 +39,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     private int alertScaredModeTimeout = 50;
     private float gameStartTime = 0;
     private float gameStartDelay = 4.0F;
+    private float levelStartDelay = 4.0F;
 
     private Map map;
 
@@ -87,13 +87,15 @@ public class PlayerSphericalMovement : MonoBehaviour
         if ( mode == "GameStart" ) {
           gameStartTime = Time.time;
           if ( this.name == "Player" ) {
-            SetInfoDisplayText("READY!");
-            EnableInfoDisplay();
             if ( GlobalState().AudioEnabled() ) {
               audio.PlayOneShot(startSound);
             }
             humanControl = true;
           }
+          StartLevel();
+        } else if ( mode == "GameInProgress" ) {
+          // new map started.
+          StartLevel();
         } else if ( mode == "GameDemo" ) {
           humanControl = false;
         }
@@ -307,15 +309,15 @@ public class PlayerSphericalMovement : MonoBehaviour
           }
         }
 
-        if ( movementEnabled ) {
+        if ( GlobalState().MovementEnabled() ) {
           playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
         } else {
-          if ( Time.time > gameStartTime + gameStartDelay) {
-            movementEnabled = true;
+          if ( Time.time > GlobalState().LevelStartTime() + levelStartDelay) {
+            GlobalState().SendMessage("EnableMovement");
             playerDirection = - Vector2.right; // so wakka wakka begins :)
-            if ( GlobalState().GameMode() == "GameStart" ) {
-              DisableInfoDisplay();
-              GlobalState().SendMessage("GameInProgress");
+            if ( GlobalState().GameMode() == "StartLevel" && this.name == "Player" ) {
+                DisableInfoDisplay();
+                GlobalState().SendMessage("GameInProgress");
             }
           }
         }
@@ -384,7 +386,8 @@ public class PlayerSphericalMovement : MonoBehaviour
           }
 
           if ( tile >= numAnimTiles ) {
-            ResetPlayerPositions();
+            // finished dead player animation, restart level
+            StartLevel();
           }
 
       } else if ( ! ( playerDirection == Vector2.zero ) ) {
@@ -632,6 +635,16 @@ public class PlayerSphericalMovement : MonoBehaviour
             + " IdirY: " + playerIntendedDirection.y
         );
         */
+    }
+
+    void StartLevel() {
+      GlobalState().SendMessage("StartLevel");
+      Debug.Log ("MIKEDEBUG: StartLevel() called! - mode = " + GlobalState().GameMode());
+      ResetPlayerPositions();
+      if ( this.name == "Player" ) {
+        SetInfoDisplayText("READY!");
+        EnableInfoDisplay();
+      }
     }
 
     void ResetPlayerPositions ()

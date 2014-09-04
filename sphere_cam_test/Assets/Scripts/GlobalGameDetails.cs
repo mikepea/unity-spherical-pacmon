@@ -22,6 +22,7 @@ public class GlobalGameDetails : MonoBehaviour
 
     public Texture2D mapTiles;
 
+    private bool demoMode = true;
     private string gameMode = "Init";
     private float gameModeStartTime = 0;
     private float levelStartTime = 0;
@@ -41,7 +42,7 @@ public class GlobalGameDetails : MonoBehaviour
         if ( gameMode == "Init" ) {
           ZeroScore();
           ResetMapNumber();
-          GameDemo();
+          StartGameDemo();
         }
 
     }
@@ -62,6 +63,11 @@ public class GlobalGameDetails : MonoBehaviour
       return movementEnabled;
     }
 
+    public bool InDemoMode() {
+      Debug.Log ( "InDemoMode: " + demoMode );
+      return demoMode;
+    }
+
     public void EnableMovement() {
       movementEnabled = true;
     }
@@ -75,7 +81,7 @@ public class GlobalGameDetails : MonoBehaviour
     }
 
     public void IncreaseScore(int increment) {
-      score += increment;
+      if ( ! InDemoMode() ) score += increment;
     }
 
     public int Score() {
@@ -87,7 +93,7 @@ public class GlobalGameDetails : MonoBehaviour
     }
 
     public void SetHighScore(int score) {
-        highScore = score;
+      if ( ! InDemoMode() ) highScore = score;
     }
 
     public string MapName() {
@@ -134,8 +140,10 @@ public class GlobalGameDetails : MonoBehaviour
 
     public void GameStart() {
       gameMode = "GameStart";
+      demoMode = false;
       ZeroScore();
       EnableAudio();
+      ResetMapNumber();
       Application.LoadLevel(0);
     }
 
@@ -147,14 +155,16 @@ public class GlobalGameDetails : MonoBehaviour
     }
 
     public void GameOver() {
-      gameMode = "GameOver";
-      gameModeStartTime = Time.time;
-      DisableAudio();
+      if ( gameMode != "GameOver" ) {
+        gameMode = "GameOver";
+        gameModeStartTime = Time.time;
+        DisableAudio();
+      }
     }
 
-    public void GameDemo() {
-      gameMode = "GameDemo";
-      gameModeStartTime = Time.time;
+    public void StartGameDemo() {
+      demoMode = true;
+      gameMode = "GameStart";
       DisableAudio();
       ResetMapNumber();
       Application.LoadLevel(0);
@@ -166,20 +176,22 @@ public class GlobalGameDetails : MonoBehaviour
     }
 
     public void FixedUpdate() {
-      //Debug.Log("MIKEDEBUG: " + GameMode() );
+      Debug.Log("MIKEDEBUG: " + GameMode() );
       if (Input.GetKey (nextGameModeKey)) {
         Debug.Log("nextGameModeKeyPressed: " + gameMode);
-        if ( gameMode == "GameDemo" ) {
+        if ( demoMode ) {
+          demoMode = false;
           GameStart();
         } else {
-          GameDemo();
+          StartGameDemo();
         }
       }
 
+      Debug.Log("GameMode " + GameMode() + " start time " + GameModeStartTime());
       if ( GameMode() == "GameOver" && 
            GameModeStartTime() + demoStartDelay < Time.time
            ) {
-        GameDemo();
+        StartGameDemo();
       }
     }
 

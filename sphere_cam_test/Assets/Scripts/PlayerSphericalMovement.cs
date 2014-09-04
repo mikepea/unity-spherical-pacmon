@@ -93,17 +93,16 @@ public class PlayerSphericalMovement : MonoBehaviour
         if ( mode == "GameStart" ) {
           gameStartTime = Time.time;
           if ( this.name == "Player" ) {
-            if ( GlobalState().AudioEnabled() ) {
-              audio.PlayOneShot(startSound);
+            if ( ! GlobalState().InDemoMode() ) {
+              if ( GlobalState().AudioEnabled() ) {
+                audio.PlayOneShot(startSound);
+              }
             }
-            humanControl = true;
             StartLevel();
           }
         } else if ( mode == "GameInProgress" ) {
           // new map started.
           StartLevel();
-        } else if ( mode == "GameDemo" ) {
-          humanControl = false;
         }
 
         sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f));
@@ -119,6 +118,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     }
 
     public void RefreshControllers() {
+      lastControllerRefreshTime = Time.time;
+
       if ( humanControlEnabled ) {
         List<InputDevice> devices = InputManager.Devices;
         Debug.Log ( this.name + ": found " + devices.Count + " inputdevs");
@@ -133,9 +134,10 @@ public class PlayerSphericalMovement : MonoBehaviour
           } else {
             if ( this.name != "Player" && inputdev.Name == "Keyboard Overlay" ) {
               Debug.Log ( this.name + ": disabling, as cannot use Keyboard Overlay" );
-              humanControl = true;
+              humanControl = false;
             } else {
               Debug.Log ( this.name + ": using InputDevice " + inputManagerDeviceIndex + ": " + inputdev.Name + ":" + inputdev.Meta );
+              if ( ! GlobalState().InDemoMode() ) humanControl = true;
             }
           }
         }
@@ -353,22 +355,26 @@ public class PlayerSphericalMovement : MonoBehaviour
         playerDirection = Vector2.zero;
     }
 
+    void CheckForStartGameButtonPress() {
+      if ( this.name == "Player" ) {
+        InputControl control = inputdev.GetControl( InputControlType.Action1 );
+        if ( control.IsPressed ) {
+          Debug.Log(this.name + ": Start Button pressed!");
+          string mode = GlobalState().GameMode();
+          if ( GlobalState().InDemoMode() || mode == "GameOver" ) {
+            GlobalState().GameStart();
+          }
+        }
+      }
+    }
+
     void FixedUpdate ()
     {
         if ( lastControllerRefreshTime + lastControllerRefreshDelay < Time.time ) {
           RefreshControllers();
-          lastControllerRefreshTime = Time.time;
         }
 
-        if ( this.name == "Player" ) {
-          InputControl control = inputdev.GetControl( InputControlType.Action1 );
-          if ( control.IsPressed ) {
-            string mode = GlobalState().GameMode();
-            if ( mode == "GameDemo" || mode == "GameOver" ) {
-              GlobalState().GameStart();
-            }
-          }
-        }
+        CheckForStartGameButtonPress();
 
         if ( GlobalState().MovementEnabled() ) {
           playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
@@ -448,7 +454,14 @@ public class PlayerSphericalMovement : MonoBehaviour
 
           if ( tile >= numAnimTiles ) {
             // finished dead player animation, restart level
-            StartLevel();
+            if ( GlobalState().GameMode() == "GameOver" ) {
+              if ( this.name == "Player" ) {
+                this.renderer.enabled = false;
+                tile = numAnimTiles;
+              }
+            } else {
+              StartLevel();
+            }
           }
 
       } else if ( ! ( playerDirection == Vector2.zero ) ) {
@@ -703,7 +716,8 @@ public class PlayerSphericalMovement : MonoBehaviour
       GlobalState().SendMessage("StartLevel");
       Debug.Log ("MIKEDEBUG: StartLevel() called! - mode = " + GlobalState().GameMode());
       ResetPlayerPositions();
-      if ( this.name == "Player" ) {
+      RefreshControllers();
+      if ( this.name == "Player" && ! GlobalState().InDemoMode() ) {
         SetInfoDisplayText("READY!");
         EnableInfoDisplay();
       }

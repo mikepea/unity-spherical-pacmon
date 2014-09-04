@@ -120,11 +120,10 @@ public class PlayerCollision1 : MonoBehaviour
 
     void UpdateHighScore() {
       if ( Score() > HighScore() ) {
-        if ( GlobalState().GameMode() != "GameDemo" ) {
-          GlobalState().SendMessage("SetHighScore", Score());
-        }
+        GlobalState().SendMessage("SetHighScore", Score());
       }
     }
+
     void FixedUpdate ()
     {
         UpdateHighScore();

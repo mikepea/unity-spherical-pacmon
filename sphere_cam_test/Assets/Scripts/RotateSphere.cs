@@ -3,10 +3,15 @@ using System.Collections;
 
 public class RotateSphere : MonoBehaviour {
 
-	public float rotateSpeed;
+  public  Vector3 rotateSpeed;
+  private Vector3 rotateDelta;
 
-	// Update is called once per frame
+  void Start () {
+    rotateDelta = rotateSpeed;
+  }
+
 	void FixedUpdate () {
-		transform.RotateAround(Vector3.zero, Vector3.up, rotateSpeed * Time.deltaTime);
-	}
+    transform.Rotate(rotateDelta);
+  }
+
 }

@@ -12,6 +12,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     private Vector2 playerIntendedDirection = new Vector2 (0, 0);
 
     public string startMarkerTag;
+    public bool simpleBaddyBehaviour;
 
     public int inputManagerDeviceIndex;
     private InputDevice inputdev;
@@ -284,6 +285,10 @@ public class PlayerSphericalMovement : MonoBehaviour
         Vector2 target;
 
         if ( this.gameObject.tag == "Player" && humanControl ) {
+          return intended;
+        }
+
+        if ( this.gameObject.tag == "Baddy" && humanControl && simpleBaddyBehaviour ) {
           return intended;
         }
 

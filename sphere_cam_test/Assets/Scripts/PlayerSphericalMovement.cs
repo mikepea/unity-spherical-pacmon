@@ -215,6 +215,9 @@ public class PlayerSphericalMovement : MonoBehaviour
               direction = Vector2.up;
           } else if (v < -0.8) {
               direction = (- Vector2.up);
+          } else if ( IAmABaddy() ) {
+              // allow baddy to say 'i dont care'
+              direction = Vector2.zero;
           } else {
               // continue in existing direction
           }

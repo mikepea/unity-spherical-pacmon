@@ -323,9 +323,11 @@ public class PlayerSphericalMovement : MonoBehaviour
                   return dir; // override with the players choice
                 }
               }
-              foreach ( Vector2 dir in availableDirections) {
-                if ( dir == current ) {
-                  return dir;  // prefer to continue in a straight line
+              if ( ! isDead ) {
+                foreach ( Vector2 dir in availableDirections) {
+                  if ( dir == current ) {
+                    return dir;  // prefer to continue in a straight line
+                  }
                 }
               }
             }

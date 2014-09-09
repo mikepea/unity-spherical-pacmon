@@ -24,6 +24,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     private bool humanControl = false;
     public bool animatePlayer;
 
+    private bool highlightSprite = false;
+
     public AudioClip startSound;
     public AudioClip deadSound;
 
@@ -56,9 +58,8 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     private float iX=0;
     private float iY=1;
-    public int _uvTieX = 1;
-    public int _uvTieY = 1;
-    public int _fps = 10;
+    public int _uvTieX;
+    public int _uvTieY;
     private Vector2 _size;
     private Renderer _myRenderer;
     private int _lastIndex = -1;
@@ -362,16 +363,24 @@ public class PlayerSphericalMovement : MonoBehaviour
         playerDirection = Vector2.zero;
     }
 
-    void CheckForStartGameButtonPress() {
-      if ( this.name == "Player" ) {
-        InputControl control = inputdev.GetControl( InputControlType.Action1 );
-        if ( control.IsPressed ) {
+    void CheckForButtonPress() {
+      if ( IsNull(inputdev) ) {
+        return;
+      }
+      InputControl control = inputdev.GetControl( InputControlType.Action1 );
+      if ( control.IsPressed ) {
+        if ( this.name == "Player" ) {
           Debug.Log(this.name + ": Start Button pressed!");
           string mode = GlobalState().GameMode();
           if ( GlobalState().InDemoMode() || mode == "GameOver" ) {
             GlobalState().GameStart();
           }
+        } else {
+          // we are a baddy, button helps to figure out which one!
+          highlightSprite = true;
         }
+      } else {
+        highlightSprite = false;
       }
     }
 
@@ -381,7 +390,7 @@ public class PlayerSphericalMovement : MonoBehaviour
           RefreshControllers();
         }
 
-        CheckForStartGameButtonPress();
+        CheckForButtonPress();
 
         if ( GlobalState().MovementEnabled() ) {
           playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
@@ -521,6 +530,8 @@ public class PlayerSphericalMovement : MonoBehaviour
       if ( isDead ) {
         tile -= _uvTieX; // 3rd row
       }
+
+      if ( highlightSprite ) { tile = 9; } 
 
       AlterTextureSpriteTile(tile);
     }

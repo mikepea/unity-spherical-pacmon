@@ -261,6 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: Baddy4Start
+  simpleBaddyBehaviour: 0
   inputManagerDeviceIndex: 4
   playerScatterSpot: {x: 35, y: 0}
   speed: 18
@@ -270,7 +271,6 @@ MonoBehaviour:
   deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
   _uvTieX: 4
   _uvTieY: 3
-  _fps: 10
 --- !u!23 &172795351
 Renderer:
   m_ObjectHideFlags: 0
@@ -436,7 +436,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 260144989}
-  m_LocalRotation: {x: 0, y: 0, z: .70710659, w: -.707106948}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -503,7 +503,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 260144989}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b841391c466f9496d87de0858acb3b1d, type: 3}
   m_Name: 
@@ -584,7 +584,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 395107394}
-  m_LocalRotation: {x: 0, y: 0, z: .70710659, w: -.707106948}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -651,7 +651,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 395107394}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b841391c466f9496d87de0858acb3b1d, type: 3}
   m_Name: 
@@ -768,7 +768,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 524146279}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: .5}
+  m_LocalPosition: {x: 9.77934178e-10, y: -.998176813, z: .499999851}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1875379718}
@@ -1012,6 +1012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: Baddy1Start
+  simpleBaddyBehaviour: 0
   inputManagerDeviceIndex: 1
   playerScatterSpot: {x: 65, y: 28}
   speed: 18
@@ -1021,7 +1022,6 @@ MonoBehaviour:
   deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
   _uvTieX: 4
   _uvTieY: 3
-  _fps: 10
 --- !u!82 &705191608
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1810,6 +1810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: Baddy2Start
+  simpleBaddyBehaviour: 0
   inputManagerDeviceIndex: 2
   playerScatterSpot: {x: 35, y: 28}
   speed: 18
@@ -1819,7 +1820,6 @@ MonoBehaviour:
   deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
   _uvTieX: 4
   _uvTieY: 3
-  _fps: 10
 --- !u!23 &1190214196
 Renderer:
   m_ObjectHideFlags: 0
@@ -2062,6 +2062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: Baddy3Start
+  simpleBaddyBehaviour: 0
   inputManagerDeviceIndex: 3
   playerScatterSpot: {x: 65, y: 0}
   speed: 18
@@ -2071,7 +2072,6 @@ MonoBehaviour:
   deadSound: {fileID: 8300000, guid: a0dde309ff1ce4e9a8dba59a14643570, type: 3}
   _uvTieX: 4
   _uvTieY: 3
-  _fps: 10
 --- !u!23 &1341022213
 Renderer:
   m_ObjectHideFlags: 0
@@ -2317,6 +2317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMarkerTag: PlayerStart
+  simpleBaddyBehaviour: 0
   inputManagerDeviceIndex: 0
   playerScatterSpot: {x: 0, y: 0}
   speed: 20
@@ -2326,7 +2327,6 @@ MonoBehaviour:
   deadSound: {fileID: 8300000, guid: d92ff658947954a0089f5a6f10153017, type: 3}
   _uvTieX: 8
   _uvTieY: 2
-  _fps: 10
 --- !u!54 &1527557692
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2791,7 +2791,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1875379717}
-  m_LocalRotation: {x: 0, y: 0, z: .70710659, w: -.707106948}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2858,7 +2858,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1875379717}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b841391c466f9496d87de0858acb3b1d, type: 3}
   m_Name: 
@@ -3112,7 +3112,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1938779255}
-  m_LocalRotation: {x: 0, y: 0, z: .70710659, w: -.707106948}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3126,7 +3126,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1938779255}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b841391c466f9496d87de0858acb3b1d, type: 3}
   m_Name: 

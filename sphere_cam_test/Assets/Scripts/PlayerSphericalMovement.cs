@@ -207,13 +207,13 @@ public class PlayerSphericalMovement : MonoBehaviour
           float h = inputdev.Direction.X;
           float v = inputdev.Direction.Y;
 
-          if (h == 1) {
+          if (h > 0.8) {
               direction = Vector2.right;
-          } else if (h == -1) {
+          } else if (h < -0.8) {
               direction = (- Vector2.right);
-          } else if (v == 1) {
+          } else if (v > 0.8) {
               direction = Vector2.up;
-          } else if (v == -1) {
+          } else if (v < -0.8) {
               direction = (- Vector2.up);
           } else {
               // continue in existing direction

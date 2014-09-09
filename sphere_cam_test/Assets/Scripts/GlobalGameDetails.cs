@@ -12,8 +12,10 @@ public class GlobalGameDetails : MonoBehaviour
     public static GlobalGameDetails i;
 
     public float blindOffset;
+    public bool displayTestPattern = false;
 
-    public int initialMapNumber = 0;
+    public int initialMapNumber;
+    public int numberOfMaps;
     private int mapNumber = 0;
     public bool disableAudio;
     private bool audioEnabled = true;
@@ -29,6 +31,7 @@ public class GlobalGameDetails : MonoBehaviour
     private float demoStartDelay = 10; // seconds
 
     public string nextGameModeKey;
+    public string nextLevelKey;
 
     private int score;
     private int highScore;
@@ -48,7 +51,11 @@ public class GlobalGameDetails : MonoBehaviour
     }
 
     public void ResetMapNumber() {
-      mapNumber = initialMapNumber;
+      if ( displayTestPattern ) {
+        mapNumber = 0;
+      } else {
+        mapNumber = initialMapNumber;
+      }
     }
 
     public float BlindOffset() {
@@ -101,10 +108,16 @@ public class GlobalGameDetails : MonoBehaviour
     }
 
     public void NextMap() {
+      if ( displayTestPattern ) {
+        mapNumber = 0;
+      } else {
         mapNumber++;
-        DisableMovement();
-        Debug.Log("MIKEDEBUG: (in NextMap) " + GameMode() );
-        Application.LoadLevel(0);
+        mapNumber = mapNumber % numberOfMaps;
+        if ( mapNumber == 0 )  mapNumber++; //  always skip map0 -- test pattern
+      }
+      DisableMovement();
+      Debug.Log("MIKEDEBUG: (in NextMap) " + GameMode() );
+      Application.LoadLevel(0);
     }
 
     public bool AudioEnabled() {
@@ -185,6 +198,11 @@ public class GlobalGameDetails : MonoBehaviour
         } else {
           StartGameDemo();
         }
+      }
+
+      if (Input.GetKey (nextLevelKey)) {
+        Debug.Log("nextLevelKeyPressed");
+        NextMap();
       }
 
       Debug.Log("GameMode " + GameMode() + " start time " + GameModeStartTime());

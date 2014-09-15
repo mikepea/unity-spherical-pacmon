@@ -638,7 +638,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 0
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_HDR: 0
@@ -1143,9 +1143,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 767402434}
-  m_LocalRotation: {x: .49999994, y: -.500000179, z: .499999791, w: -.500000179}
+  m_LocalRotation: {x: .499999791, y: -.500000358, z: .499999732, w: -.500000238}
   m_LocalPosition: {x: 5, y: 0, z: 0}
-  m_LocalScale: {x: .499999911, y: .49999994, z: .49999994}
+  m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 148205950}
   m_RootOrder: 1
@@ -1614,7 +1614,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1027486912}
-  m_LocalRotation: {x: -.00617059506, y: -.00617059181, z: .707079709, w: -.707080066}
+  m_LocalRotation: {x: 0, y: 0, z: .70710659, w: -.707106948}
   m_LocalPosition: {x: 5, y: 0, z: 0}
   m_LocalScale: {x: .49999997, y: .5, z: .49999997}
   m_Children: []
@@ -2301,7 +2301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numPills: 0
-  playerMaxLives: 3
+  playerMaxLives: 2
   gameOverScene: title-scene
   superPlayer: 0
   munch: {fileID: 8300000, guid: 8ad4851df0d0844d1b718146d7b95abc, type: 3}
@@ -2845,7 +2845,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 0
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_HDR: 0
@@ -3099,7 +3099,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 0
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_HDR: 0

@@ -65,15 +65,15 @@ public class PlayerCollision1 : MonoBehaviour
     void PlayerHasDied ()
     {
         DisableAllBaddies();
+        if ( this.GetComponent<PlayerSphericalMovement>().IsDead() == true ) {
+          return; // already dead.
+        }
         if (playerLivesRemaining == 0) {
-            //Application.LoadLevel (gameOverScene);
-            //playerLivesRemaining = playerMaxLives;
             this.SendMessage ("HasDied");
             this.SendMessage ("GameOver");
         } else {
             playerLivesRemaining--;
             this.SendMessage ("HasDied");
-            //ResetPlayerPositions ();
         }
     }
 

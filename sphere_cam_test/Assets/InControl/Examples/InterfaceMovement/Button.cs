@@ -19,9 +19,9 @@ namespace InterfaceMovement
 			bool hasFocus = transform.parent.GetComponent<ButtonManager>().focusedButton == this;
 
 			// Fade alpha in and out depending on focus.
-			var color = renderer.material.color;
+			var color = GetComponent<Renderer>().material.color;
 			color.a = Mathf.MoveTowards( color.a, hasFocus ? 1.0f : 0.5f, Time.deltaTime * 3.0f );
-			renderer.material.color = color;
+			GetComponent<Renderer>().material.color = color;
 		}
 	}
 }

@@ -58,7 +58,7 @@ public class PlayerCollision1 : MonoBehaviour
     void DisableAllBaddies() {
         GameObject[] baddies = GameObject.FindGameObjectsWithTag ("Baddy");
         foreach (GameObject baddy in baddies) {
-            baddy.renderer.enabled = false; // dont SetActive(false), as cannot then find it.
+            baddy.GetComponent<Renderer>().enabled = false; // dont SetActive(false), as cannot then find it.
         }
     }
 
@@ -93,7 +93,7 @@ public class PlayerCollision1 : MonoBehaviour
         } else if (other.gameObject.tag == "Pill" || other.gameObject.tag == "Power Pill" ) {
             IncreaseScore(10);
             lastPillMunchTime = Time.time;
-            other.renderer.enabled = false;
+            other.GetComponent<Renderer>().enabled = false;
             Destroy(other.gameObject, 0.5f);
             if (other.gameObject.tag == "Power Pill") {
                 other.gameObject.SetActive (false);
@@ -135,13 +135,13 @@ public class PlayerCollision1 : MonoBehaviour
         }
         if ( AudioEnabled() ) {
           if ( lastPillMunchTime + pillMunchDelay > Time.time ) {
-            if ( ! audio.isPlaying ) {
-              audio.clip = munch;
-              audio.loop = true;
-              audio.Play();
+            if ( ! GetComponent<AudioSource>().isPlaying ) {
+              GetComponent<AudioSource>().clip = munch;
+              GetComponent<AudioSource>().loop = true;
+              GetComponent<AudioSource>().Play();
             }
           } else {
-            audio.loop = false;
+            GetComponent<AudioSource>().loop = false;
           }
         }
     }

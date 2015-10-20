@@ -16,7 +16,7 @@ namespace MultiplayerExample
 			if (inputDevice == null)
 			{
 				// If no controller exists for this cube, just make it translucent.
-				renderer.material.color = new Color( 1.0f, 1.0f, 1.0f, 0.2f );
+				GetComponent<Renderer>().material.color = new Color( 1.0f, 1.0f, 1.0f, 0.2f );
 			}
 			else
 			{
@@ -30,26 +30,26 @@ namespace MultiplayerExample
 			// Set object material color based on which action is pressed.
 			if (inputDevice.Action1)
 			{
-				renderer.material.color = Color.green;
+				GetComponent<Renderer>().material.color = Color.green;
 			}
 			else
 			if (inputDevice.Action2)
 			{
-				renderer.material.color = Color.red;
+				GetComponent<Renderer>().material.color = Color.red;
 			}
 			else
 			if (inputDevice.Action3)
 			{
-				renderer.material.color = Color.blue;
+				GetComponent<Renderer>().material.color = Color.blue;
 			}
 			else
 			if (inputDevice.Action4)
 			{
-				renderer.material.color = Color.yellow;
+				GetComponent<Renderer>().material.color = Color.yellow;
 			}
 			else
 			{
-				renderer.material.color = Color.white;
+				GetComponent<Renderer>().material.color = Color.white;
 			}
 			
 			// Rotate target object with both sticks and d-pad.

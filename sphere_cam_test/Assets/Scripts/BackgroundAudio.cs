@@ -25,15 +25,15 @@ public class BackgroundAudio : MonoBehaviour
     }
     if ( GlobalState().AudioEnabled() ) {
       if ( someoneIsScared ) {
-        if ( !audio.isPlaying ) {
+        if ( !GetComponent<AudioSource>().isPlaying ) {
           Debug.Log("Starting scaredSound!");
-          audio.clip = scaredSound;
-          audio.loop = true;
-          audio.Play();
+          GetComponent<AudioSource>().clip = scaredSound;
+          GetComponent<AudioSource>().loop = true;
+          GetComponent<AudioSource>().Play();
         }
       } else {
-        audio.loop = false;
-        audio.Stop();
+        GetComponent<AudioSource>().loop = false;
+        GetComponent<AudioSource>().Stop();
       }
     }
   }

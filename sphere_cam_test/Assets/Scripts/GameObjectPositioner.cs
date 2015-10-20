@@ -55,11 +55,11 @@ public class GameObjectPositioner : MonoBehaviour
     }
 
     void EnableRendering() {
-        this.renderer.enabled = true;
+        this.GetComponent<Renderer>().enabled = true;
     }
 
     void DisableRendering() {
-        this.renderer.enabled = false;
+        this.GetComponent<Renderer>().enabled = false;
     }
 
     void UpdateObjectLocationAndRotation ()

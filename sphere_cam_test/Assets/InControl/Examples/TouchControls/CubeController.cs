@@ -13,7 +13,7 @@ namespace TouchExample
 			var inputDevice = InputManager.ActiveDevice;
 
 			// Set target object material color based on which action is pressed.
-			renderer.material.color = GetColorFromActionButtons( inputDevice );
+			GetComponent<Renderer>().material.color = GetColorFromActionButtons( inputDevice );
 
 			// Rotate target object.
 			transform.Rotate( Vector3.down,  500.0f * Time.deltaTime * inputDevice.Direction.X, Space.World );

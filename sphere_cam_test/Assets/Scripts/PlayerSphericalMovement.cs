@@ -97,7 +97,7 @@ public class PlayerSphericalMovement : MonoBehaviour
           if ( this.name == "Player" ) {
             if ( ! GlobalState().InDemoMode() ) {
               if ( GlobalState().AudioEnabled() ) {
-                audio.PlayOneShot(startSound);
+                GetComponent<AudioSource>().PlayOneShot(startSound);
               }
             }
             StartLevel();
@@ -114,7 +114,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         isScared = false;
 
         _size = new Vector2 (1.0f / _uvTieX, 1.0f / _uvTieY);
-        _myRenderer = renderer;
+        _myRenderer = GetComponent<Renderer>();
         _myRenderer.material.SetTextureScale ("_MainTex", _size);
 
     }
@@ -151,11 +151,11 @@ public class PlayerSphericalMovement : MonoBehaviour
     }
 
     public void EnableInfoDisplay() {
-      infoDisplay.renderer.enabled = true;
+      infoDisplay.GetComponent<Renderer>().enabled = true;
     }
 
     public void DisableInfoDisplay() {
-      infoDisplay.renderer.enabled = false;
+      infoDisplay.GetComponent<Renderer>().enabled = false;
     }
 
     public void SetInfoDisplayText ( string message ) {
@@ -176,7 +176,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         isDead = false;
         isHome = true;
         UpdatePlayerObjectLocationAndRotation ();
-        this.renderer.enabled = true;
+        this.GetComponent<Renderer>().enabled = true;
     }
 
     void EnterScaredMode ()
@@ -475,7 +475,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             // finished dead player animation, restart level
             if ( GlobalState().GameMode() == "GameOver" ) {
               if ( this.name == "Player" ) {
-                this.renderer.enabled = false;
+                this.GetComponent<Renderer>().enabled = false;
                 tile = numAnimTiles;
               }
             } else {
@@ -579,8 +579,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     void HasDied() {
         isDead = true;
         if ( GlobalState().AudioEnabled() ) {
-          audio.clip = deadSound;
-          audio.Play();
+          GetComponent<AudioSource>().clip = deadSound;
+          GetComponent<AudioSource>().Play();
         }
     }
 

@@ -28,10 +28,10 @@ public class CreateMap : MonoBehaviour
         Shader mapShader = Shader.Find("Diffuse");
 
         texture.Apply ();
-        renderer.material.mainTexture = texture;
-        renderer.material.shader = mapShader;
+        GetComponent<Renderer>().material.mainTexture = texture;
+        GetComponent<Renderer>().material.shader = mapShader;
         float offset = 0.057F;
-        renderer.material.mainTextureOffset = new Vector2(offset, 0);
+        GetComponent<Renderer>().material.mainTextureOffset = new Vector2(offset, 0);
 
     }
 

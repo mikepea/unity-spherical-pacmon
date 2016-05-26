@@ -31,7 +31,7 @@ public class AlignmentTexture : MonoBehaviour
         }
 
         texture.Apply ();
-        renderer.material.mainTexture = texture;	
+        GetComponent<Renderer>().material.mainTexture = texture;	
 
     }
 

@@ -123,13 +123,12 @@ public class PlayerSphericalMovement : MonoBehaviour
       lastControllerRefreshTime = Time.time;
 
       if ( humanControlEnabled ) {
-        List<InputDevice> devices = InputManager.Devices;
-        Debug.Log ( this.name + ": found " + devices.Count + " inputdevs");
-        if ( inputManagerDeviceIndex + 1 > devices.Count ) {
+            Debug.Log ( this.name + ": found " + InputManager.Devices.Count + " inputdevs");
+            if ( inputManagerDeviceIndex + 1 > InputManager.Devices.Count ) {
           Debug.Log ( this.name + ": device " + inputManagerDeviceIndex + " is not present");
           humanControl = false;
         } else {
-          inputdev = devices[inputManagerDeviceIndex];
+                inputdev = InputManager.Devices[inputManagerDeviceIndex];
           if ( IsNull(inputdev) ) {
             Debug.Log ( this.name + ": device + " + inputManagerDeviceIndex + " is not Active");
             humanControl = false;

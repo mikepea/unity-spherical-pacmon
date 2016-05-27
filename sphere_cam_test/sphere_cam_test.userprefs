@@ -1,17 +1,18 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerSphericalMovement.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerSphericalMovement.cs" Line="134" Column="1" />
-      <File FileName="Assets/InControl/Library/Components/InControlManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/PlayerCollision1.cs" Line="156" Column="1" />
-      <File FileName="Assets/Scripts/Map.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/InControlKeyboardOverlay.cs" Line="6" Column="72" />
+      <File FileName="Assets/Scripts/PlayerSphericalMovement.cs" Line="130" Column="17" />
+      <File FileName="Assets/Scripts/PlayerCollision1.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Map.cs" Line="294" Column="6" />
       <File FileName="Assets/Scripts/EnterNextScene.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GlobalGameDetails.cs" Line="199" Column="1" />
+      <File FileName="Assets/Scripts/GlobalGameDetails.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/SphericalCoordinates.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/AddRegularPills.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/EnsureRotated.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/RotateSphere.cs" Line="18" Column="1" />
+      <File FileName="Assets/Scripts/RotateSphere.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameObjectPositioner.cs" Line="34" Column="61" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

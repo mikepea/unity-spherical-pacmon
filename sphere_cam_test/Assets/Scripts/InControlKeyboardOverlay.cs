@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using InControl;
 
-public class InControlKeyboardOverlayProfile : UnityInputDeviceProfile
+public class InControlKeyboardOverlayProfile : CustomInputDeviceProfile
 {
   public InControlKeyboardOverlayProfile() 
   {
@@ -25,7 +25,7 @@ public class InControlKeyboardOverlayProfile : UnityInputDeviceProfile
       new InputControlMapping {
         Handle = "DPadLeft alt",
         Target = InputControlType.DPadLeft,
-        Source = KeyCodeButton( KeyCode.LeftArrow )
+                Source = KeyCodeButton( KeyCode.LeftArrow )
       },
 
       new InputControlMapping {

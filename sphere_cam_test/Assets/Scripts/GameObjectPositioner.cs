@@ -32,7 +32,6 @@ public class GameObjectPositioner : MonoBehaviour
         map = new Map (mapName);
 
         Debug.Log("Game Mode: " + GlobalState().GameMode());
-        string mode = GlobalState().GameMode();
 
         sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f));
         transform.localPosition = sc.toCartesian;

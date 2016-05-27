@@ -292,7 +292,6 @@ public class Map
 
     public float LatitudeSpeedAdjust (float angle)
     {
-        float a = Mathf.Abs (angle);
         return ( 1.0F / Mathf.Cos(degreesToRadians(angle)) );
     }
 

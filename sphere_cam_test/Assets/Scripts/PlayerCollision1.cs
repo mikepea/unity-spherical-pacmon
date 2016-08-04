@@ -39,8 +39,16 @@ public class PlayerCollision1 : MonoBehaviour
         playerLivesRemaining = playerMaxLives;
 
         GameObject[] scoreboards = GameObject.FindGameObjectsWithTag("Scoreboard");
-        scoreboard = scoreboards[0];
+        if ( scoreboards.Length == 0 ) {
+          Debug.LogWarning("No Scoreboard on this map");
+          return;
+        }
         GameObject[] hiscoreboards = GameObject.FindGameObjectsWithTag("HiScoreboard");
+        if ( hiscoreboards.Length == 0 ) {
+          Debug.LogWarning("No HiScoreboard on this map");
+          return;
+        }
+        scoreboard = scoreboards[0];
         hiscoreboard = hiscoreboards[0];
     }
 

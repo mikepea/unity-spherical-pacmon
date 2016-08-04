@@ -82,8 +82,10 @@ public class PlayerSphericalMovement : MonoBehaviour
         RefreshControllers();
 
         GameObject[] infoDisplays = GameObject.FindGameObjectsWithTag("InfoDisplay");
-        infoDisplay = infoDisplays[0];
-        SetInfoDisplayText("");
+        if ( infoDisplays.Length > 0 ) {
+          infoDisplay = infoDisplays[0];
+          SetInfoDisplayText("");
+        }
         DisableInfoDisplay();
 
         string mapName = GlobalState().MapName();
@@ -150,15 +152,21 @@ public class PlayerSphericalMovement : MonoBehaviour
     }
 
     public void EnableInfoDisplay() {
-      infoDisplay.GetComponent<Renderer>().enabled = true;
+      if ( infoDisplay != null ) {
+        infoDisplay.GetComponent<Renderer>().enabled = true;
+      }
     }
 
     public void DisableInfoDisplay() {
-      infoDisplay.GetComponent<Renderer>().enabled = false;
+      if ( infoDisplay != null ) {
+        infoDisplay.GetComponent<Renderer>().enabled = false;
+      }
     }
 
     public void SetInfoDisplayText ( string message ) {
-      infoDisplay.GetComponent<TextMesh>().text = message;
+      if ( infoDisplay != null ) {
+        infoDisplay.GetComponent<TextMesh>().text = message;
+      }
     }
 
     void PutPlayerAtStartPosition ()
@@ -435,6 +443,9 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void UpdatePlayerObjectLocationAndRotation ()
     {
+        if ( sc == null ) {
+          return;
+        }
         transform.localPosition = sc.SetRotation (
             map.degreesToRadians (currentAngleX),
             map.degreesToRadians (currentAngleY)

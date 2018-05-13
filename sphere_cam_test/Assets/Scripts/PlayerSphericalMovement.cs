@@ -762,12 +762,20 @@ public class PlayerSphericalMovement : MonoBehaviour
     {
         GlobalState ().SendMessage ("StartLevel");
         Debug.Log ("MIKEDEBUG: StartLevel() called! - mode = " + GlobalState ().GameMode ());
+        ResetSpherePosition ();
         ResetPlayerPositions ();
         RefreshControllers ();
         if (this.name == "Player" && ! GlobalState ().InDemoMode ()) {
             SetInfoDisplayText ("READY!");
             EnableInfoDisplay ();
         }
+    }
+
+    void ResetSpherePosition () {
+        Debug.LogWarning ("Resetting Sphere Position");
+        GameObject[] spheres = GameObject.FindGameObjectsWithTag ("MainSphere");
+        GameObject mainSphere = spheres[0];
+        mainSphere.transform.localRotation = Quaternion.identity;
     }
 
     void ResetPlayerPositions ()

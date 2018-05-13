@@ -56,8 +56,8 @@ public class PlayerSphericalMovement : MonoBehaviour
     private int maxDeadLastTileChangeTicks = 10;
     private bool playerTileBounceDirection = true;
 
-    private float iX=0;
-    private float iY=1;
+    private float iX = 0;
+    private float iY = 1;
     public int _uvTieX;
     public int _uvTieY;
     private Vector2 _size;
@@ -68,10 +68,11 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     private GameObject infoDisplay;
 
-    GlobalGameDetails GlobalState() {
+    GlobalGameDetails GlobalState ()
+    {
         if (!ggd) {
-          GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
-          ggd = states[0].GetComponent<GlobalGameDetails>();
+            GameObject[] states = GameObject.FindGameObjectsWithTag ("PersistedState");
+            ggd = states [0].GetComponent<GlobalGameDetails> ();
         }
         return ggd;
     }
@@ -79,32 +80,32 @@ public class PlayerSphericalMovement : MonoBehaviour
     void Start ()
     {
 
-        RefreshControllers();
+        RefreshControllers ();
 
-        GameObject[] infoDisplays = GameObject.FindGameObjectsWithTag("InfoDisplay");
-        infoDisplay = infoDisplays[0];
-        SetInfoDisplayText("");
-        DisableInfoDisplay();
+        GameObject[] infoDisplays = GameObject.FindGameObjectsWithTag ("InfoDisplay");
+        infoDisplay = infoDisplays [0];
+        SetInfoDisplayText ("");
+        DisableInfoDisplay ();
 
-        string mapName = GlobalState().MapName();
+        string mapName = GlobalState ().MapName ();
         map = new Map (mapName);
-        Debug.Log(this.name + ": In PlayerSphericalMovement.Start, mapName = " + mapName);
-        Debug.Log(this.name + ": Game Mode: " + GlobalState().GameMode());
+        Debug.Log (this.name + ": In PlayerSphericalMovement.Start, mapName = " + mapName);
+        Debug.Log (this.name + ": Game Mode: " + GlobalState ().GameMode ());
 
-        string mode = GlobalState().GameMode();
-        if ( mode == "GameStart" ) {
-          gameStartTime = Time.time;
-          if ( this.name == "Player" ) {
-            if ( ! GlobalState().InDemoMode() ) {
-              if ( GlobalState().AudioEnabled() ) {
-                audio.PlayOneShot(startSound);
-              }
+        string mode = GlobalState ().GameMode ();
+        if (mode == "GameStart") {
+            gameStartTime = Time.time;
+            if (this.name == "Player") {
+                if (! GlobalState ().InDemoMode ()) {
+                    if (GlobalState ().AudioEnabled ()) {
+                        audio.PlayOneShot (startSound);
+                    }
+                }
+                StartLevel ();
             }
-            StartLevel();
-          }
-        } else if ( mode == "GameInProgress" ) {
-          // new map started.
-          StartLevel();
+        } else if (mode == "GameInProgress") {
+            // new map started.
+            StartLevel ();
         }
 
         sc = new SphericalCoordinates (transform.localPosition, 0f, 10f, 0f, (Mathf.PI * 2f), -(Mathf.PI / 3f), (Mathf.PI / 3f));
@@ -119,53 +120,59 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     }
 
-    public void RefreshControllers() {
-      lastControllerRefreshTime = Time.time;
+    public void RefreshControllers ()
+    {
+        lastControllerRefreshTime = Time.time;
 
-      if ( humanControlEnabled ) {
-        List<InputDevice> devices = InputManager.Devices;
-        Debug.Log ( this.name + ": found " + devices.Count + " inputdevs");
-        if ( inputManagerDeviceIndex + 1 > devices.Count ) {
-          Debug.Log ( this.name + ": device " + inputManagerDeviceIndex + " is not present");
-          humanControl = false;
-        } else {
-          inputdev = devices[inputManagerDeviceIndex];
-          if ( IsNull(inputdev) ) {
-            Debug.Log ( this.name + ": device + " + inputManagerDeviceIndex + " is not Active");
-            humanControl = false;
-          } else {
-            if ( this.name != "Player" && inputdev.Name == "Keyboard Overlay" ) {
-              Debug.Log ( this.name + ": disabling, as cannot use Keyboard Overlay" );
-              humanControl = false;
+        if (humanControlEnabled) {
+            List<InputDevice> devices = InputManager.Devices;
+            Debug.Log (this.name + ": found " + devices.Count + " inputdevs");
+            if (inputManagerDeviceIndex + 1 > devices.Count) {
+                Debug.Log (this.name + ": device " + inputManagerDeviceIndex + " is not present");
+                humanControl = false;
             } else {
-              Debug.Log ( this.name + ": using InputDevice " + inputManagerDeviceIndex + ": " + inputdev.Name + ":" + inputdev.Meta );
-              if ( ! GlobalState().InDemoMode() ) humanControl = true;
+                inputdev = devices [inputManagerDeviceIndex];
+                if (IsNull (inputdev)) {
+                    Debug.Log (this.name + ": device + " + inputManagerDeviceIndex + " is not Active");
+                    humanControl = false;
+                } else {
+                    if (this.name != "Player" && inputdev.Name == "Keyboard Overlay") {
+                        Debug.Log (this.name + ": disabling, as cannot use Keyboard Overlay");
+                        humanControl = false;
+                    } else {
+                        Debug.Log (this.name + ": using InputDevice " + inputManagerDeviceIndex + ": " + inputdev.Name + ":" + inputdev.Meta);
+                        if (! GlobalState ().InDemoMode ())
+                            humanControl = true;
+                    }
+                }
             }
-          }
         }
-      }
     }
 
-    public static bool IsNull(System.Object aObj) {
-      return aObj == null || aObj.Equals(null);
+    public static bool IsNull (System.Object aObj)
+    {
+        return aObj == null || aObj.Equals (null);
     }
 
-    public void EnableInfoDisplay() {
-      infoDisplay.renderer.enabled = true;
+    public void EnableInfoDisplay ()
+    {
+        infoDisplay.renderer.enabled = true;
     }
 
-    public void DisableInfoDisplay() {
-      infoDisplay.renderer.enabled = false;
+    public void DisableInfoDisplay ()
+    {
+        infoDisplay.renderer.enabled = false;
     }
 
-    public void SetInfoDisplayText ( string message ) {
-      infoDisplay.GetComponent<TextMesh>().text = message;
+    public void SetInfoDisplayText (string message)
+    {
+        infoDisplay.GetComponent<TextMesh> ().text = message;
     }
 
     void PutPlayerAtStartPosition ()
     {
         playerGridRef = map.FindEntityGridRef (startMarkerTag);
-        if ( playerGridRef == new Vector2 (-1, -1) ) {
+        if (playerGridRef == new Vector2 (-1, -1)) {
             this.gameObject.SetActive (false);
             return;
         }
@@ -181,47 +188,49 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void EnterScaredMode ()
     {
-        if ( ! isDead || ! isHome ) {
-          isScared = true;
-          ticksInScaredMode = 0;
+        if (! isDead || ! isHome) {
+            isScared = true;
+            ticksInScaredMode = 0;
         }
     }
 
-    public bool IsScared () {
-      return isScared;
+    public bool IsScared ()
+    {
+        return isScared;
     }
 
-    public bool IsDead () {
-      return isDead;
+    public bool IsDead ()
+    {
+        return isDead;
     }
 
     void EnterDeadMode ()
     {
         isScared = false;
-        HasDied();
+        HasDied ();
     }
 
     Vector2 ProcessInputsIntoDirection (Vector2 direction)
     {
-        if ( humanControl ) {
-          float h = inputdev.Direction.X;
-          float v = inputdev.Direction.Y;
+        if (humanControl) {
+            float h = inputdev.Direction.X;
+            float v = inputdev.Direction.Y;
 
-          if (h > 0.8) {
-              direction = Vector2.right;
-          } else if (h < -0.8) {
-              direction = (- Vector2.right);
-          } else if (v > 0.8) {
-              direction = Vector2.up;
-          } else if (v < -0.8) {
-              direction = (- Vector2.up);
-          } else if ( IAmABaddy() ) {
-              // allow baddy to say 'i dont care'
-              direction = Vector2.zero;
-          } else {
-              // continue in existing direction
-          }
-          Debug.Log(this.name + ": being asked to go " + direction);
+            if (h > 0.8) {
+                direction = Vector2.right;
+            } else if (h < -0.8) {
+                direction = (- Vector2.right);
+            } else if (v > 0.8) {
+                direction = Vector2.up;
+            } else if (v < -0.8) {
+                direction = (- Vector2.up);
+            } else if (IAmABaddy ()) {
+                // allow baddy to say 'i dont care'
+                direction = Vector2.zero;
+            } else {
+                // continue in existing direction
+            }
+            Debug.Log (this.name + ": being asked to go " + direction);
         }
 
         return NextComputerDirection (playerDirection, direction);
@@ -230,56 +239,58 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     Vector2 TargetLookahead (Vector2 dir)
     {
-        if ( dir == Vector2.up ) {
+        if (dir == Vector2.up) {
             return new Vector2 (-1, 0); // emulate 'up bug'
-        } else if ( dir == - Vector2.up) {
+        } else if (dir == - Vector2.up) {
             return new Vector2 (1, -1);
-        } else if ( dir == Vector2.right) {
+        } else if (dir == Vector2.right) {
             return new Vector2 (1, 1);
         } else {
             return new Vector2 (-1, -1);
         }
     }
 
-    Vector2 GetPlayerAiTarget() {
-      Vector2 target = Vector2.zero;
-      int random = Random.Range(0,3);
-      if ( random > 1 ) {
-        target = new Vector2 (40,20);
-      }
-      return target;
+    Vector2 GetPlayerAiTarget ()
+    {
+        Vector2 target = Vector2.zero;
+        int random = Random.Range (0, 3);
+        if (random > 1) {
+            target = new Vector2 (40, 20);
+        }
+        return target;
     }
 
-    Vector2 GetBaddyAiTarget() {
-      Vector2 target = Vector2.zero;
-      if ( isScared ) {
-        target = playerScatterSpot;
-        Debug.Log(this.name + " is scared, and heading to " + target);
-      } else if ( isDead ) {
-        target = map.FindEntityGridRef("Baddy2Start"); // the baddy home box centre
-        Debug.Log(this.name + " is dead, and heading to " + target);
-      } else if ( humanControl ) {
-        // don't help out the human!
-        target = playerScatterSpot;
-        Debug.Log(this.name + " is human controlled, and heading to " + target);
-      } else {
-        // attack!
-        Vector2 playerLoc = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().GridRef();
-        Vector2 playerDir = GameObject.FindWithTag("Player").GetComponent<PlayerSphericalMovement>().PlayerDirection();
-        if ( this.name == "Baddy1" ) {
-          target = playerLoc;
-        } else if ( this.name == "Baddy2" ) {
-          target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (4, 4));
-        } else if ( this.name == "Baddy3" ) {
-          target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (6, 6));
-        } else if ( this.name == "Baddy4" ) {
-          target = playerLoc + Vector2.Scale(TargetLookahead(playerDir), new Vector2 (2, 2));
+    Vector2 GetBaddyAiTarget ()
+    {
+        Vector2 target = Vector2.zero;
+        if (isScared) {
+            target = playerScatterSpot;
+            Debug.Log (this.name + " is scared, and heading to " + target);
+        } else if (isDead) {
+            target = map.FindEntityGridRef ("Baddy2Start"); // the baddy home box centre
+            Debug.Log (this.name + " is dead, and heading to " + target);
+        } else if (humanControl) {
+            // don't help out the human!
+            target = playerScatterSpot;
+            Debug.Log (this.name + " is human controlled, and heading to " + target);
         } else {
-          target = playerLoc;
+            // attack!
+            Vector2 playerLoc = GameObject.FindWithTag ("Player").GetComponent<PlayerSphericalMovement> ().GridRef ();
+            Vector2 playerDir = GameObject.FindWithTag ("Player").GetComponent<PlayerSphericalMovement> ().PlayerDirection ();
+            if (this.name == "Baddy1") {
+                target = playerLoc;
+            } else if (this.name == "Baddy2") {
+                target = playerLoc + Vector2.Scale (TargetLookahead (playerDir), new Vector2 (4, 4));
+            } else if (this.name == "Baddy3") {
+                target = playerLoc + Vector2.Scale (TargetLookahead (playerDir), new Vector2 (6, 6));
+            } else if (this.name == "Baddy4") {
+                target = playerLoc + Vector2.Scale (TargetLookahead (playerDir), new Vector2 (2, 2));
+            } else {
+                target = playerLoc;
+            }
+            //Debug.Log(this.name + " is on the attack! and heading to " + target);
         }
-        //Debug.Log(this.name + " is on the attack! and heading to " + target);
-      }
-      return target;
+        return target;
     }
 
     Vector2 NextComputerDirection (Vector2 current, Vector2 intended)
@@ -288,62 +299,62 @@ public class PlayerSphericalMovement : MonoBehaviour
         Vector2 direction = current;
         Vector2 target;
 
-        if ( this.gameObject.tag == "Player" && humanControl ) {
-          return intended;
+        if (this.gameObject.tag == "Player" && humanControl) {
+            return intended;
         }
 
-        if ( this.gameObject.tag == "Baddy" && humanControl && simpleBaddyBehaviour ) {
-          return intended;
+        if (this.gameObject.tag == "Baddy" && humanControl && simpleBaddyBehaviour) {
+            return intended;
         }
 
-        if ( this.gameObject.tag == "Player" ) {
-          target = GetPlayerAiTarget();
+        if (this.gameObject.tag == "Player") {
+            target = GetPlayerAiTarget ();
         } else {
-          target = GetBaddyAiTarget();
+            target = GetBaddyAiTarget ();
         }
 
         // under AI/partial AI control - work out where we want to head to.
-        List<Vector2> availableDirections = map.AvailableDirectionsAtGridRef(playerGridRef);
+        List<Vector2> availableDirections = map.AvailableDirectionsAtGridRef (playerGridRef);
 
-        if ( map.IsEntityAtGridRef("BaddyDoor", playerGridRef - Vector2.up ) && ! isDead ) {
-          // remove down as a direction, as we cannot go thru BaddyDoor
-          availableDirections.Remove(-Vector2.up);
+        if (map.IsEntityAtGridRef ("BaddyDoor", playerGridRef - Vector2.up) && ! isDead) {
+            // remove down as a direction, as we cannot go thru BaddyDoor
+            availableDirections.Remove (-Vector2.up);
         }
 
-        if ( availableDirections.Count == 1 ) {
-          direction = availableDirections[0]; // always take only available dir.
-        } else if ( availableDirections.Count == 2 && current != Vector2.zero ) {
-          availableDirections.Remove(-current); // cannot reverse
-          direction = availableDirections[0];
+        if (availableDirections.Count == 1) {
+            direction = availableDirections [0]; // always take only available dir.
+        } else if (availableDirections.Count == 2 && current != Vector2.zero) {
+            availableDirections.Remove (-current); // cannot reverse
+            direction = availableDirections [0];
         } else {
-          // work out which direction takes us closest to target
-          float lowest = 100000000.0F;
-          availableDirections.Remove(-current); // cannot reverse
+            // work out which direction takes us closest to target
+            float lowest = 100000000.0F;
+            availableDirections.Remove (-current); // cannot reverse
 
             // just baddy humanControl override here.
-            if ( humanControl ) {
-              foreach ( Vector2 dir in availableDirections) {
-                if ( dir == intended ) {
-                  return dir; // override with the players choice
+            if (humanControl) {
+                foreach (Vector2 dir in availableDirections) {
+                    if (dir == intended) {
+                        return dir; // override with the players choice
+                    }
                 }
-              }
-              if ( ! isDead ) {
-                foreach ( Vector2 dir in availableDirections) {
-                  if ( dir == current ) {
-                    return dir;  // prefer to continue in a straight line
-                  }
+                if (! isDead) {
+                    foreach (Vector2 dir in availableDirections) {
+                        if (dir == current) {
+                            return dir;  // prefer to continue in a straight line
+                        }
+                    }
                 }
-              }
             }
 
-            foreach ( Vector2 dir in availableDirections) {
-              Vector2 newLocation = playerGridRef + dir;
-              float dist = map.DistanceBetween(newLocation, target);
-              //Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
-              if ( dist < lowest ) {
-                lowest = dist;
-                direction = dir;
-              }
+            foreach (Vector2 dir in availableDirections) {
+                Vector2 newLocation = playerGridRef + dir;
+                float dist = map.DistanceBetween (newLocation, target);
+                //Debug.Log(this.name + " at " + playerGridRef + " going " + dir + ", distance from " + newLocation + " to " + target + " = " + dist);
+                if (dist < lowest) {
+                    lowest = dist;
+                    direction = dir;
+                }
             }
 
         }
@@ -366,68 +377,70 @@ public class PlayerSphericalMovement : MonoBehaviour
         playerDirection = Vector2.zero;
     }
 
-    void CheckForButtonPress() {
-      if ( IsNull(inputdev) ) {
-        return;
-      }
-      InputControl control = inputdev.GetControl( InputControlType.Action1 );
-      if ( control.IsPressed ) {
-        if ( this.name == "Player" ) {
-          Debug.Log(this.name + ": Start Button pressed!");
-          string mode = GlobalState().GameMode();
-          if ( GlobalState().InDemoMode() || mode == "GameOver" ) {
-            GlobalState().GameStart();
-          }
-        } else {
-          // we are a baddy, button helps to figure out which one!
-          highlightSprite = true;
+    void CheckForButtonPress ()
+    {
+        if (IsNull (inputdev)) {
+            return;
         }
-      } else {
-        highlightSprite = false;
-      }
+        InputControl control = inputdev.GetControl (InputControlType.Action1);
+        if (control.IsPressed) {
+            if (this.name == "Player") {
+                Debug.Log (this.name + ": Start Button pressed!");
+                string mode = GlobalState ().GameMode ();
+                if (GlobalState ().InDemoMode () || mode == "GameOver") {
+                    GlobalState ().GameStart ();
+                }
+            } else {
+                // we are a baddy, button helps to figure out which one!
+                highlightSprite = true;
+            }
+        } else {
+            highlightSprite = false;
+        }
     }
 
     void FixedUpdate ()
     {
-        if ( lastControllerRefreshTime + lastControllerRefreshDelay < Time.time ) {
-          RefreshControllers();
+        if (lastControllerRefreshTime + lastControllerRefreshDelay < Time.time) {
+            RefreshControllers ();
         }
 
-        CheckForButtonPress();
+        CheckForButtonPress ();
 
-        if ( GlobalState().MovementEnabled() ) {
-          playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
+        if (GlobalState ().MovementEnabled ()) {
+            playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);
         } else {
-          if ( GlobalState().GameMode() == "StartLevel" &&
-               Time.time > GlobalState().LevelStartTime() + levelStartDelay) {
-            GlobalState().SendMessage("EnableMovement");
-            playerDirection = - Vector2.right; // so wakka wakka begins :)
-            SetInfoDisplayText("");
-            DisableInfoDisplay();
-            GlobalState().SendMessage("GameInProgress");
-          }
+            if (GlobalState ().GameMode () == "StartLevel" &&
+                Time.time > GlobalState ().LevelStartTime () + levelStartDelay) {
+                GlobalState ().SendMessage ("EnableMovement");
+                playerDirection = - Vector2.right; // so wakka wakka begins :)
+                SetInfoDisplayText ("");
+                DisableInfoDisplay ();
+                GlobalState ().SendMessage ("GameInProgress");
+            }
         }
 
-        if ( IAmABaddy() ) {
-          UpdateBaddyState ();
+        if (IAmABaddy ()) {
+            UpdateBaddyState ();
         }
         UpdateNextPlayerPosition ();
 
         UpdatePlayerObjectLocationAndRotation ();
-        UpdatePlayerAnimation();
+        UpdatePlayerAnimation ();
 
     }
 
-    void UpdateBaddyState () {
-        if ( isScared ) {
-            if ( ticksInScaredMode > maxTicksInScaredMode ) {
+    void UpdateBaddyState ()
+    {
+        if (isScared) {
+            if (ticksInScaredMode > maxTicksInScaredMode) {
                 isScared = false;
                 ticksInScaredMode = 0;
             } else {
                 ticksInScaredMode++;
             }
-        } else if ( isDead ) {
-            if ( playerGridRef == map.FindEntityGridRef("Baddy2Start") ) {
+        } else if (isDead) {
+            if (playerGridRef == map.FindEntityGridRef ("Baddy2Start")) {
                 // made it home!
                 isDead = false;
             }
@@ -436,6 +449,9 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void UpdatePlayerObjectLocationAndRotation ()
     {
+        if (sc == null) {
+            return;
+        }
         transform.localPosition = sc.SetRotation (
             map.degreesToRadians (currentAngleX),
             map.degreesToRadians (currentAngleY)
@@ -443,123 +459,129 @@ public class PlayerSphericalMovement : MonoBehaviour
         transform.LookAt (Vector3.zero);
     }
 
-    void UpdatePlayerAnimation() {
-      if ( this.gameObject.tag == "Player" ) {
-        TransformPlayerForSpriteAnimation ();
-        UpdatePlayerSprite();
-      } else {
-        UpdateBaddySprite();
-      }
+    void UpdatePlayerAnimation ()
+    {
+        if (this.gameObject.tag == "Player") {
+            TransformPlayerForSpriteAnimation ();
+            UpdatePlayerSprite ();
+        } else {
+            UpdateBaddySprite ();
+        }
     }
 
-    void UpdatePlayerSprite() {
+    void UpdatePlayerSprite ()
+    {
 
-      if ( ! animatePlayer ) {
-        return;
-      }
+        if (! animatePlayer) {
+            return;
+        }
 
-      int numAnimTiles = _uvTieX;
+        int numAnimTiles = _uvTieX;
 
-      if ( isDead ) {
-          lastTileChangeTicks++;
-          if ( tile >= _uvTieX ) {
-            tile = 0;
-          } else {
-            if ( lastTileChangeTicks > maxDeadLastTileChangeTicks ) {
-              lastTileChangeTicks = 0;
-              tile++;
-            }
-          }
-
-          if ( tile >= numAnimTiles ) {
-            // finished dead player animation, restart level
-            if ( GlobalState().GameMode() == "GameOver" ) {
-              if ( this.name == "Player" ) {
-                this.renderer.enabled = false;
-                tile = numAnimTiles;
-              }
+        if (isDead) {
+            lastTileChangeTicks++;
+            if (tile >= _uvTieX) {
+                tile = 0;
             } else {
-              StartLevel();
+                if (lastTileChangeTicks > maxDeadLastTileChangeTicks) {
+                    lastTileChangeTicks = 0;
+                    tile++;
+                }
             }
-          }
 
-      } else if ( ! ( playerDirection == Vector2.zero ) ) {
-          lastTileChangeTicks++;
-          if ( lastTileChangeTicks > maxLastTileChangeTicks ) {
-              lastTileChangeTicks = 0;
-              if ( playerTileBounceDirection ) {
-                tile++;
-              } else {
-                tile--;
-              }
-              if ( tile <= _uvTieX ) {
-                playerTileBounceDirection = true;
-                tile = _uvTieX;
-              } else if ( tile >= _uvTieX + numAnimTiles - 1 ) {
-                playerTileBounceDirection = false;
-              }
+            if (tile >= numAnimTiles) {
+                // finished dead player animation, restart level
+                if (GlobalState ().GameMode () == "GameOver") {
+                    if (this.name == "Player") {
+                        this.renderer.enabled = false;
+                        tile = numAnimTiles;
+                    }
+                } else {
+                    StartLevel ();
+                }
+            }
 
-         }
-      }
-      AlterTextureSpriteTile(tile);
+        } else if (! (playerDirection == Vector2.zero)) {
+            lastTileChangeTicks++;
+            if (lastTileChangeTicks > maxLastTileChangeTicks) {
+                lastTileChangeTicks = 0;
+                if (playerTileBounceDirection) {
+                    tile++;
+                } else {
+                    tile--;
+                }
+                if (tile <= _uvTieX) {
+                    playerTileBounceDirection = true;
+                    tile = _uvTieX;
+                } else if (tile >= _uvTieX + numAnimTiles - 1) {
+                    playerTileBounceDirection = false;
+                }
+
+            }
+        }
+        AlterTextureSpriteTile (tile);
     }
 
-    void UpdateBaddySprite() {
+    void UpdateBaddySprite ()
+    {
 
-      if ( ! animatePlayer ) {
-        return;
-      }
-
-      if ( isScared == true ) {
-        if ( ( maxTicksInScaredMode - ticksInScaredMode ) < alertScaredModeTimeout ) {
-          tile = ( ticksInScaredMode / 10 ) % 2 + 8;
-        } else {
-          tile = 8;
+        if (! animatePlayer) {
+            return;
         }
-      } else {
-        if ( playerDirection == Vector2.up ) {
-          tile = 0 + 1*_uvTieX;
-        } else if ( playerDirection == Vector2.right ) {
-          tile = 1 + 1*_uvTieX;
-        } else if ( playerDirection == - Vector2.up ) {
-          tile = 2 + 1*_uvTieX;
-        } else if ( playerDirection == - Vector2.right ) {
-          tile = 3 + 1*_uvTieX;
+
+        if (isScared == true) {
+            if ((maxTicksInScaredMode - ticksInScaredMode) < alertScaredModeTimeout) {
+                tile = (ticksInScaredMode / 10) % 2 + 8;
+            } else {
+                tile = 8;
+            }
         } else {
-          tile = 0 + 1*_uvTieX;
+            if (playerDirection == Vector2.up) {
+                tile = 0 + 1 * _uvTieX;
+            } else if (playerDirection == Vector2.right) {
+                tile = 1 + 1 * _uvTieX;
+            } else if (playerDirection == - Vector2.up) {
+                tile = 2 + 1 * _uvTieX;
+            } else if (playerDirection == - Vector2.right) {
+                tile = 3 + 1 * _uvTieX;
+            } else {
+                tile = 0 + 1 * _uvTieX;
+            }
         }
-      }
 
-      if ( isDead ) {
-        tile -= _uvTieX; // 3rd row
-      }
+        if (isDead) {
+            tile -= _uvTieX; // 3rd row
+        }
 
-      if ( highlightSprite ) { tile = 9; } 
+        if (highlightSprite) {
+            tile = 9;
+        } 
 
-      AlterTextureSpriteTile(tile);
+        AlterTextureSpriteTile (tile);
     }
 
-    void AlterTextureSpriteTile(int index) {
+    void AlterTextureSpriteTile (int index)
+    {
 
-      if (index != _lastIndex) {
-        iX = index % _uvTieX;
-        iY = index / _uvTieX;
-        Vector2 offset = new Vector2(iX*_size.x, 1-(_size.y*iY));
-        //Debug.Log(this.name + " using sprite tile " + tile + ", offset " + offset );
-        _myRenderer.material.SetTextureOffset ("_MainTex", offset);
-        _lastIndex = index;
-      }
+        if (index != _lastIndex) {
+            iX = index % _uvTieX;
+            iY = index / _uvTieX;
+            Vector2 offset = new Vector2 (iX * _size.x, 1 - (_size.y * iY));
+            //Debug.Log(this.name + " using sprite tile " + tile + ", offset " + offset );
+            _myRenderer.material.SetTextureOffset ("_MainTex", offset);
+            _lastIndex = index;
+        }
 
     }
 
     void TransformPlayerForSpriteAnimation ()
     {
-        if ( isDead ) {
-          return;
+        if (isDead) {
+            return;
         }
         Vector2 directionToFace = playerDirection;
         if (playerDirection == Vector2.zero) {
-            Debug.Log(this.name + ": stopped, so facing " + playerIntendedDirection);
+            Debug.Log (this.name + ": stopped, so facing " + playerIntendedDirection);
             directionToFace = playerIntendedDirection;
         }
         if (directionToFace.x < 0) {
@@ -572,22 +594,25 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     }
 
-    bool IAmABaddy() {
-        return ( this.gameObject.tag == "Baddy" );
+    bool IAmABaddy ()
+    {
+        return (this.gameObject.tag == "Baddy");
     }
 
-    void HasDied() {
+    void HasDied ()
+    {
         isDead = true;
-        if ( GlobalState().AudioEnabled() ) {
-          audio.clip = deadSound;
-          audio.Play();
+        if (GlobalState ().AudioEnabled ()) {
+            audio.clip = deadSound;
+            audio.Play ();
         }
     }
 
-    void GameOver() {
-        GlobalState().GameOver();
-        SetInfoDisplayText("GAME OVER");
-        EnableInfoDisplay();
+    void GameOver ()
+    {
+        GlobalState ().GameOver ();
+        SetInfoDisplayText ("GAME OVER");
+        EnableInfoDisplay ();
     }
 
     void ChangeDirectionIfAble (Vector2 nextMoveSpeed)
@@ -605,7 +630,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             return;
         }
 
-        if ( map.WallAtGridReference(playerGridRef + playerIntendedDirection) ) {
+        if (map.WallAtGridReference (playerGridRef + playerIntendedDirection)) {
             return;
         }
 
@@ -633,20 +658,20 @@ public class PlayerSphericalMovement : MonoBehaviour
 
     void MoveUnlessBlockedByWall (Vector2 nextMoveSpeed)
     {
-        if ( map.IsEntityAtGridRef("BaddyDoor", playerGridRef + playerIntendedDirection) ) {
-          if ( IAmABaddy() ) {
-            // we want to enter/leave the baddy house
-            if ( isDead && ( playerIntendedDirection == - Vector2.up ) ) {
-              // sweet, door is open
-            } else if ( ! isDead && ( playerIntendedDirection == Vector2.up ) ) {
-              // sweet, leaving - door is open
+        if (map.IsEntityAtGridRef ("BaddyDoor", playerGridRef + playerIntendedDirection)) {
+            if (IAmABaddy ()) {
+                // we want to enter/leave the baddy house
+                if (isDead && (playerIntendedDirection == - Vector2.up)) {
+                    // sweet, door is open
+                } else if (! isDead && (playerIntendedDirection == Vector2.up)) {
+                    // sweet, leaving - door is open
+                } else {
+                    // treat it like a wall
+                    return;
+                }
             } else {
-              // treat it like a wall
-              return;
+                return; // player cannot go thru door, ever
             }
-          } else {
-            return; // player cannot go thru door, ever
-          }
         }
 
         float dist = map.angularDistanceToNextGridLine (currentAngleY, currentAngleX, playerDirection);
@@ -656,10 +681,10 @@ public class PlayerSphericalMovement : MonoBehaviour
             ) {
             // going north/south, blocked by wall.
             currentAngleY = Mathf.Round (currentAngleY + (playerDirection.y * dist)); // normalise angle to grid
-            if ( this.name == "Player" ) {
-              playerDirection = Vector2.zero;
+            if (this.name == "Player") {
+                playerDirection = Vector2.zero;
             } else {
-              playerDirection = playerIntendedDirection; // baddies dont stop
+                playerDirection = playerIntendedDirection; // baddies dont stop
             }
         } else if (playerDirection.x != 0
             && dist < nextMoveSpeed.x
@@ -667,10 +692,10 @@ public class PlayerSphericalMovement : MonoBehaviour
                    ) {
             // going east/west, blocked by wall.
             currentAngleX = Mathf.Round (currentAngleX + (playerDirection.x * dist)); // normalise angle to grid
-            if ( this.name == "Player" ) {
-              playerDirection = Vector2.zero;
+            if (this.name == "Player") {
+                playerDirection = Vector2.zero;
             } else {
-              playerDirection = playerIntendedDirection; // baddies dont stop
+                playerDirection = playerIntendedDirection; // baddies dont stop
             }
         } else {
             // not about to hit wall, move as normal
@@ -695,22 +720,22 @@ public class PlayerSphericalMovement : MonoBehaviour
     {
         float baseSpeed = speed;
 
-        if ( isDead && this.name == "Player" ) {
-          baseSpeed = 0;
-        } else if ( isDead ) {
-          baseSpeed = 50;
+        if (isDead && this.name == "Player") {
+            baseSpeed = 0;
+        } else if (isDead) {
+            baseSpeed = 50;
         }
         Vector2 newSpeed = new Vector2 (
                 (baseSpeed * Time.deltaTime * map.LatitudeSpeedAdjust (currentAngleY)),
                 (baseSpeed * Time.deltaTime)
-            );
+        );
         return newSpeed;
     }
 
     void UpdateNextPlayerPosition ()
     {
         playerGridRef = map.GridReferenceAtLatitudeLongitude (currentAngleY, currentAngleX);
-        Vector2 nextMoveSpeed = PlayerSpeed();
+        Vector2 nextMoveSpeed = PlayerSpeed ();
 
         ChangeDirectionIfAble (nextMoveSpeed);
 
@@ -733,15 +758,16 @@ public class PlayerSphericalMovement : MonoBehaviour
         */
     }
 
-    void StartLevel() {
-      GlobalState().SendMessage("StartLevel");
-      Debug.Log ("MIKEDEBUG: StartLevel() called! - mode = " + GlobalState().GameMode());
-      ResetPlayerPositions();
-      RefreshControllers();
-      if ( this.name == "Player" && ! GlobalState().InDemoMode() ) {
-        SetInfoDisplayText("READY!");
-        EnableInfoDisplay();
-      }
+    void StartLevel ()
+    {
+        GlobalState ().SendMessage ("StartLevel");
+        Debug.Log ("MIKEDEBUG: StartLevel() called! - mode = " + GlobalState ().GameMode ());
+        ResetPlayerPositions ();
+        RefreshControllers ();
+        if (this.name == "Player" && ! GlobalState ().InDemoMode ()) {
+            SetInfoDisplayText ("READY!");
+            EnableInfoDisplay ();
+        }
     }
 
     void ResetPlayerPositions ()

@@ -45,6 +45,8 @@ public class GlobalGameDetails : MonoBehaviour
 
     public string nextGameModeKey;
     public string nextLevelKey;
+    public string increaseRotateSpeedKey;
+    public string decreaseRotateSpeedKey;
 
     private int score;
     private int highScore;
@@ -309,7 +311,19 @@ public class GlobalGameDetails : MonoBehaviour
             NextMap ();
         }
 
-        Debug.Log ("GameMode " + GameMode () + " start time " + GameModeStartTime ());
+        if (Input.GetKeyDown (increaseRotateSpeedKey)) {
+            GameObject[] spheres = GameObject.FindGameObjectsWithTag ("MainSphere");
+            mainSphere = spheres[0];
+            Debug.Log ("increaseRotateSpeedKey pressed");
+            mainSphere.SendMessage ("IncreaseSpeed");
+        }
+        if (Input.GetKeyDown (decreaseRotateSpeedKey)) {
+            GameObject[] spheres = GameObject.FindGameObjectsWithTag ("MainSphere");
+            mainSphere = spheres[0];
+            Debug.Log ("decreaseRotateSpeedKey pressed");
+            mainSphere.SendMessage ("DecreaseSpeed");
+        }
+
         if (GameMode () == "GameOver" && 
             GameModeStartTime () + demoStartDelay < Time.time
            ) {

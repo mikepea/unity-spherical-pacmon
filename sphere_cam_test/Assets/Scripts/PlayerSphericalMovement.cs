@@ -772,10 +772,10 @@ public class PlayerSphericalMovement : MonoBehaviour
     }
 
     void ResetSpherePosition () {
-        //Debug.Log ("Resetting Sphere Position");
+        Debug.Log ("Resetting Sphere Position");
         GameObject[] spheres = GameObject.FindGameObjectsWithTag ("MainSphere");
         GameObject mainSphere = spheres[0];
-        mainSphere.transform.localRotation = Quaternion.identity;
+        mainSphere.SendMessage ("ResetToOrigin");
     }
 
     void ResetPlayerPositions ()

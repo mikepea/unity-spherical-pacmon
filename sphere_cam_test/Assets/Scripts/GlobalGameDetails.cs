@@ -144,7 +144,7 @@ public class GlobalGameDetails : MonoBehaviour
 
     public bool InDemoMode ()
     {
-        Debug.Log ("InDemoMode: " + demoMode);
+        //Debug.Log ("InDemoMode: " + demoMode);
         return demoMode;
     }
 
@@ -201,7 +201,6 @@ public class GlobalGameDetails : MonoBehaviour
                 mapNumber++; //  always skip map0 -- test pattern
         }
         DisableMovement ();
-        Debug.Log ("MIKEDEBUG: (in NextMap) " + GameMode ());
         Application.LoadLevel (0);
     }
 
@@ -295,8 +294,7 @@ public class GlobalGameDetails : MonoBehaviour
             // restart :(
         }
 
-        Debug.Log ("MIKEDEBUG: " + GameMode ());
-        if (Input.GetKey (nextGameModeKey)) {
+        if (Input.GetKeyDown (nextGameModeKey)) {
             Debug.Log ("nextGameModeKeyPressed: " + gameMode);
             if (demoMode) {
                 demoMode = false;
@@ -306,7 +304,7 @@ public class GlobalGameDetails : MonoBehaviour
             }
         }
 
-        if (Input.GetKey (nextLevelKey)) {
+        if (Input.GetKeyDown (nextLevelKey)) {
             Debug.Log ("nextLevelKeyPressed");
             NextMap ();
         }

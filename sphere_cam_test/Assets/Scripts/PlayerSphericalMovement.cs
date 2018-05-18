@@ -230,7 +230,7 @@ public class PlayerSphericalMovement : MonoBehaviour
             } else {
                 // continue in existing direction
             }
-            Debug.Log (this.name + ": being asked to go " + direction);
+            //Debug.Log (this.name + ": being asked to go " + direction);
         }
 
         return NextComputerDirection (playerDirection, direction);
@@ -265,14 +265,14 @@ public class PlayerSphericalMovement : MonoBehaviour
         Vector2 target = Vector2.zero;
         if (isScared) {
             target = playerScatterSpot;
-            Debug.Log (this.name + " is scared, and heading to " + target);
+            //Debug.Log (this.name + " is scared, and heading to " + target);
         } else if (isDead) {
             target = map.FindEntityGridRef ("Baddy2Start"); // the baddy home box centre
-            Debug.Log (this.name + " is dead, and heading to " + target);
+            //Debug.Log (this.name + " is dead, and heading to " + target);
         } else if (humanControl) {
             // don't help out the human!
             target = playerScatterSpot;
-            Debug.Log (this.name + " is human controlled, and heading to " + target);
+            //Debug.Log (this.name + " is human controlled, and heading to " + target);
         } else {
             // attack!
             Vector2 playerLoc = GameObject.FindWithTag ("Player").GetComponent<PlayerSphericalMovement> ().GridRef ();
@@ -385,7 +385,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         InputControl control = inputdev.GetControl (InputControlType.Action1);
         if (control.IsPressed) {
             if (this.name == "Player") {
-                Debug.Log (this.name + ": Start Button pressed!");
+                //Debug.Log (this.name + ": Start Button pressed!");
                 string mode = GlobalState ().GameMode ();
                 if (GlobalState ().InDemoMode () || mode == "GameOver") {
                     GlobalState ().GameStart ();
@@ -581,7 +581,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         }
         Vector2 directionToFace = playerDirection;
         if (playerDirection == Vector2.zero) {
-            Debug.Log (this.name + ": stopped, so facing " + playerIntendedDirection);
+            //Debug.Log (this.name + ": stopped, so facing " + playerIntendedDirection);
             directionToFace = playerIntendedDirection;
         }
         if (directionToFace.x < 0) {
@@ -761,7 +761,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     void StartLevel ()
     {
         GlobalState ().SendMessage ("StartLevel");
-        Debug.Log ("MIKEDEBUG: StartLevel() called! - mode = " + GlobalState ().GameMode ());
+        //Debug.Log ("MIKEDEBUG: StartLevel() called! - mode = " + GlobalState ().GameMode ());
         ResetSpherePosition ();
         ResetPlayerPositions ();
         RefreshControllers ();
@@ -772,7 +772,7 @@ public class PlayerSphericalMovement : MonoBehaviour
     }
 
     void ResetSpherePosition () {
-        Debug.LogWarning ("Resetting Sphere Position");
+        //Debug.Log ("Resetting Sphere Position");
         GameObject[] spheres = GameObject.FindGameObjectsWithTag ("MainSphere");
         GameObject mainSphere = spheres[0];
         mainSphere.transform.localRotation = Quaternion.identity;

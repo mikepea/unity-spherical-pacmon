@@ -36,7 +36,7 @@ public class PlayerCollision1 : MonoBehaviour
         lastPillMunchTime = - pillMunchDelay;
         numPills = GameObject.FindGameObjectsWithTag ("Pill").Length +
                    GameObject.FindGameObjectsWithTag ("Power Pill").Length;
-        playerLivesRemaining = playerMaxLives;
+        playerLivesRemaining = playerMaxLives - 1;
 
         GameObject[] scoreboards = GameObject.FindGameObjectsWithTag("Scoreboard");
         scoreboard = scoreboards[0];

@@ -765,9 +765,14 @@ public class PlayerSphericalMovement : MonoBehaviour
         ResetSpherePosition ();
         ResetPlayerPositions ();
         RefreshControllers ();
-        if (this.name == "Player" && ! GlobalState ().InDemoMode ()) {
-            SetInfoDisplayText ("READY!");
-            EnableInfoDisplay ();
+        if (this.name == "Player") {
+            if ( ! GlobalState ().InDemoMode ()) {
+                SetInfoDisplayText ("READY!");
+                EnableInfoDisplay ();
+            } else {
+                SetInfoDisplayText ("PRESS 'A' TO START!");
+                EnableInfoDisplay ();
+            }
         }
     }
 

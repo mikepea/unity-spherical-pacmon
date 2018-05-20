@@ -377,6 +377,20 @@ public class PlayerSphericalMovement : MonoBehaviour
         playerDirection = Vector2.zero;
     }
 
+    void CheckForStartPress ()
+    {
+        if (IsNull (inputdev)) {
+            return;
+        }
+        InputControl control = inputdev.GetControl (InputControlType.Start);
+        if (control.IsPressed) {
+            if (this.name == "Player") {
+                Debug.Log (this.name + ": Hard Start Button pressed!");
+                GlobalState ().GameStart ();
+            }
+        }
+    }
+
     void CheckForButtonPress ()
     {
         if (IsNull (inputdev)) {
@@ -406,6 +420,7 @@ public class PlayerSphericalMovement : MonoBehaviour
         }
 
         CheckForButtonPress ();
+        CheckForStartPress ();
 
         if (GlobalState ().MovementEnabled ()) {
             playerIntendedDirection = ProcessInputsIntoDirection (playerIntendedDirection);

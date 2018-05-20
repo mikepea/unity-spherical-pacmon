@@ -47,8 +47,8 @@ public class InControlKeyboardOverlayProfile : UnityInputDeviceProfile
       },
 
       new InputControlMapping {
-        Handle = "Action1 alt",
-        Target = InputControlType.Action1,
+        Handle = "Command alt",
+        Target = InputControlType.Start,
         Source = KeyCodeButton( KeyCode.Space )
       },
 

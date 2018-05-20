@@ -16,11 +16,17 @@ public class RotateSphere : MonoBehaviour {
   }
 
   void IncreaseSpeed () {
-    rotateDelta.y += rotateSpeedIncrement;
+    rotateSpeed.y += rotateSpeedIncrement;
+    if ( rotateSpeed.y > maxSpeed ) {
+      rotateSpeed.y = maxSpeed;
+    }
   }
 
   void DecreaseSpeed () {
-    rotateDelta.y -= rotateSpeedIncrement;
+    rotateSpeed.y -= rotateSpeedIncrement;
+    if ( rotateSpeed.y < 0 ) {
+      rotateSpeed.y = 0;
+    }
   }
 
   void ResetToOrigin () {

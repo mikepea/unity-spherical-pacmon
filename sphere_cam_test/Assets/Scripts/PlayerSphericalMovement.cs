@@ -84,8 +84,11 @@ public class PlayerSphericalMovement : MonoBehaviour
 
         GameObject[] infoDisplays = GameObject.FindGameObjectsWithTag ("InfoDisplay");
         infoDisplay = infoDisplays [0];
-        SetInfoDisplayText ("");
-        DisableInfoDisplay ();
+
+        if (! GlobalState ().InDemoMode ()) {
+           SetInfoDisplayText ("");
+           DisableInfoDisplay ();
+        }
 
         string mapName = GlobalState ().MapName ();
         map = new Map (mapName);
@@ -429,8 +432,13 @@ public class PlayerSphericalMovement : MonoBehaviour
                 Time.time > GlobalState ().LevelStartTime () + levelStartDelay) {
                 GlobalState ().SendMessage ("EnableMovement");
                 playerDirection = - Vector2.right; // so wakka wakka begins :)
-                SetInfoDisplayText ("");
-                DisableInfoDisplay ();
+                if (! GlobalState ().InDemoMode ()) {
+                    SetInfoDisplayText ("");
+                    DisableInfoDisplay ();
+                } else {
+                    SetInfoDisplayText ("PRESS 'A'!");
+                    EnableInfoDisplay ();
+                }
                 GlobalState ().SendMessage ("GameInProgress");
             }
         }
@@ -785,7 +793,7 @@ public class PlayerSphericalMovement : MonoBehaviour
                 SetInfoDisplayText ("READY!");
                 EnableInfoDisplay ();
             } else {
-                SetInfoDisplayText ("PRESS 'A' TO START!");
+                SetInfoDisplayText ("PRESS 'A'!");
                 EnableInfoDisplay ();
             }
         }
